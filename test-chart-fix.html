@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Gráfica - Arreglo</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        .test-button:hover {
+            background: #2563eb;
+        }
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .chart-container canvas {
+            max-height: 400px !important;
+            width: 100% !important;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>📊 Test de Gráfica - Arreglo</h1>
+        <p>Este test verifica que la gráfica se cargue correctamente.</p>
+        
+        <button class="test-button" onclick="testChartJS()">🔍 Verificar Chart.js</button>
+        <button class="test-button" onclick="createChart()">📊 Crear Gráfico</button>
+        <button class="test-button" onclick="testWithData()">📈 Test con Datos</button>
+        
+        <div id="testResult" class="result" style="display: none;">
+            <h3>Resultado del Test:</h3>
+            <div id="testContent"></div>
+        </div>
+    </div>
+
+    <div class="test-container">
+        <h2>📊 Gráfico de Prueba</h2>
+        <div class="chart-container">
+            <canvas id="testChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+
+    <script>
+        let testChart = null;
+
+        function testChartJS() {
+            document.getElementById('testResult').style.display = 'block';
+            
+            let html = '<h4>🔍 Verificación de Chart.js:</h4>';
+            
+            // Verificar Chart.js
+            if (typeof Chart !== 'undefined') {
+                html += '<div class="status success">✅ Chart.js está disponible</div>';
+                html += `<p><strong>Versión:</strong> ${Chart.version || 'Desconocida'}</p>`;
+            } else {
+                html += '<div class="status error">❌ Chart.js no está disponible</div>';
+            }
+            
+            // Verificar canvas
+            const canvas = document.getElementById('testChart');
+            if (canvas) {
+                html += '<div class="status success">✅ Canvas disponible</div>';
+            } else {
+                html += '<div class="status error">❌ Canvas no encontrado</div>';
+            }
+            
+            // Verificar contexto
+            if (canvas) {
+                try {
+                    const ctx = canvas.getContext('2d');
+                    if (ctx) {
+                        html += '<div class="status success">✅ Contexto 2D disponible</div>';
+                    } else {
+                        html += '<div class="status error">❌ Contexto 2D no disponible</div>';
+                    }
+                } catch (error) {
+                    html += `<div class="status error">❌ Error obteniendo contexto: ${error.message}</div>`;
+                }
+            }
+            
+            document.getElementById('testContent').innerHTML = html;
+        }
+
+        function createChart() {
+            const canvas = document.getElementById('testChart');
+            if (!canvas) {
+                alert('Canvas no encontrado');
+                return;
+            }
+
+            if (typeof Chart === 'undefined') {
+                alert('Chart.js no está disponible');
+                return;
+            }
+
+            try {
+                // Destruir gráfico anterior si existe
+                if (testChart) {
+                    testChart.destroy();
+                }
+
+                const ctx = canvas.getContext('2d');
+                
+                testChart = new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: [
+                            'Vulnerabilidad Económica',
+                            'Acceso a Salud',
+                            'Acceso a Educación',
+                            'Cohesión Social',
+                            'Seguridad',
+                            'Ambiente'
+                        ],
+                        datasets: [{
+                            label: 'Test de Gráfica',
+                            data: [85, 70, 90, 95, 75, 60],
+                            backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                            borderColor: 'rgba(59, 130, 246, 1)',
+                            borderWidth: 2,
+                            pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            pointRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    stepSize: 20,
+                                    color: '#64748b'
+                                },
+                                grid: {
+                                    color: 'rgba(100, 116, 139, 0.2)'
+                                },
+                                pointLabels: {
+                                    color: '#475569',
+                                    font: {
+                                        size: 11,
+                                        weight: '500'
+                                    }
+                                }
+                            }
+                        },
+                        animation: {
+                            duration: 2000,
+                            easing: 'easeInOutQuart'
+                        }
+                    }
+                });
+                
+                document.getElementById('testResult').style.display = 'block';
+                document.getElementById('testContent').innerHTML = `
+                    <h4>📊 Gráfico Creado:</h4>
+                    <div class="status success">✅ Gráfico creado exitosamente</div>
+                    <p>El gráfico debería aparecer arriba. Si no lo ves, hay un problema con Chart.js.</p>
+                `;
+            } catch (error) {
+                document.getElementById('testResult').style.display = 'block';
+                document.getElementById('testContent').innerHTML = `
+                    <h4>❌ Error al crear gráfico:</h4>
+                    <div class="status error">Error: ${error.message}</div>
+                `;
+            }
+        }
+
+        function testWithData() {
+            // Simular datos de categorías
+            const categories = {
+                economico: 85,
+                salud: 70,
+                social: 90,
+                educacion: 60,
+                seguridad: 75,
+                ambiental: 80
+            };
+            
+            // Simular resultados completos
+            const results = {
+                date: new Date().toISOString(),
+                generalScore: 75,
+                categories: categories,
+                recommendations: [
+                    'Buscar programas de empleo',
+                    'Acceder a servicios de salud',
+                    'Participar en actividades comunitarias'
+                ],
+                diagnosis: 'Diagnóstico de prueba',
+                answers: {}
+            };
+            
+            // Guardar en localStorage
+            localStorage.setItem('diagnosticResults', JSON.stringify(results));
+            
+            document.getElementById('testResult').style.display = 'block';
+            document.getElementById('testContent').innerHTML = `
+                <h4>📈 Test con Datos:</h4>
+                <div class="status success">✅ Datos guardados en localStorage</div>
+                <p><strong>Puntuación:</strong> ${results.generalScore}</p>
+                <p><strong>Categorías:</strong> ${Object.keys(categories).length} categorías</p>
+                <p><strong>Próximo paso:</strong> Ve a <a href="resultados.html" target="_blank">resultados.html</a> para ver los resultados completos</p>
+            `;
+        }
+
+        // Inicializar cuando la página cargue
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Página cargada, verificando Chart.js...');
+            setTimeout(() => {
+                if (typeof Chart !== 'undefined') {
+                    console.log('Chart.js disponible');
+                } else {
+                    console.log('Chart.js no disponible');
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

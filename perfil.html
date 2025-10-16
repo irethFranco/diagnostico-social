@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - Diagnóstico Social</title>
+    <link rel="stylesheet" href="CSS/estilos.css?v=43">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Estilos específicos para el perfil */
+        .profile-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 40px 20px;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .profile-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .profile-subtitle {
+            font-size: 1.3rem;
+            color: #64748b;
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .profile-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .profile-info {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            height: fit-content;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            margin: 0 auto 15px;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .profile-email {
+            font-size: 1rem;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #3b82f6;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .history-section {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .history-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .history-timeline {
+            position: relative;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            border-left: 4px solid #3b82f6;
+            position: relative;
+        }
+
+        .history-item:hover {
+            background: #e0f2fe;
+            transform: translateX(5px);
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+        .history-item:hover .delete-btn {
+            opacity: 1;
+        }
+
+        .delete-btn:hover {
+            background: #dc2626;
+            transform: scale(1.1);
+        }
+
+        .history-date {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 500;
+            margin-right: 20px;
+            min-width: 100px;
+        }
+
+        .history-content {
+            flex: 1;
+        }
+
+        .history-score {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 5px;
+        }
+
+        .history-description {
+            font-size: 1rem;
+            color: #475569;
+        }
+
+        .chart-section {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 30px;
+        }
+
+        .chart-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .action-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        /* Desplegable de citas */
+        .collapsible { max-height: 0; overflow-y: hidden; overflow-x: hidden; opacity: 0; transition: max-height 500ms cubic-bezier(.2,.7,.2,1), opacity 250ms ease; padding: 0 8px; }
+        .collapsible.open { max-height: 2000px; opacity: 1; }
+        .appointments-item .history-score { color: #1d4ed8; }
+        #appointmentsTimeline { display: grid; gap: 12px; max-height: 380px; overflow-y: auto; overflow-x: hidden; padding-right: 6px; }
+        #appointmentsTimeline::-webkit-scrollbar { width: 8px; }
+        #appointmentsTimeline::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
+        .appointments-item { background: #eaf2ff; box-sizing: border-box; }
+        .appointments-item { display:flex; flex-wrap:wrap; width: 100%; }
+        .appointments-item .history-content { flex:1 1 auto; min-width: 0; }
+        .appointments-item .history-date { flex:0 0 140px; min-width: 120px; }
+        .appointments-item .history-description { word-break: break-word; overflow-wrap: anywhere; }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #64748b;
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .profile-info {
+                padding: 20px;
+            }
+            
+            .profile-avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .profile-name {
+                font-size: 1.2rem;
+            }
+            
+            .profile-stats {
+                gap: 10px;
+            }
+            
+            .stat-item {
+                padding: 10px;
+            }
+            
+            .stat-value {
+                font-size: 1.2rem;
+            }
+            
+            .history-section {
+                padding: 20px;
+            }
+            
+            .chart-section {
+                padding: 20px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                width: 100%;
+            }
+        }
+
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <!-- Header -->
+        <div class="profile-header">
+            <h1 class="profile-title">Mi Perfil</h1>
+            <p class="profile-subtitle">Historial completo de tus diagnósticos sociales y evolución personal</p>
+        </div>
+
+        <!-- Contenido Principal -->
+        <div class="profile-content">
+            <!-- Información del Usuario -->
+            <div class="profile-info" style="animation: fadeInUp 0.8s ease-out 0.2s both;">
+                <div class="profile-avatar">👤</div>
+                <h2 class="profile-name" id="userName">Usuario</h2>
+                <p class="profile-email" id="userEmail">usuario@email.com</p>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalDiagnostics">3</div>
+                        <div class="stat-label">Diagnósticos</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="averageScore">82</div>
+                        <div class="stat-label">Promedio</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historial de Diagnósticos -->
+            <div class="history-section" style="animation: fadeInUp 0.8s ease-out 0.4s both;">
+                <h2 class="history-title">Historial de diagnósticos y citas</h2>
+                <div class="history-timeline" id="historyTimeline">
+                    <!-- Los elementos se cargarán dinámicamente -->
+                </div>
+            </div>
+
+            <!-- Historial de Citas (colapsable) -->
+            
+        </div>
+
+        <!-- Gráfico de Evolución -->
+        <div class="chart-section" style="animation: fadeInUp 0.8s ease-out 0.6s both;">
+            <h2 class="chart-title">Evolución de tu Bienestar Social</h2>
+            <div style="height: 300px; position: relative;">
+                <canvas id="evolutionChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="action-buttons" style="animation: fadeInUp 0.8s ease-out 0.8s both;">
+            <a href="diagnostico.html" class="action-btn btn-primary">
+                🔄 Nuevo Diagnóstico
+            </a>
+            <a href="citas.html" class="action-btn btn-secondary">
+                📅 Agendar Cita
+            </a>
+            <button class="action-btn btn-secondary" onclick="exportHistory()">
+                📄 Exportar Historial
+            </button>
+        </div>
+    </div>
+
+    <script src="JS/perfil.js"></script>
+    <script>
+        // Renderizar Historial de Citas con pestañas
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ya no renderizamos listado aquí; se ve en citas-historial.html
+        });
+    </script>
+    <script>
+        // Inicializar perfil cuando la página cargue
+        document.addEventListener('DOMContentLoaded', function() {
+            initProfilePage();
+        });
+    </script>
+</body>
+</html>

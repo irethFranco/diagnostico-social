@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Resultados Dinámicos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .results {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            white-space: pre-wrap;
+        }
+        .scenario {
+            background: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Prueba de Resultados Dinámicos</h1>
+        <p>Esta página permite probar que los resultados del diagnóstico cambien según las respuestas del usuario.</p>
+        
+        <div class="scenario">
+            <h3>Escenario 1: Vulnerabilidad Económica Alta</h3>
+            <p>Simula respuestas que deberían generar alta vulnerabilidad económica</p>
+            <button class="test-button" onclick="testEconomicScenario()">Probar Escenario Económico</button>
+        </div>
+        
+        <div class="scenario">
+            <h3>Escenario 2: Vulnerabilidad en Salud</h3>
+            <p>Simula respuestas que deberían generar alta vulnerabilidad en salud</p>
+            <button class="test-button" onclick="testHealthScenario()">Probar Escenario de Salud</button>
+        </div>
+        
+        <div class="scenario">
+            <h3>Escenario 3: Baja Vulnerabilidad</h3>
+            <p>Simula respuestas que deberían generar baja vulnerabilidad</p>
+            <button class="test-button" onclick="testLowVulnerabilityScenario()">Probar Escenario Bajo Riesgo</button>
+        </div>
+        
+        <div class="scenario">
+            <h3>Ver Resultados Actuales</h3>
+            <p>Muestra los resultados actualmente guardados en localStorage</p>
+            <button class="test-button" onclick="showCurrentResults()">Ver Resultados Actuales</button>
+        </div>
+        
+        <div id="results" class="results" style="display: none;"></div>
+    </div>
+
+    <script src="JS/diagnostic.js"></script>
+    <script src="JS/resultados-simple.js"></script>
+    <script>
+        // Función para mostrar resultados
+        function showResults(title, results) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.style.display = 'block';
+            resultsDiv.innerHTML = `
+                <h3>${title}</h3>
+                <strong>Puntuación General:</strong> ${results.generalScore}<br>
+                <strong>Categorías:</strong><br>
+                - Económica: ${results.categories['Económica'] || 0}<br>
+                - Social: ${results.categories['Social'] || 0}<br>
+                - Salud: ${results.categories['Salud'] || 0}<br>
+                - Educativa: ${results.categories['Educativa'] || 0}<br>
+                - Ambiental: ${results.categories['Ambiental'] || 0}<br>
+                <strong>Diagnóstico:</strong> ${results.diagnosis.escenario || 'No disponible'}<br>
+                <strong>Descripción:</strong> ${results.diagnosis.descripcion || 'No disponible'}<br>
+                <strong>Recomendaciones:</strong><br>
+                ${results.recommendations ? results.recommendations.map(rec => `- ${rec}`).join('<br>') : 'No disponibles'}
+            `;
+        }
+
+        // Función para simular respuestas y guardar resultados
+        function simulateAndSaveResults(answers, scenarioName) {
+            console.log(`🧪 Simulando ${scenarioName} con respuestas:`, answers);
+            
+            // Crear instancia del sistema de diagnóstico
+            const diagnostic = new DiagnosticForm();
+            diagnostic.answers = answers;
+            
+            // Calcular categorías
+            const categories = diagnostic.calculateCategoriesFromAnswers();
+            console.log('📊 Categorías calculadas:', categories);
+            
+            // Calcular puntuación general
+            const generalScore = diagnostic.calculateGeneralScore();
+            console.log('📈 Puntuación general:', generalScore);
+            
+            // Generar diagnóstico
+            const diagnosis = diagnostic.generateSpecificDiagnosis();
+            console.log('🔍 Diagnóstico generado:', diagnosis);
+            
+            // Generar recomendaciones
+            const analysis = diagnostic.generateDetailedAnalysis();
+            const vulnerabilityLevel = diagnostic.getVulnerabilityLevel(generalScore);
+            const recommendations = diagnostic.generateSpecificRecommendations(analysis, vulnerabilityLevel.nombre);
+            
+            // Crear resultados
+            const results = {
+                date: new Date().toISOString(),
+                generalScore: generalScore,
+                categories: categories,
+                diagnosis: diagnosis,
+                recommendations: recommendations,
+                aiDiagnosis: diagnostic.generateSpecificDiagnosisText(),
+                answers: answers,
+                userName: 'Usuario de Prueba'
+            };
+            
+            // Guardar en localStorage
+            localStorage.setItem('diagnosticResults', JSON.stringify(results));
+            console.log('✅ Resultados guardados en localStorage');
+            
+            return results;
+        }
+
+        // Escenario 1: Vulnerabilidad Económica Alta
+        function testEconomicScenario() {
+            const answers = {
+                q1: 'rural',
+                q2: ['falta_empleo'],
+                q3: 'mucho',
+                q4: 'desempleado',
+                q5: 'no',
+                q6: 'no',
+                q7: 'bueno',
+                q8: 'secundaria',
+                q9: 'apoyo_economico',
+                q10: 'si'
+            };
+            
+            const results = simulateAndSaveResults(answers, 'Vulnerabilidad Económica Alta');
+            showResults('Escenario: Vulnerabilidad Económica Alta', results);
+        }
+
+        // Escenario 2: Vulnerabilidad en Salud
+        function testHealthScenario() {
+            const answers = {
+                q1: 'rural',
+                q2: ['acceso_salud'],
+                q3: 'mucho',
+                q4: 'empleado_formal',
+                q5: 'si_completamente',
+                q6: 'si',
+                q7: 'inexistente',
+                q8: 'universitaria',
+                q9: 'atencion_psicologica',
+                q10: 'si'
+            };
+            
+            const results = simulateAndSaveResults(answers, 'Vulnerabilidad en Salud');
+            showResults('Escenario: Vulnerabilidad en Salud', results);
+        }
+
+        // Escenario 3: Baja Vulnerabilidad
+        function testLowVulnerabilityScenario() {
+            const answers = {
+                q1: 'urbana',
+                q2: [],
+                q3: 'nada',
+                q4: 'empleado_formal',
+                q5: 'si_completamente',
+                q6: 'no',
+                q7: 'bueno',
+                q8: 'universitaria',
+                q9: 'proyectos_comunitarios',
+                q10: 'si'
+            };
+            
+            const results = simulateAndSaveResults(answers, 'Baja Vulnerabilidad');
+            showResults('Escenario: Baja Vulnerabilidad', results);
+        }
+
+        // Mostrar resultados actuales
+        function showCurrentResults() {
+            const results = localStorage.getItem('diagnosticResults');
+            if (results) {
+                const data = JSON.parse(results);
+                showResults('Resultados Actuales en localStorage', data);
+            } else {
+                document.getElementById('results').innerHTML = '<h3>No hay resultados guardados</h3>';
+                document.getElementById('results').style.display = 'block';
+            }
+        }
+
+        // Cargar datos de diagnóstico al iniciar
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🧪 Página de prueba de resultados dinámicos cargada');
+        });
+    </script>
+</body>
+</html>

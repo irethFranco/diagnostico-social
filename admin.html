@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrador</title>
+    <link rel="stylesheet" href="CSS/estilos.css?v=43">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <style>
+        .admin-container { min-height: 100vh; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); padding: 56px 24px; }
+        .admin-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 24px; }
+        .admin-title { font-size: 2.6rem; font-weight: 800; color: #1e293b; text-align: center; margin-bottom: 8px; letter-spacing: -0.5px; }
+        .admin-subtitle { text-align: center; color: #64748b; margin-bottom: 28px; font-weight: 500; }
+
+        .admin-card { position: relative; background: #ffffff; border-radius: 18px; padding: 24px; border: 1px solid #e2e8f0; box-shadow: 0 15px 50px rgba(2, 6, 23, 0.06); overflow: hidden; }
+        .admin-card::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(120deg, rgba(59,130,246,0.08), rgba(99,102,241,0.08)); opacity: 0.6; }
+        .admin-card > * { position: relative; }
+
+        .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+        .field label { font-weight: 600; color: #334155; }
+        .field textarea, .field input { border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 14px; font-size: 0.95rem; color: #0f172a; background: #f8fafc; outline: none; transition: box-shadow 0.2s ease, border-color 0.2s ease; }
+        .field textarea:focus, .field input:focus { box-shadow: 0 0 0 4px rgba(59,130,246,0.15); border-color: #93c5fd; }
+
+        .btn { padding: 10px 16px; border-radius: 12px; border: none; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; font-weight: 700; cursor: pointer; box-shadow: 0 6px 20px rgba(59,130,246,0.35); transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease; }
+        .btn:hover { transform: translateY(-1px); filter: brightness(1.03); box-shadow: 0 10px 28px rgba(59,130,246,0.45); }
+        .btn:active { transform: translateY(0); }
+        .btn.secondary { background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; box-shadow: none; }
+        .btn.secondary:hover { background: #e2e8f0; }
+        .btn.danger { background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; box-shadow: 0 6px 20px rgba(239,68,68,0.35); }
+
+        .toolbar { display: flex; gap: 8px; align-items: center; }
+        .list { display: grid; gap: 14px; }
+        .user-item { display: grid; grid-template-columns: 1fr 180px 200px auto; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 16px; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 10px 30px rgba(2,6,23,0.04); transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; }
+        .user-item:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(2,6,23,0.06); border-color: #dbeafe; }
+        .muted { color: #64748b; font-size: 0.9rem; }
+        .chip { display: inline-flex; align-items: center; gap: 8px; background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; padding: 4px 10px; border-radius: 999px; font-size: 0.85rem; font-weight: 600; }
+        .chip .dot { width: 8px; height: 8px; background: #3b82f6; border-radius: 50%; }
+
+        @media (max-width: 900px) {
+            .admin-grid { grid-template-columns: 1fr; }
+            .user-item { grid-template-columns: 1fr; }
+            
+            /* Asegurar que los botones de exportar y salir se vean en móvil */
+            .toolbar {
+                display: flex !important;
+                flex-wrap: wrap;
+                gap: 8px;
+                width: 100%;
+            }
+            
+            .toolbar .btn {
+                flex: 1;
+                min-width: auto;
+                font-size: 12px;
+                padding: 8px 12px;
+                white-space: nowrap;
+            }
+        }
+        
+        /* Ocultar opciones no aplicables para admin */
+        .nav-links a[href="diagnostico.html"],
+        .nav-links a[href="citas.html"] { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Barra superior simple: LOGOUT y avatar -->
+        <!-- Barra de usuario (reutiliza AuthSystem) -->
+        <div style="display:flex; justify-content:flex-end; align-items:center; gap:12px; margin-bottom:8px;">
+            <div class="user-icon" id="userIcon" style="display:block;">
+                <div class="user-avatar">👤</div>
+                <div class="user-dropdown" id="userDropdown">
+                    <div class="user-info">
+                        <div class="user-name" id="userName">Usuario</div>
+                        <div class="user-email">usuario@email.com</div>
+                    </div>
+                    <div class="user-menu">
+                        <a href="#" class="menu-item" id="logoutBtn">Cerrar Sesión</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h1 class="admin-title">Panel de Administración</h1>
+        <p class="admin-subtitle">Gestión local: usuarios, diagnósticos y citas en este dispositivo</p>
+        <!-- Login -->
+        <div id="adminLogin" class="admin-card" style="max-width:560px; margin:0 auto 20px auto; display:none;">
+            <h3 style="margin-bottom:12px; color:#1e293b">Ingresar como Administrador</h3>
+            <div class="field">
+                <label for="adminUser">Usuario</label>
+                <input id="adminUser" placeholder="admin">
+            </div>
+            <div class="field">
+                <label for="adminPass">Contraseña</label>
+                <input id="adminPass" type="password" placeholder="••••••">
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button class="btn" id="loginAdmin">Ingresar</button>
+                <button class="btn secondary" id="goToCreds">Configurar Credenciales</button>
+            </div>
+            <div class="muted" style="margin-top:10px">Primero configura las credenciales en esta misma página.</div>
+        </div>
+
+        <div id="adminContent" class="admin-grid" style="display:none;">
+            <div class="admin-card" id="credsCard" style="display:none;">
+                <h3 style="margin-bottom:12px; color:#1e293b">Credenciales (JSON)</h3>
+                <div class="field">
+                    <label for="adminJson">Pega aquí el JSON con usuario y clave</label>
+                    <textarea id="adminJson" rows="6" placeholder='{"username":"admin","password":"1234"}'></textarea>
+                </div>
+                <button class="btn" id="saveAdminJson">Guardar Credenciales</button>
+                <div class="muted" style="margin-top:10px">Se guarda en localStorage y solo afecta este navegador.</div>
+            </div>
+
+            <div class="admin-card" style="padding-top: 18px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <h3 style="color:#1e293b; margin:0;">Usuarios y Diagnósticos</h3>
+                        <span class="chip"><span class="dot"></span> Local</span>
+                    </div>
+                    <div class="toolbar">
+                        <button class="btn secondary" id="toggleCreds">Configurar</button>
+                        <button class="btn secondary" id="exportUsers">Exportar PDF</button>
+                        <button class="btn danger" id="logoutAdmin">Salir</button>
+                    </div>
+                </div>
+                
+                <!-- Filtros -->
+                <div style="display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap; align-items:center;">
+                    <div class="field" style="margin:0; min-width:200px;">
+                        <label for="dateFilter">Filtrar por fecha</label>
+                        <input type="date" id="dateFilter" style="margin:0;">
+                    </div>
+                    <div class="field" style="margin:0; min-width:150px;">
+                        <label for="userFilter">Filtrar por usuario</label>
+                        <input type="text" id="userFilter" placeholder="Nombre de usuario" style="margin:0;">
+                    </div>
+                    <button class="btn secondary" id="clearFilters" style="align-self:end;">Limpiar Filtros</button>
+                </div>
+                
+                <div id="usersList" class="list"></div>
+                <div class="muted" style="margin-top:10px">Fuente: actividad guardada en esta app (localStorage).</div>
+            </div>
+
+            <!-- Citas agendadas -->
+            <div class="admin-card" style="padding-top: 18px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <h3 style="color:#1e293b; margin:0;">Citas agendadas</h3>
+                        <span class="chip"><span class="dot"></span> Local</span>
+                    </div>
+                    <div class="toolbar">
+                        <button class="btn secondary" id="refreshAppointments">Actualizar</button>
+                        <button class="btn" id="autoAcceptPending" style="padding: 8px 12px; font-size: 12px; min-width: auto;">Auto</button>
+                    </div>
+                </div>
+
+                <div style="display:flex; gap:12px; margin-bottom:12px; flex-wrap:wrap; align-items:center;">
+                    <div class="field" style="margin:0; min-width:180px;">
+                        <label for="apptDateFilter">Fecha</label>
+                        <input type="date" id="apptDateFilter">
+                    </div>
+                    <div class="field" style="margin:0; min-width:180px;">
+                        <label for="apptStatusFilter">Estado</label>
+                        <select id="apptStatusFilter">
+                            <option value="">Todos</option>
+                            <option value="pending">Pendiente</option>
+                            <option value="confirmed">Confirmada</option>
+                            <option value="cancelled">Cancelada</option>
+                        </select>
+                    </div>
+                    <button class="btn secondary" id="apptClearFilters" style="align-self:end;">Limpiar</button>
+                </div>
+
+                <div id="appointmentsList" class="list"></div>
+                <div class="muted" style="margin-top:10px">Las citas se almacenan sólo en este navegador.</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="JS/auth.js"></script>
+    <script>
+        // Inicializar barra de usuario
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                const auth = new AuthSystem();
+                auth.initUserSession();
+            } catch(_) {}
+            
+            // Bloquear navegación a páginas no permitidas para admin
+            function blockAdminLinks() {
+                const links = document.querySelectorAll('a[href="diagnostico.html"], a[href="citas.html"]');
+                links.forEach(link => {
+                    link.href = 'javascript:void(0)';
+                    link.onclick = function(e) {
+                        e.preventDefault();
+                        alert('Esta opción no está disponible para administradores');
+                        return false;
+                    };
+                });
+            }
+            
+            // Ejecutar inmediatamente y repetir cada 200ms
+            blockAdminLinks();
+            setInterval(blockAdminLinks, 200);
+        });
+    </script>
+    <script src="JS/admin.js"></script>
+    <script src="JS/citas-admin.js"></script>
+</body>
+</html>
+

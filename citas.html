@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar Cita</title>
+    <link rel="stylesheet" href="CSS/estilos.css?v=580">
+    <style>
+        .appt-container { min-height: 100vh; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); padding: 40px 20px; }
+        .appt-card { max-width: 720px; margin: 0 auto; background: #fff; border-radius: 18px; border: 1px solid #e2e8f0; box-shadow: 0 12px 40px rgba(2,6,23,0.06); padding: 22px; }
+        .appt-title { font-size: 2rem; font-weight: 800; color: #1e293b; text-align: center; margin-bottom: 8px; }
+        .appt-subtitle { text-align: center; color: #64748b; margin-bottom: 22px; }
+        .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+        .field label { font-weight: 600; color: #334155; }
+        .field input, .field select, .field textarea { border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 14px; font-size: 0.95rem; color: #0f172a; background: #f8fafc; outline: none; transition: box-shadow 0.2s ease, border-color 0.2s ease; }
+        .field input:focus, .field select:focus, .field textarea:focus { box-shadow: 0 0 0 4px rgba(59,130,246,0.15); border-color: #93c5fd; }
+        .btn { padding: 12px 16px; border-radius: 12px; border: none; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; font-weight: 700; cursor: pointer; box-shadow: 0 6px 20px rgba(59,130,246,0.35); }
+        .muted { color: #64748b; font-size: 0.9rem; }
+        .success { background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; padding: 10px 12px; border-radius: 12px; margin-top: 12px; display:none; }
+    </style>
+    <script src="JS/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                const auth = new AuthSystem();
+                auth.checkUserSession();
+                auth.initUserSession();
+            } catch(_) {}
+        });
+    </script>
+    <script src="JS/citas.js"></script>
+</head>
+<body>
+    <div class="appt-container">
+        <div class="appt-card">
+            <h1 class="appt-title">Agendar Cita Presencial</h1>
+            <p class="appt-subtitle">Completa los datos para solicitar una cita con la trabajadora social</p>
+
+            <form id="appointmentForm">
+                <div class="field">
+                    <label for="fullName">Nombre completo</label>
+                    <input id="fullName" required placeholder="Tu nombre y apellido">
+                </div>
+                <div class="field">
+                    <label for="email">Correo electrónico</label>
+                    <input id="email" type="email" required placeholder="tucorreo@ejemplo.com">
+                </div>
+                <div class="field">
+                    <label for="phone">Teléfono</label>
+                    <input id="phone" type="tel" required placeholder="Tu número de contacto">
+                </div>
+                <div class="field">
+                    <label for="reason">Motivo / Tema</label>
+                    <textarea id="reason" rows="3" required placeholder="Cuéntanos brevemente el motivo"></textarea>
+                </div>
+                <div class="field">
+                    <label for="date">Fecha preferida</label>
+                    <input id="date" type="date" required>
+                </div>
+                <div class="field">
+                    <label for="time">Hora preferida</label>
+                    <input id="time" type="time" required>
+                </div>
+                <div class="field" style="align-items:flex-start; gap:10px;">
+                    <label style="display:flex; align-items:center; gap:8px;">
+                        <input id="consent" type="checkbox" required>
+                        <span>Acepto el uso de mis datos para la gestión de la cita</span>
+                    </label>
+                </div>
+                <button class="btn" type="submit">Solicitar cita</button>
+                <div id="successMsg" class="success">Tu solicitud fue registrada. Te avisaremos aquí cuando sea aceptada.</div>
+                <div class="muted" style="margin-top:8px;">Nota: La información se guarda en este dispositivo.</div>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .appointment-form {
+                padding: 20px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .field {
+                margin-bottom: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 10px;
+            }
+            
+            .appointment-form {
+                padding: 15px;
+            }
+            
+            .form-title {
+                font-size: 1.5rem;
+            }
+            
+            .form-subtitle {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</body>
+</html>
+
+
+

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostico Social</title>
+    <link rel="stylesheet" href="CSS/estilos.css?v=580">
+</head>
+<body>
+    <!-- Barra superior de información -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <span class="left-text"></span>
+            <span class="right-text">HELLO</span>
+        </div>
+    </div>
+
+    <!-- Navbar principal -->
+      <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-circle">
+                    <div class="logo-icon">👓</div>
+                </div>
+            </div>
+  <ul class="nav-links">
+                <li><a href="#" class="active">INICIO</a></li>
+                <li><a href="diagnostico.html">DIAGNÓSTICO</a></li>
+                <li><a href="citas.html">AGENDAR CITA</a></li>
+                <li><a href="perfil.html" id="profileLink" style="display: none;">MI PERFIL</a></li>
+                <li><a href="#" id="loginLogoutLink">LOGIN</a></li>
+                
+  </ul>
+            <div class="nav-right">
+                <div class="cart-icon">🛒 0</div>
+                <!-- Ícono de usuario (aparece cuando está logueado) -->
+                <div class="user-icon" id="userIcon" style="display: none;">
+                    <div class="user-avatar">👤</div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-info">
+                            <div class="user-name" id="userName">Usuario</div>
+                            <div class="user-email">usuario@email.com</div>
+                        </div>
+                        <div class="user-menu">
+                            <a href="#" class="menu-item">Mi Perfil</a>
+                            <a href="#" class="menu-item">Configuración</a>
+                            <a href="#" class="menu-item" id="logoutBtn">Cerrar Sesión</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</nav>
+
+    <!-- Sección principal -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-image">
+                <img src="imagenes/fonfo.jpg" alt="Diagnóstico Social" class="main-image">
+            </div>
+            <div class="hero-content">
+                <h1 class="hero-title">Bienvenido al diagnostico social</h1>
+                <p class="hero-description">Comparte tu problemática social y recibe un diagnóstico orientado hacia alternativas de solución, empoderamiento y transformación personal y colectiva.</p>
+                <div class="hero-buttons">
+                    <button class="btn-outline" onclick="window.location.href='diagnostico.html'">COMENZAR DIAGNÓSTICO</button>
+                    <button class="btn-filled" id="knowMoreBtn">CONOCER MÁS</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Conocer Más (despliegue en la misma página) -->
+    <section id="knowMoreSection" class="know-more" aria-label="Conocer más">
+        <div class="know-more-container">
+            <div class="know-more-media">
+                <img id="kmSecImage" src="imagenes/conocer.jpg" alt="Conocer más" />
+                <div id="kmSecCaption" class="know-more-caption">Escuchar, entender y transformar las problemáticas sociales</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de características -->
+    <section class="features-section">
+        <div class="features-container">
+            <div class="features-content">
+                <h2 class="features-title">Tecnología para el trabajo social</h2>
+                <h3 class="features-subtitle">Transformando comunidades</h3>
+                <p class="features-description">Utilizamos tecnología avanzada para brindar diagnósticos sociales precisos y soluciones innovadoras que empoderan a las comunidades y promueven el cambio social positivo.</p>
+            </div>
+            <div class="features-cards">
+                <div class="feature-card">
+                    <div class="card-icon">🔍</div>
+                    <h4>Diagnóstico Inteligente</h4>
+                    <p>Análisis profundo de problemáticas sociales mediante tecnología avanzada y metodologías probadas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-icon">🤝</div>
+                    <h4>Acompañamiento Profesional</h4>
+                    <p>Apoyo continuo de expertos en trabajo social para implementar soluciones efectivas.</p>
+                </div>
+            </div>
+            
+            <div class="stats-toggle">
+                <div class="stats-line" onclick="toggleStats()">
+                    <span class="stats-text">Ver estadísticas de confianza</span>
+                    <span class="stats-arrow">▼</span>
+                </div>
+                <div class="stats-overlay" id="statsOverlay" onclick="toggleStats()"></div>
+                <div class="stats-content" id="statsContent">
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Diagnósticos Realizados</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Satisfacción</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Soporte</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Misión y Visión -->
+    <section class="mission-vision-section">
+        <div class="mission-vision-container">
+            
+            <div class="mission-vision-content">
+                <div class="mission-vision-image">
+                    <img src="imagenes/social.jpg" alt="Equipo de trabajo social profesional" class="social-image">
+                </div>
+                
+                <div class="mission-vision-text">
+                    <div class="mission-item">
+                        <div class="mission-icon">🎯</div>
+                        <div class="mission-text">
+                            <h3>Nuestra Misión</h3>
+                            <p>Brindar herramientas tecnológicas avanzadas para el diagnóstico y solución de problemáticas sociales, empoderando a trabajadores sociales y comunidades para crear un impacto positivo y sostenible.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="vision-item">
+                        <div class="vision-icon">👁️</div>
+                        <div class="vision-text">
+                            <h3>Nuestra Visión</h3>
+                            <p>Ser la plataforma líder en diagnóstico social tecnológico, transformando la manera en que se abordan y resuelven los desafíos sociales, creando un futuro más justo y equitativo para todos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Contacto -->
+    <section class="contact-section">
+        <div class="contact-container">
+            <h2 class="contact-title">Contáctanos</h2>
+            <p class="contact-subtitle">Estamos aquí para ayudarte</p>
+            
+            <div class="contact-items">
+                <a href="https://wa.me/573147998289?text=Hola%20Mariela,%20me%20interesa%20el%20diagnóstico%20social" target="_blank" class="contact-item whatsapp">
+                    <div class="contact-icon">
+                        <img src="imagenes/whatsapp.png" alt="WhatsApp" class="icon-image">
+                    </div>
+                    <div class="contact-info">
+                        <h3>WhatsApp</h3>
+                        <p>314 799 8289</p>
+                    </div>
+                </a>
+                
+                <a href="https://www.facebook.com/marielamargoth.mercado" target="_blank" class="contact-item facebook">
+                    <div class="contact-icon">
+                        <img src="imagenes/facebook.png" alt="Facebook" class="icon-image">
+                    </div>
+                    <div class="contact-info">
+                        <h3>Facebook</h3>
+                        <p>Mariela Mercado</p>
+                    </div>
+                </a>
+                
+                <a href="https://www.instagram.com/mercadovidesmariela?igsh=bnlyZnNxaHp0amQz" target="_blank" class="contact-item instagram">
+                    <div class="contact-icon">
+                        <img src="imagenes/instagram.svg" alt="Instagram" class="icon-image">
+                    </div>
+                    <div class="contact-info">
+                        <h3>Instagram</h3>
+                        <p>@mercadovidesmariela</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Somos trabajadoras sociales</p>
+        <p>&copy; 2025 Diagnóstico Social. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Scripts organizados -->
+    <script src="JS/auth.js"></script>
+    <script src="JS/cards.js"></script>
+    <script src="JS/main.js"></script>
+    
+    <!-- Conocer Más: Sección con animación y caption -->
+    <style>
+        .know-more { max-width: 1200px; margin: 0 auto; padding: 0 20px; overflow: hidden; max-height: 0; opacity: 0; transition: max-height 550ms cubic-bezier(.2,.7,.2,1), opacity 400ms ease; cursor: pointer; transform: translateY(-8px); }
+        .know-more.open { max-height: 85vh; opacity: 1; transform: translateY(0); }
+        .know-more-container { margin: 24px 0 8px 0; }
+        .know-more-media { position: relative; border-radius: 16px; overflow: hidden; box-shadow: 0 25px 60px rgba(2,6,23,0.25); background: linear-gradient(135deg, #0b1628, #111827); }
+        .know-more-media img { width: 100%; height: 62vh; min-height: 320px; object-fit: cover; display: block; transform: scale(1.03); opacity: 0; transition: transform 700ms cubic-bezier(.2,.7,.2,1), opacity 450ms ease; }
+        .know-more.open .know-more-media img.loaded { opacity: 1; transform: scale(1); }
+        .know-more-caption { position: absolute; left: 18px; right: 18px; bottom: 18px; padding: 14px 16px; border-radius: 12px; background: linear-gradient(135deg, rgba(15,23,42,0.85), rgba(2,6,23,0.75)); color: #e2e8f0; font-weight: 700; font-size: clamp(1rem, 2.6vw, 1.25rem); letter-spacing: 0.2px; line-height: 1.35; border: 1px solid rgba(99,102,241,0.22); box-shadow: 0 10px 30px rgba(2,6,23,0.35); opacity: 0; transform: translateY(8px); transition: opacity 250ms ease, transform 250ms ease; pointer-events: none; }
+        .know-more-caption.show { opacity: 1; transform: translateY(0); }
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container { padding: 0 20px; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.1rem; }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                position: relative;
+                z-index: 1000;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .nav-links { 
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.95);
+                padding: 15px;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+            
+            .nav-links li {
+                margin: 0;
+            }
+            
+            .nav-links a {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+                white-space: nowrap;
+            }
+            
+            .nav-right {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+            }
+            
+            /* Hero Section */
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                text-align: center;
+                padding: 20px;
+            }
+            
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            .hero-buttons { flex-direction: column; gap: 15px; }
+            .btn { width: 100%; text-align: center; }
+            
+            /* Features Section - Transformando comunidades */
+            .features-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 20px;
+            }
+            
+            .features-content {
+                text-align: center;
+            }
+            
+            .features-title {
+                font-size: 1.5rem;
+            }
+            
+            .features-subtitle {
+                font-size: 2rem;
+            }
+            
+            .features-description {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+            
+            .features-cards {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .feature-card {
+                padding: 20px;
+                text-align: center;
+            }
+            
+            /* Mission Vision Section */
+            .mission-vision-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 20px;
+            }
+            
+            .mission-vision-text {
+                text-align: center;
+            }
+            
+            .mission-item, .vision-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .mission-icon, .vision-icon {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 640px) { 
+            .know-more-media img { height: 48vh; }
+            .hero h1 { font-size: 1.8rem; }
+            .hero p { font-size: 0.9rem; }
+            .container { padding: 0 15px; }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .nav-links a {
+                padding: 10px 15px;
+                text-align: center;
+                width: 100%;
+                border-radius: 5px;
+                background: rgba(59, 130, 246, 0.1);
+            }
+            
+            /* Features Section - Mobile */
+            .features-subtitle {
+                font-size: 1.8rem;
+            }
+            
+            .features-description {
+                font-size: 0.9rem;
+            }
+            
+            .feature-card {
+                padding: 15px;
+            }
+            
+            .feature-card h4 {
+                font-size: 1.1rem;
+            }
+            
+            .feature-card p {
+                font-size: 0.9rem;
+            }
+            
+            /* Mission Vision Mobile */
+            .mission-vision-container {
+                padding: 15px;
+            }
+            
+            .mission-text h3, .vision-text h3 {
+                font-size: 1.3rem;
+            }
+            
+            .mission-text p, .vision-text p {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.5rem; }
+            .hero p { font-size: 0.85rem; }
+            .container { padding: 0 10px; }
+            
+            .navbar {
+                padding: 10px 0;
+            }
+            
+            .nav-container {
+                gap: 10px;
+            }
+            
+            .nav-links {
+                padding: 10px;
+                gap: 5px;
+            }
+            
+            .nav-links a {
+                font-size: 0.8rem;
+                padding: 8px 10px;
+            }
+            
+            .logo-circle {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .logo-icon {
+                font-size: 1.2rem;
+            }
+            
+            /* Features Section - Small Mobile */
+            .features-subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .features-description {
+                font-size: 0.85rem;
+            }
+            
+            .feature-card {
+                padding: 12px;
+            }
+            
+            .feature-card h4 {
+                font-size: 1rem;
+            }
+            
+            .feature-card p {
+                font-size: 0.85rem;
+            }
+            
+            /* Mission Vision Small Mobile */
+            .mission-vision-container {
+                padding: 10px;
+            }
+            
+            .mission-text h3, .vision-text h3 {
+                font-size: 1.2rem;
+            }
+            
+            .mission-text p, .vision-text p {
+                font-size: 0.85rem;
+            }
+            
+            .mission-icon, .vision-icon {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('knowMoreBtn');
+            const section = document.getElementById('knowMoreSection');
+            const img = document.getElementById('kmSecImage');
+            const caption = document.getElementById('kmSecCaption');
+
+            function openSection() {
+                if (!section.classList.contains('open')) {
+                    img.classList.add('loaded');
+                    section.classList.add('open');
+                }
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            function toggleCaption() { caption.classList.toggle('show'); }
+            function closeSection() {
+                section.classList.remove('open');
+                caption.classList.remove('show');
+            }
+
+            if (btn) btn.addEventListener('click', openSection);
+            if (img) img.addEventListener('click', toggleCaption);
+            if (section) section.addEventListener('click', function(e) {
+                if (e.target === section || e.target === section.querySelector('.know-more-container')) {
+                    closeSection();
+                }
+            });
+        });
+    </script>
+    
+    <script>
+        function toggleStats() {
+            const statsLine = document.querySelector('.stats-line');
+            const statsContent = document.getElementById('statsContent');
+            const statsOverlay = document.getElementById('statsOverlay');
+            
+            statsLine.classList.toggle('active');
+            statsContent.classList.toggle('expanded');
+            statsOverlay.classList.toggle('active');
+        }
+    </script>
+    
+
+</body>
+</html>

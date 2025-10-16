@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico Social - Preguntas</title>
+    <link rel="stylesheet" href="CSS/estilos.css?v=41">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/diagnostico.css">
+   
+    
+</head>
+<body>
+    <div class="diagnostic-container">
+        <!-- Header -->
+        <div class="diagnostic-header">
+            <h1 class="diagnostic-title">Diagnóstico Social</h1>
+            <p class="diagnostic-subtitle">Responde las siguientes preguntas para recibir un diagnóstico personalizado sobre tu situación social</p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text">
+                <span id="currentQuestion">1</span> de <span id="totalQuestions">10</span> preguntas
+            </div>
+        </div>
+
+        <!-- Questions Container -->
+        <div class="questions-container">
+            <form id="diagnosticForm">
+                <!-- Pregunta 1 -->
+                <div class="question-slide active">
+                    <div class="question-card">
+                        <div class="question-number">Pregunta 1</div>
+                        <h2 class="question-text">¿En qué tipo de comunidad vives?</h2>
+                        <div class="options-container">
+                            <div class="option-item">
+                                <input type="radio" name="q1" value="urbana" id="q1a" class="option-input">
+                                <label for="q1a" class="option-label">Urbana</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q1" value="rural" id="q1b" class="option-input">
+                                <label for="q1b" class="option-label">Rural</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q1" value="semiurbana" id="q1c" class="option-input">
+                                <label for="q1c" class="option-label">Semiurbana</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pregunta 2 -->
+                <div class="question-slide">
+                    <div class="question-card">
+                        <div class="question-number">Pregunta 2</div>
+                        <h2 class="question-text">¿Cuáles son las principales problemáticas que identificas en tu comunidad? (Puedes marcar más de una opción)</h2>
+                        <div class="options-container">
+                            <div class="option-item">
+                                <input type="checkbox" name="q2" value="falta_empleo" id="q2a" class="option-input">
+                                <label for="q2a" class="option-label">Falta de empleo o ingresos estables</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" name="q2" value="inseguridad" id="q2b" class="option-input">
+                                <label for="q2b" class="option-label">Inseguridad y violencia</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" name="q2" value="acceso_salud" id="q2c" class="option-input">
+                                <label for="q2c" class="option-label">Deficiente acceso a salud</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" name="q2" value="problemas_ambientales" id="q2d" class="option-input">
+                                <label for="q2d" class="option-label">Problemas ambientales (basuras, contaminación, agua)</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" name="q2" value="acceso_educacion" id="q2e" class="option-input">
+                                <label for="q2e" class="option-label">Bajo acceso a educación o formación</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" name="q2" value="conflictos_familiares" id="q2f" class="option-input">
+                                <label for="q2f" class="option-label">Conflictos familiares o comunitarios</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" name="q2" value="oportunidades_jovenes" id="q2g" class="option-input">
+                                <label for="q2g" class="option-label">Pocas oportunidades para jóvenes y mujeres</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" name="q2" value="otra" id="q2h" class="option-input">
+                                <label for="q2h" class="option-label">Otra: <input type="text" placeholder="Especifica" style="margin-left: 10px; padding: 5px; border: 1px solid #ddd; border-radius: 4px;"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pregunta 3 -->
+                <div class="question-slide">
+                    <div class="question-card">
+                        <div class="question-number">Pregunta 3</div>
+                        <h2 class="question-text">¿Cómo te afecta personalmente esta problemática?</h2>
+                        <div class="options-container">
+                            <div class="option-item">
+                                <input type="radio" name="q3" value="mucho" id="q3a" class="option-input">
+                                <label for="q3a" class="option-label">Mucho</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q3" value="poco" id="q3b" class="option-input">
+                                <label for="q3b" class="option-label">Poco</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q3" value="nada" id="q3c" class="option-input">
+                                <label for="q3c" class="option-label">Nada</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pregunta 4 -->
+                <div class="question-slide">
+                    <div class="question-card">
+                        <div class="question-number">Pregunta 4</div>
+                        <h2 class="question-text">¿Cuál es tu situación laboral actual?</h2>
+                        <div class="options-container">
+                            <div class="option-item">
+                                <input type="radio" name="q4" value="empleado_formal" id="q4a" class="option-input">
+                                <label for="q4a" class="option-label">Empleado/a formal</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q4" value="trabajador_independiente" id="q4b" class="option-input">
+                                <label for="q4b" class="option-label">Trabajador/a independiente</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q4" value="desempleado" id="q4c" class="option-input">
+                                <label for="q4c" class="option-label">Desempleado/a</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q4" value="estudiante" id="q4d" class="option-input">
+                                <label for="q4d" class="option-label">Estudiante</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q4" value="ama_casa" id="q4e" class="option-input">
+                                <label for="q4e" class="option-label">Ama de casa</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q4" value="jubilado" id="q4f" class="option-input">
+                                <label for="q4f" class="option-label">Jubilado/a o pensionado/a</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q4" value="otro" id="q4g" class="option-input">
+                                <label for="q4g" class="option-label">Otro: <input type="text" placeholder="Especifica" style="margin-left: 10px; padding: 5px; border: 1px solid #ddd; border-radius: 4px;"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pregunta 5 -->
+                <div class="question-slide">
+                    <div class="question-card">
+                        <div class="question-number">Pregunta 5</div>
+                        <h2 class="question-text">¿Los ingresos del hogar alcanzan para cubrir las necesidades básicas?</h2>
+                        <div class="options-container">
+                            <div class="option-item">
+                                <input type="radio" name="q5" value="si_completamente" id="q5a" class="option-input">
+                                <label for="q5a" class="option-label">Sí, completamente</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q5" value="parcialmente" id="q5b" class="option-input">
+                                <label for="q5b" class="option-label">Parcialmente</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q5" value="no" id="q5c" class="option-input">
+                                <label for="q5c" class="option-label">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pregunta 6 -->
+                <div class="question-slide">
+                    <div class="question-card">
+                        <div class="question-number">Pregunta 6</div>
+                        <h2 class="question-text">¿Algún miembro de tu hogar presenta una condición especial (discapacidad, enfermedad crónica, adulto mayor, niño o niña con necesidades especiales)?</h2>
+                        <div class="options-container">
+                            <div class="option-item">
+                                <input type="radio" name="q6" value="si" id="q6a" class="option-input">
+                                <label for="q6a" class="option-label">Sí</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q6" value="no" id="q6b" class="option-input">
+                                <label for="q6b" class="option-label">No</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q6" value="prefiero_no_responder" id="q6c" class="option-input">
+                                <label for="q6c" class="option-label">Prefiero no responder</label>
+                            </div>
+                        </div>
+                        <div id="q6_specify" style="margin-top: 15px; display: none;">
+                            <label for="q6_specify_text">Si respondiste sí, especifica:</label>
+                            <input type="text" id="q6_specify_text" placeholder="Describe la condición especial" style="width: 100%; margin-top: 5px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pregunta 7 -->
+                <div class="question-slide">
+                    <div class="question-card">
+                        <div class="question-number">Pregunta 7</div>
+                        <h2 class="question-text">¿Cómo describirías el acceso a los servicios de salud en tu comunidad?</h2>
+                        <div class="options-container">
+                            <div class="option-item">
+                                <input type="radio" name="q7" value="bueno" id="q7a" class="option-input">
+                                <label for="q7a" class="option-label">Bueno</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q7" value="regular" id="q7b" class="option-input">
+                                <label for="q7b" class="option-label">Regular</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q7" value="deficiente" id="q7c" class="option-input">
+                                <label for="q7c" class="option-label">Deficiente</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q7" value="inexistente" id="q7d" class="option-input">
+                                <label for="q7d" class="option-label">Inexistente</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pregunta 8 -->
+                <div class="question-slide">
+                    <div class="question-card">
+                        <div class="question-number">Pregunta 8</div>
+                        <h2 class="question-text">¿Cuál es tu nivel educativo más alto alcanzado?</h2>
+                        <div class="options-container">
+                            <div class="option-item">
+                                <input type="radio" name="q8" value="ninguno" id="q8a" class="option-input">
+                                <label for="q8a" class="option-label">Ninguno</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q8" value="primaria" id="q8b" class="option-input">
+                                <label for="q8b" class="option-label">Primaria</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q8" value="secundaria" id="q8c" class="option-input">
+                                <label for="q8c" class="option-label">Secundaria</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q8" value="tecnica" id="q8d" class="option-input">
+                                <label for="q8d" class="option-label">Técnica o tecnológica</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q8" value="universitaria" id="q8e" class="option-input">
+                                <label for="q8e" class="option-label">Universitaria</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q8" value="posgrado" id="q8f" class="option-input">
+                                <label for="q8f" class="option-label">Posgrado</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pregunta 9 -->
+                <div class="question-slide">
+                    <div class="question-card">
+                        <div class="question-number">Pregunta 9</div>
+                        <h2 class="question-text">¿Qué tipo de ayuda consideras más necesaria?</h2>
+                        <div class="options-container">
+                            <div class="option-item">
+                                <input type="radio" name="q9" value="apoyo_economico" id="q9a" class="option-input">
+                                <label for="q9a" class="option-label">Apoyo económico</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q9" value="capacitacion" id="q9b" class="option-input">
+                                <label for="q9b" class="option-label">Capacitación o educación</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q9" value="atencion_psicologica" id="q9c" class="option-input">
+                                <label for="q9c" class="option-label">Atención psicológica o social</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q9" value="programas_empleo" id="q9d" class="option-input">
+                                <label for="q9d" class="option-label">Programas de empleo</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q9" value="proyectos_comunitarios" id="q9e" class="option-input">
+                                <label for="q9e" class="option-label">Proyectos comunitarios sostenibles</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q9" value="otro" id="q9f" class="option-input">
+                                <label for="q9f" class="option-label">Otro: <input type="text" placeholder="Especifica" style="margin-left: 10px; padding: 5px; border: 1px solid #ddd; border-radius: 4px;"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pregunta 10 -->
+                <div class="question-slide">
+                    <div class="question-card">
+                        <div class="question-number">Pregunta 10</div>
+                        <h2 class="question-text">¿Estarías dispuesto/a a participar en procesos de diagnóstico y seguimiento social a través de la aplicación?</h2>
+                        <div class="options-container">
+                            <div class="option-item">
+                                <input type="radio" name="q10" value="si" id="q10a" class="option-input">
+                                <label for="q10a" class="option-label">Sí</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q10" value="no" id="q10b" class="option-input">
+                                <label for="q10b" class="option-label">No</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q10" value="tal_vez" id="q10c" class="option-input">
+                                <label for="q10c" class="option-label">Tal vez</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="navigation-buttons">
+                    <button type="button" class="nav-btn prev" id="prevBtn" disabled>Anterior</button>
+                    <button type="button" class="nav-btn next" id="nextBtn">Siguiente</button>
+                </div>
+
+                <!-- Submit Button (solo visible en la última pregunta) -->
+                <button type="submit" class="submit-btn" id="submitBtn" style="display: none;">
+                    Completar Diagnóstico
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="JS/diagnostic.js"></script>
+    <script src="JS/main.js"></script>
+    <script>
+        // Inicializar el formulario de diagnóstico cuando la página cargue
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof DiagnosticForm !== 'undefined') {
+                window.diagnosticForm = new DiagnosticForm();
+                console.log('Formulario de diagnóstico inicializado');
+            } else {
+                console.error('DiagnosticForm no está disponible');
+            }
+        });
+    </script>
+</body>
+</html>

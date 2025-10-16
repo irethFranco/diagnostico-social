@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Validación Formulario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        .test-button:hover {
+            background: #2563eb;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+        .question-test {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔍 Test Validación Formulario</h1>
+        <p>Este test verifica que la validación del formulario funcione correctamente.</p>
+        
+        <button class="test-button" onclick="testValidation()">🔍 Test Validación</button>
+        <button class="test-button" onclick="testSpecificQuestions()">📝 Test Preguntas Específicas</button>
+        <button class="test-button" onclick="testCompleteForm()">🚀 Test Formulario Completo</button>
+        
+        <div id="testResult" class="result" style="display: none;">
+            <h3>Resultado del Test:</h3>
+            <div id="testContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // Simular respuestas de prueba
+        const testAnswers = {
+            q1: 'urbana',
+            q2: ['falta_empleo', 'salud', 'ambientales'],
+            q3: 'mucho',
+            q4: 'desempleado',
+            q5: 'no',
+            q6: 'si',
+            q7: 'deficiente',
+            q8: 'secundaria',
+            q9: 'capacitacion',
+            q10: 'si'
+        };
+
+        function testValidation() {
+            // Simular el sistema de validación
+            const diagnosticForm = {
+                answers: testAnswers,
+                totalQuestions: 10,
+                
+                validateAllAnswers() {
+                    console.log('Validando respuestas:', this.answers);
+                    
+                    for (let i = 1; i <= this.totalQuestions; i++) {
+                        const questionName = `q${i}`;
+                        const answer = this.answers[questionName];
+                        
+                        console.log(`Validando pregunta ${i} (${questionName}):`, answer);
+                        
+                        // Para pregunta 2 (checkboxes), verificar que al menos una opción esté seleccionada
+                        if (questionName === 'q2') {
+                            if (!answer || !Array.isArray(answer) || answer.length === 0) {
+                                console.log(`Pregunta ${i} no respondida (checkboxes vacías)`);
+                                return false;
+                            }
+                        } else {
+                            // Para radio buttons, verificar que haya una respuesta
+                            if (!answer || answer === '') {
+                                console.log(`Pregunta ${i} no respondida (radio button vacío)`);
+                                return false;
+                            }
+                        }
+                    }
+                    
+                    console.log('Todas las preguntas están respondidas');
+                    return true;
+                }
+            };
+
+            const isValid = diagnosticForm.validateAllAnswers();
+            
+            document.getElementById('testResult').style.display = 'block';
+            document.getElementById('testContent').innerHTML = `
+                <h4>🔍 Test Validación:</h4>
+                <div class="status ${isValid ? 'success' : 'error'}">
+                    <strong>Validación:</strong> ${isValid ? '✅ Todas las preguntas respondidas' : '❌ Faltan preguntas por responder'}
+                </div>
+                <div class="status success">
+                    <strong>Respuestas cargadas:</strong> ${Object.keys(testAnswers).length}/10 preguntas
+                </div>
+                <div class="status ${testAnswers.q2 && testAnswers.q2.length > 0 ? 'success' : 'error'}">
+                    <strong>Pregunta 2 (checkboxes):</strong> ${testAnswers.q2 && testAnswers.q2.length > 0 ? '✅ ' + testAnswers.q2.length + ' opciones seleccionadas' : '❌ No seleccionada'}
+                </div>
+                <div class="status ${testAnswers.q6 ? 'success' : 'error'}">
+                    <strong>Pregunta 6 (condición especial):</strong> ${testAnswers.q6 ? '✅ ' + testAnswers.q6 : '❌ No respondida'}
+                </div>
+            `;
+        }
+
+        function testSpecificQuestions() {
+            // Simular diferentes escenarios de validación
+            const scenarios = [
+                {
+                    name: 'Formulario Completo',
+                    answers: {
+                        q1: 'urbana',
+                        q2: ['falta_empleo', 'salud'],
+                        q3: 'mucho',
+                        q4: 'desempleado',
+                        q5: 'no',
+                        q6: 'si',
+                        q7: 'deficiente',
+                        q8: 'secundaria',
+                        q9: 'capacitacion',
+                        q10: 'si'
+                    }
+                },
+                {
+                    name: 'Formulario Incompleto',
+                    answers: {
+                        q1: 'urbana',
+                        q2: [], // Vacío
+                        q3: 'mucho',
+                        q4: 'desempleado',
+                        q5: 'no',
+                        q6: '', // Vacío
+                        q7: 'deficiente',
+                        q8: 'secundaria',
+                        q9: 'capacitacion',
+                        q10: 'si'
+                    }
+                }
+            ];
+
+            let html = '<h4>📝 Test Preguntas Específicas:</h4>';
+            
+            scenarios.forEach(scenario => {
+                const diagnosticForm = {
+                    answers: scenario.answers,
+                    totalQuestions: 10,
+                    
+                    validateAllAnswers() {
+                        for (let i = 1; i <= this.totalQuestions; i++) {
+                            const questionName = `q${i}`;
+                            const answer = this.answers[questionName];
+                            
+                            if (questionName === 'q2') {
+                                if (!answer || !Array.isArray(answer) || answer.length === 0) {
+                                    return false;
+                                }
+                            } else {
+                                if (!answer || answer === '') {
+                                    return false;
+                                }
+                            }
+                        }
+                        return true;
+                    }
+                };
+
+                const isValid = diagnosticForm.validateAllAnswers();
+                
+                html += `
+                    <div class="question-test">
+                        <div class="status ${isValid ? 'success' : 'error'}">
+                            <strong>${scenario.name}:</strong> ${isValid ? '✅ Válido' : '❌ Inválido'}
+                        </div>
+                        <p><strong>Respuestas:</strong> ${Object.keys(scenario.answers).length}/10</p>
+                        <p><strong>Pregunta 2:</strong> ${scenario.answers.q2 ? scenario.answers.q2.length + ' opciones' : 'Vacía'}</p>
+                        <p><strong>Pregunta 6:</strong> ${scenario.answers.q6 || 'Vacía'}</p>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('testResult').style.display = 'block';
+            document.getElementById('testContent').innerHTML = html;
+        }
+
+        function testCompleteForm() {
+            // Simular datos de categorías
+            const categories = {
+                economico: 85,
+                salud: 70,
+                social: 90,
+                educacion: 60,
+                seguridad: 75,
+                ambiental: 80
+            };
+            
+            // Simular resultados completos
+            const results = {
+                date: new Date().toISOString(),
+                generalScore: 75,
+                categories: categories,
+                recommendations: [
+                    'Buscar programas de empleo',
+                    'Acceder a servicios de salud',
+                    'Participar en actividades comunitarias'
+                ],
+                diagnosis: 'Diagnóstico de prueba',
+                answers: testAnswers
+            };
+            
+            // Guardar en localStorage
+            localStorage.setItem('diagnosticResults', JSON.stringify(results));
+            
+            document.getElementById('testResult').style.display = 'block';
+            document.getElementById('testContent').innerHTML = `
+                <h4>🚀 Test Formulario Completo:</h4>
+                <div class="status success">✅ Datos guardados en localStorage</div>
+                <div class="status success">✅ Puntuación: ${results.generalScore}</div>
+                <div class="status success">✅ Categorías: ${Object.keys(categories).length} categorías</div>
+                <div class="status success">✅ Recomendaciones: ${results.recommendations.length} recomendaciones</div>
+                <p><strong>Próximo paso:</strong> Ve a <a href="resultados.html" target="_blank">resultados.html</a> para ver los resultados completos</p>
+            `;
+        }
+    </script>
+</body>
+</html>

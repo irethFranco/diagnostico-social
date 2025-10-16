@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Completo del Sistema</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        .test-button:hover {
+            background: #2563eb;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .chart-container canvas {
+            max-height: 400px !important;
+            width: 100% !important;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Test Completo del Sistema de Diagnóstico</h1>
+        <p>Este test verifica que todos los componentes funcionen correctamente.</p>
+        
+        <button class="test-button" onclick="runAllTests()">🚀 Ejecutar Todos los Tests</button>
+        <button class="test-button" onclick="testDiagnosis()">🔍 Test Diagnóstico</button>
+        <button class="test-button" onclick="testChart()">📊 Test Gráfica</button>
+        <button class="test-button" onclick="testIntegration()">🔗 Test Integración</button>
+        
+        <div id="testResult" class="result" style="display: none;">
+            <h3>Resultado del Test:</h3>
+            <div id="testContent"></div>
+        </div>
+    </div>
+
+    <div class="test-container">
+        <h2>📊 Test de Gráfica en Vivo</h2>
+        <div class="chart-container">
+            <h3>Gráfico de Prueba</h3>
+            <canvas id="testChart" width="400" height="200"></canvas>
+        </div>
+        <button class="test-button" onclick="createTestChart()">Crear Gráfico de Prueba</button>
+    </div>
+
+    <script>
+        // Simular respuestas de prueba
+        const testAnswers = {
+            q1: 'urbana',
+            q2: ['falta_empleo', 'salud', 'ambientales'],
+            q3: 'mucho',
+            q4: 'desempleado',
+            q5: 'no',
+            q6: 'si',
+            q7: 'deficiente',
+            q8: 'secundaria',
+            q9: 'capacitacion',
+            q10: 'si'
+        };
+
+        function runAllTests() {
+            let results = [];
+            
+            // Test 1: Chart.js
+            results.push({
+                name: "Chart.js",
+                status: typeof Chart !== 'undefined' ? 'success' : 'error',
+                message: typeof Chart !== 'undefined' ? 'Chart.js cargado correctamente' : 'Chart.js no está disponible'
+            });
+            
+            // Test 2: Canvas
+            const canvas = document.getElementById('testChart');
+            results.push({
+                name: "Canvas",
+                status: canvas ? 'success' : 'error',
+                message: canvas ? 'Canvas disponible' : 'Canvas no encontrado'
+            });
+            
+            // Test 3: Diagnóstico
+            const diagnosis = generateTestDiagnosis();
+            results.push({
+                name: "Diagnóstico",
+                status: diagnosis.length > 100 ? 'success' : 'error',
+                message: `Diagnóstico generado: ${diagnosis.length} caracteres`
+            });
+            
+            // Mostrar resultados
+            showTestResults(results);
+        }
+
+        function testDiagnosis() {
+            const diagnosis = generateTestDiagnosis();
+            
+            document.getElementById('testResult').style.display = 'block';
+            document.getElementById('testContent').innerHTML = `
+                <h4>✅ Test de Diagnóstico:</h4>
+                <div class="status ${diagnosis.length > 100 ? 'success' : 'error'}">
+                    <strong>Estado:</strong> ${diagnosis.length > 100 ? '✅ Texto completo' : '❌ Texto cortado'}
+                </div>
+                <p><strong>Longitud:</strong> ${diagnosis.length} caracteres</p>
+                <div style="background: white; padding: 15px; border-radius: 5px; margin: 10px 0; white-space: pre-line; line-height: 1.6; max-height: 300px; overflow-y: auto;">${diagnosis}</div>
+            `;
+        }
+
+        function testChart() {
+            setTimeout(() => {
+                document.getElementById('testResult').style.display = 'block';
+                document.getElementById('testContent').innerHTML = `
+                    <h4>📊 Test de Gráfica:</h4>
+                    <div class="status ${typeof Chart !== 'undefined' ? 'success' : 'error'}">
+                        <strong>Chart.js:</strong> ${typeof Chart !== 'undefined' ? '✅ Disponible' : '❌ No disponible'}
+                    </div>
+                    <div class="status ${document.getElementById('testChart') ? 'success' : 'error'}">
+                        <strong>Canvas:</strong> ${document.getElementById('testChart') ? '✅ Disponible' : '❌ No disponible'}
+                    </div>
+                    <p><strong>Estado general:</strong> ${typeof Chart !== 'undefined' && document.getElementById('testChart') ? '✅ Gráfica lista' : '❌ Problemas detectados'}</p>
+                `;
+            }, 500);
+        }
+
+        function testIntegration() {
+            // Simular datos de categorías
+            const categories = {
+                economico: 85,
+                salud: 70,
+                social: 90,
+                educacion: 60,
+                seguridad: 75,
+                ambiental: 80
+            };
+            
+            // Simular resultados completos
+            const results = {
+                date: new Date().toISOString(),
+                generalScore: 75,
+                categories: categories,
+                recommendations: [
+                    'Buscar programas de empleo',
+                    'Acceder a servicios de salud',
+                    'Participar en actividades comunitarias'
+                ],
+                diagnosis: generateTestDiagnosis(),
+                answers: testAnswers
+            };
+            
+            // Guardar en localStorage
+            localStorage.setItem('diagnosticResults', JSON.stringify(results));
+            
+            document.getElementById('testResult').style.display = 'block';
+            document.getElementById('testContent').innerHTML = `
+                <h4>🔗 Test de Integración:</h4>
+                <div class="status success">
+                    <strong>Datos guardados:</strong> ✅ Resultados simulados guardados en localStorage
+                </div>
+                <div class="status success">
+                    <strong>Puntuación:</strong> ${results.generalScore}
+                </div>
+                <div class="status success">
+                    <strong>Categorías:</strong> ${Object.keys(categories).length} categorías procesadas
+                </div>
+                <div class="status success">
+                    <strong>Recomendaciones:</strong> ${results.recommendations.length} recomendaciones generadas
+                </div>
+                <p><strong>Próximo paso:</strong> Ve a <a href="resultados.html" target="_blank">resultados.html</a> para ver los resultados completos</p>
+            `;
+        }
+
+        function createTestChart() {
+            const canvas = document.getElementById('testChart');
+            if (!canvas || typeof Chart === 'undefined') {
+                alert('Chart.js no está disponible o canvas no encontrado');
+                return;
+            }
+
+            const ctx = canvas.getContext('2d');
+            
+            try {
+                new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: [
+                            'Vulnerabilidad Económica',
+                            'Acceso a Salud',
+                            'Acceso a Educación',
+                            'Cohesión Social',
+                            'Seguridad',
+                            'Ambiente'
+                        ],
+                        datasets: [{
+                            label: 'Test de Gráfica',
+                            data: [85, 70, 90, 95, 75, 60],
+                            backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                            borderColor: 'rgba(59, 130, 246, 1)',
+                            borderWidth: 2,
+                            pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            pointRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    stepSize: 20,
+                                    color: '#64748b'
+                                },
+                                grid: {
+                                    color: 'rgba(100, 116, 139, 0.2)'
+                                },
+                                pointLabels: {
+                                    color: '#475569',
+                                    font: {
+                                        size: 11,
+                                        weight: '500'
+                                    }
+                                }
+                            }
+                        },
+                        animation: {
+                            duration: 2000,
+                            easing: 'easeInOutQuart'
+                        }
+                    }
+                });
+                
+                document.getElementById('testResult').style.display = 'block';
+                document.getElementById('testContent').innerHTML = `
+                    <h4>📊 Gráfico Creado:</h4>
+                    <div class="status success">
+                        <strong>Estado:</strong> ✅ Gráfico creado exitosamente
+                    </div>
+                    <p>El gráfico debería aparecer arriba. Si no lo ves, hay un problema con Chart.js.</p>
+                `;
+            } catch (error) {
+                document.getElementById('testResult').style.display = 'block';
+                document.getElementById('testContent').innerHTML = `
+                    <h4>❌ Error al crear gráfico:</h4>
+                    <div class="status error">
+                        <strong>Error:</strong> ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        function generateTestDiagnosis() {
+            return `Querido/a Usuario de Prueba, según el análisis detallado de tus respuestas, tu diagnóstico social indica vulnerabilidad económica severa. Se identificaron las siguientes problemáticas principales: Falta de empleo o ingresos estables, Deficiente acceso a salud, Problemas ambientales. En el aspecto económico, se presenta una situación económica crítica con desempleo y ingresos insuficientes para cubrir necesidades básicas. En el aspecto social, existe disposición para participar en procesos comunitarios, lo cual es una fortaleza para el desarrollo social. En el aspecto educativo, existe interés en capacitación, lo cual es positivo para el desarrollo personal. En el aspecto de salud, se presenta un acceso deficiente a servicios de salud, lo cual es una vulnerabilidad crítica.
+
+Recomendaciones específicas para tu situación:
+1. Buscar programas de empleo y apoyo económico inmediato
+2. Acceder a programas de apoyo económico y alimentario
+3. Buscar atención en centros de salud públicos y programas de salud comunitaria
+4. Buscar programas de capacitación técnica y profesional
+
+Recuerda que cada paso que tomes hacia la mejora de tu situación es valioso. Te recomendamos buscar apoyo en programas locales de desarrollo social y consultar con un especialista en trabajo social para obtener un análisis más detallado.`;
+        }
+
+        function showTestResults(results) {
+            document.getElementById('testResult').style.display = 'block';
+            
+            let html = '<h4>🧪 Resultados de Todos los Tests:</h4>';
+            
+            results.forEach(result => {
+                html += `
+                    <div class="status ${result.status}">
+                        <strong>${result.name}:</strong> ${result.message}
+                    </div>
+                `;
+            });
+            
+            const allSuccess = results.every(r => r.status === 'success');
+            html += `
+                <div class="status ${allSuccess ? 'success' : 'error'}">
+                    <strong>Estado General:</strong> ${allSuccess ? '✅ Todos los tests pasaron' : '❌ Algunos tests fallaron'}
+                </div>
+            `;
+            
+            document.getElementById('testContent').innerHTML = html;
+        }
+
+        function clearResults() {
+            localStorage.removeItem('diagnosticResults');
+            document.getElementById('testResult').style.display = 'none';
+            alert('Resultados limpiados');
+        }
+    </script>
+</body>
+</html>

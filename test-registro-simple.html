@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Registro Simple</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .form-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .users-list {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .user-item {
+            padding: 8px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>🔐 Prueba de Registro</h1>
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="username">👤 Usuario:</label>
+                <input type="text" id="username" name="username" required placeholder="Ingresa tu usuario">
+            </div>
+            <div class="form-group">
+                <label for="password">🔒 Contraseña:</label>
+                <input type="password" id="password" name="password" required placeholder="Mínimo 6 caracteres">
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">🔒 Confirmar Contraseña:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Repite tu contraseña">
+            </div>
+            <div class="form-group">
+                <label for="email">📧 Email:</label>
+                <input type="email" id="email" name="email" required placeholder="tu@email.com">
+            </div>
+            <button type="submit">✅ Registrar Usuario</button>
+        </form>
+        <div id="result"></div>
+        <div id="usersList" class="users-list" style="display: none;">
+            <h3>👥 Usuarios Registrados:</h3>
+            <div id="usersContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        console.log('🚀 Iniciando prueba de registro...');
+        
+        // Función para mostrar resultado
+        function showResult(message, isSuccess = true) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = `result ${isSuccess ? 'success' : 'error'}`;
+            resultDiv.innerHTML = message;
+            resultDiv.style.display = 'block';
+        }
+        
+        // Función para mostrar usuarios registrados
+        function showUsers() {
+            const users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+            const usersList = document.getElementById('usersList');
+            const usersContainer = document.getElementById('usersContainer');
+            
+            if (users.length > 0) {
+                usersList.style.display = 'block';
+                usersContainer.innerHTML = users.map((user, index) => `
+                    <div class="user-item">
+                        <strong>${index + 1}.</strong> ${user.username} (${user.email})
+                        <br><small>Registrado: ${new Date(user.registeredAt).toLocaleString()}</small>
+                    </div>
+                `).join('');
+            } else {
+                usersList.style.display = 'none';
+            }
+        }
+        
+        // Función para limpiar formulario
+        function clearForm() {
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('confirmPassword').value = '';
+            document.getElementById('email').value = '';
+        }
+        
+        // Event listener para el formulario
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            console.log('🔍 Procesando registro...');
+            
+            // Obtener valores
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const email = document.getElementById('email').value.trim();
+            
+            console.log('📝 Datos recibidos:', { username, email, password: password ? '***' : 'vacío' });
+            
+            // Validaciones
+            if (username.length < 3) {
+                showResult('❌ El usuario debe tener al menos 3 caracteres', false);
+                document.getElementById('username').focus();
+                return;
+            }
+            
+            if (password.length < 6) {
+                showResult('❌ La contraseña debe tener al menos 6 caracteres', false);
+                document.getElementById('password').focus();
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showResult('❌ Las contraseñas no coinciden', false);
+                document.getElementById('confirmPassword').focus();
+                return;
+            }
+            
+            if (!email.includes('@') || !email.includes('.')) {
+                showResult('❌ Por favor ingresa un email válido', false);
+                document.getElementById('email').focus();
+                return;
+            }
+            
+            // Obtener usuarios existentes
+            const existingUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+            console.log('👥 Usuarios existentes:', existingUsers.length);
+            
+            // Verificar si ya existe
+            const userExists = existingUsers.some(user => 
+                user.username.toLowerCase() === username.toLowerCase() || 
+                user.email.toLowerCase() === email.toLowerCase()
+            );
+            
+            if (userExists) {
+                showResult('❌ El usuario o email ya está registrado', false);
+                return;
+            }
+            
+            // Crear nuevo usuario
+            const newUser = {
+                username: username,
+                email: email,
+                password: password,
+                registeredAt: new Date().toISOString()
+            };
+            
+            // Guardar usuario
+            existingUsers.push(newUser);
+            localStorage.setItem('registeredUsers', JSON.stringify(existingUsers));
+            
+            console.log('✅ Usuario registrado exitosamente:', newUser);
+            console.log('💾 Total de usuarios:', existingUsers.length);
+            
+            // Mostrar éxito
+            showResult(`✅ ¡Usuario registrado exitosamente!<br>👤 Usuario: ${username}<br>📧 Email: ${email}<br>📊 Total usuarios: ${existingUsers.length}`);
+            
+            // Limpiar formulario
+            clearForm();
+            
+            // Mostrar lista de usuarios
+            showUsers();
+        });
+        
+        // Mostrar usuarios existentes al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📋 Cargando usuarios existentes...');
+            showUsers();
+        });
+    </script>
+</body>
+</html>

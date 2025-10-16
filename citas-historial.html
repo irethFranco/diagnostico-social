@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Citas</title>
+    <link rel="stylesheet" href="CSS/estilos.css?v=580">
+    <style>
+        .hist-container { min-height: 100vh; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); padding: 40px 16px; }
+        .hist-card { max-width: 1100px; margin: 0 auto; background: #fff; border-radius: 18px; border: 1px solid #e2e8f0; box-shadow: 0 16px 50px rgba(2,6,23,0.06); padding: 18px; }
+        .hist-header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:10px; }
+        .hist-title { font-size: 1.8rem; font-weight: 800; color: #1e293b; margin:0; }
+        .toolbar { display:flex; flex-wrap:wrap; gap:10px; }
+        .field { display:flex; flex-direction:column; gap:6px; }
+        .field input, .field select { border:1px solid #e2e8f0; border-radius:12px; padding:10px 12px; background:#f8fafc; }
+        .btn { padding:10px 14px; border:none; border-radius:12px; font-weight:700; cursor:pointer; }
+        .btn.primary { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color:#fff; }
+        .btn.secondary { background:#f1f5f9; border:1px solid #e2e8f0; color:#334155; }
+        .list { display:grid; gap:12px; margin-top:12px; }
+        .appt-item { display:grid; grid-template-columns: 1fr 180px 160px; align-items:center; gap:12px; padding:14px; border:1px solid #e2e8f0; border-radius:14px; background:#ffffff; }
+        .status { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; font-weight:700; font-size:.9rem; }
+        .status.pendiente { background:#fff7ed; color:#9a3412; border:1px solid #fed7aa; }
+        .status.confirmada { background:#ecfeff; color:#155e75; border:1px solid #a5f3fc; }
+        .status.cancelada { background:#fee2e2; color:#991b1b; border:1px solid #fecaca; }
+        @media (max-width: 720px) { .appt-item { grid-template-columns: 1fr; align-items:flex-start; } }
+    </style>
+    <script src="JS/citas-historial.js"></script>
+</head>
+<body>
+    <div class="hist-container">
+        <div class="hist-card">
+            <div class="hist-header">
+                <h1 class="hist-title">Historial de Citas</h1>
+                <div class="toolbar">
+                    <a id="backToProfile" class="btn secondary" href="perfil.html">Volver a Perfil</a>
+                </div>
+            </div>
+            <div class="toolbar" style="margin-bottom:10px;">
+                <div class="field">
+                    <label for="filterState">Estado</label>
+                    <select id="filterState">
+                        <option value="">Todos</option>
+                        <option value="pending">Pendientes</option>
+                        <option value="confirmed">Confirmadas</option>
+                        <option value="cancelled">Canceladas</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="filterDate">Fecha</label>
+                    <input type="date" id="filterDate">
+                </div>
+                <div class="field" style="justify-content:flex-end;">
+                    <button class="btn secondary" id="clearFilters" style="align-self:flex-end;">Limpiar</button>
+                </div>
+            </div>
+            <div id="histList" class="list"></div>
+        </div>
+    </div>
+</body>
+</html>
+
+

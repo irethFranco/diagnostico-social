@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados del Diagnóstico - Diagnóstico Social</title>
+    <link rel="stylesheet" href="CSS/estilos.css?v=42">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chart.js removido para usar sistema simple -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <style>
+        /* Estilos específicos para resultados */
+        .results-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 40px 20px;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .results-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .results-subtitle {
+            font-size: 1.3rem;
+            color: #64748b;
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .results-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .score-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .score-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+        }
+
+        .score-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .score-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .score-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #3b82f6;
+            margin-bottom: 10px;
+        }
+
+        .score-description {
+            font-size: 1rem;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .chart-container {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 30px;
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .chart-container canvas {
+            max-height: 400px !important;
+            width: 100% !important;
+        }
+
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .recommendations-section {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 40px;
+        }
+
+        .recommendations-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .recommendation-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .recommendation-item:hover {
+            background: #e0f2fe;
+            transform: translateX(5px);
+        }
+
+        .recommendation-icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            color: #3b82f6;
+        }
+
+        .recommendation-text {
+            font-size: 1rem;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .action-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #64748b;
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .results-content {
+                max-width: 90%;
+                padding: 0 20px;
+            }
+            
+            .score-cards {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .results-content {
+                max-width: 95%;
+                padding: 0 15px;
+                gap: 20px;
+            }
+            
+            .score-cards {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                max-width: 100%;
+            }
+            
+            .score-card {
+                padding: 20px;
+            }
+            
+            .chart-container {
+                padding: 20px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                gap: 15px;
+                max-width: 100%;
+            }
+            
+            .action-btn {
+                width: 100%;
+                padding: 12px 20px;
+            }
+            
+            .score-value {
+                font-size: 2.5rem;
+            }
+            
+            .score-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .results-content {
+                padding: 0 10px;
+            }
+            
+            .score-card {
+                padding: 15px;
+            }
+            
+            .chart-container {
+                padding: 15px;
+            }
+            
+            .score-value {
+                font-size: 2rem;
+            }
+            
+            .score-title {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="results-container">
+        <!-- Header -->
+        <div class="results-header">
+            <h1 class="results-title">Tu Diagnóstico Social</h1>
+            <p class="results-subtitle">Análisis completo de tu situación social y recomendaciones personalizadas</p>
+        </div>
+
+        <!-- Diagnóstico Específico -->
+        <div class="diagnosis-section" style="background: #ffffff; border-radius: 20px; padding: 40px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0; margin-bottom: 40px; animation: fadeInUp 0.8s ease-out 0.1s both;">
+            <h2 class="diagnosis-title" style="font-size: 2rem; font-weight: 700; color: #1e293b; margin-bottom: 20px; text-align: center;">🎯 Diagnóstico Personalizado</h2>
+            <div class="diagnosis-content" id="diagnosisContent">
+                <div class="diagnosis-greeting" style="font-size: 1.3rem; color: #1e293b; margin-bottom: 20px; text-align: center; font-weight: 600;">
+                    <span id="userGreeting">Hola,</span> según tus respuestas:
+                </div>
+                <div class="diagnosis-text" style="font-size: 1.2rem; color: #1e293b; line-height: 1.6; text-align: center; padding: 25px; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: 15px; border-left: 5px solid #3b82f6; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+                    <span id="diagnosisText">Cargando diagnóstico...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenido Principal -->
+        <div class="results-content">
+            <!-- Puntuación General -->
+            <div class="score-card" style="animation: fadeInScale 0.8s ease-out 0.2s both;">
+                <div class="score-icon">📊</div>
+                <h2 class="score-title">Puntuación General</h2>
+                <div class="score-value" id="generalScore">85</div>
+                <p class="score-description">Tu bienestar social se encuentra en un nivel satisfactorio con algunas áreas de mejora.</p>
+            </div>
+
+            <!-- Nivel de Riesgo -->
+            <div class="score-card" style="animation: fadeInScale 0.8s ease-out 0.4s both;">
+                <div class="score-icon">⚠️</div>
+                <h2 class="score-title">Nivel de Riesgo</h2>
+                <div class="score-value" style="color: #f59e0b;">BAJO</div>
+                <p class="score-description">No se detectan factores de riesgo significativos en tu situación actual.</p>
+            </div>
+        </div>
+
+        <!-- Gráfico de Categorías -->
+        <div class="chart-container" style="animation: fadeInUp 0.8s ease-out 0.6s both;">
+            <h2 class="chart-title">Análisis por Categorías</h2>
+            <div id="chart" style="padding: 20px; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);"></div>
+        </div>
+
+        <!-- Recomendaciones -->
+        <div class="recommendations-section" style="animation: fadeInUp 0.8s ease-out 0.8s both;">
+            <h2 class="recommendations-title">Recomendaciones Personalizadas</h2>
+            <!-- Contenedor dinámico poblado por JS/resultados-simple.js -->
+            <div class="recommendations-list">
+                <div class="recommendation-item">
+                    <div class="recommendation-icon">⏳</div>
+                    <div class="recommendation-text">Cargando recomendaciones personalizadas...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="action-buttons" style="animation: fadeInUp 0.8s ease-out 1s both;">
+            <button class="action-btn btn-success" onclick="saveToProfile()">
+                💾 Guardar en Mi Perfil
+            </button>
+            <a href="index.html" class="action-btn btn-primary">
+                🏠 Volver al Inicio
+            </a>
+            <button class="action-btn btn-secondary" onclick="exportResults()">
+                📄 Exportar PDF
+            </button>
+        </div>
+    </div>
+
+    <script src="JS/resultados-simple.js"></script>
+    <script>
+        // Inicializar gráfico cuando la página cargue
+        document.addEventListener('DOMContentLoaded', function() {
+            initResultsPage();
+        });
+    </script>
+</body>
+</html>
+
