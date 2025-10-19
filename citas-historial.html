@@ -6,23 +6,159 @@
     <title>Historial de Citas</title>
     <link rel="stylesheet" href="CSS/estilos.css?v=580">
     <style>
-        .hist-container { min-height: 100vh; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); padding: 40px 16px; }
-        .hist-card { max-width: 1100px; margin: 0 auto; background: #fff; border-radius: 18px; border: 1px solid #e2e8f0; box-shadow: 0 16px 50px rgba(2,6,23,0.06); padding: 18px; }
-        .hist-header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:10px; }
-        .hist-title { font-size: 1.8rem; font-weight: 800; color: #1e293b; margin:0; }
-        .toolbar { display:flex; flex-wrap:wrap; gap:10px; }
-        .field { display:flex; flex-direction:column; gap:6px; }
-        .field input, .field select { border:1px solid #e2e8f0; border-radius:12px; padding:10px 12px; background:#f8fafc; }
-        .btn { padding:10px 14px; border:none; border-radius:12px; font-weight:700; cursor:pointer; }
-        .btn.primary { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color:#fff; }
-        .btn.secondary { background:#f1f5f9; border:1px solid #e2e8f0; color:#334155; }
-        .list { display:grid; gap:12px; margin-top:12px; }
-        .appt-item { display:grid; grid-template-columns: 1fr 180px 160px; align-items:center; gap:12px; padding:14px; border:1px solid #e2e8f0; border-radius:14px; background:#ffffff; }
-        .status { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; font-weight:700; font-size:.9rem; }
-        .status.pendiente { background:#fff7ed; color:#9a3412; border:1px solid #fed7aa; }
-        .status.confirmada { background:#ecfeff; color:#155e75; border:1px solid #a5f3fc; }
-        .status.cancelada { background:#fee2e2; color:#991b1b; border:1px solid #fecaca; }
-        @media (max-width: 720px) { .appt-item { grid-template-columns: 1fr; align-items:flex-start; } }
+        .hist-container { 
+            min-height: 100vh; 
+            background: linear-gradient(135deg, #e0f2f7 0%, #f0f9ff 100%); 
+            padding: 40px 16px; 
+        }
+        .hist-card { 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); 
+            border-radius: 25px; 
+            border: 1px solid rgba(59, 130, 246, 0.1); 
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.15); 
+            padding: 30px; 
+        }
+        .hist-header { 
+            display:flex; 
+            justify-content:space-between; 
+            align-items:center; 
+            gap:12px; 
+            margin-bottom:20px; 
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(59, 130, 246, 0.1);
+        }
+        .hist-title { 
+            font-size: 2.2rem; 
+            font-weight: 800; 
+            color: #1e293b; 
+            margin:0; 
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .toolbar { 
+            display:flex; 
+            flex-wrap:wrap; 
+            gap:15px; 
+            background: rgba(59, 130, 246, 0.05);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        .field { 
+            display:flex; 
+            flex-direction:column; 
+            gap:8px; 
+        }
+        .field label {
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.9rem;
+        }
+        .field input, .field select { 
+            border: 2px solid rgba(59, 130, 246, 0.2); 
+            border-radius: 12px; 
+            padding: 12px 16px; 
+            background: #ffffff; 
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .field input:focus, .field select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            outline: none;
+        }
+        .btn { 
+            padding: 12px 20px; 
+            border: none; 
+            border-radius: 12px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .btn.primary { 
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8); 
+            color: #fff; 
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        .btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+        .btn.secondary { 
+            background: linear-gradient(135deg, #f1f5f9, #e2e8f0); 
+            border: 2px solid rgba(59, 130, 246, 0.2); 
+            color: #374151; 
+        }
+        .btn.secondary:hover {
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+            transform: translateY(-1px);
+        }
+        .list { 
+            display:grid; 
+            gap: 15px; 
+            margin-top: 20px; 
+        }
+        .appt-item { 
+            display:grid; 
+            grid-template-columns: 1fr 180px 160px; 
+            align-items:center; 
+            gap:15px; 
+            padding: 20px; 
+            border: 2px solid rgba(59, 130, 246, 0.1); 
+            border-radius: 18px; 
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.08);
+        }
+        .appt-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+        .status { 
+            display:inline-flex; 
+            align-items:center; 
+            gap:8px; 
+            padding: 8px 16px; 
+            border-radius: 25px; 
+            font-weight: 700; 
+            font-size: 0.85rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .status.pendiente { 
+            background: linear-gradient(135deg, #fff7ed, #fed7aa); 
+            color: #9a3412; 
+            border: 2px solid #fed7aa; 
+        }
+        .status.confirmada { 
+            background: linear-gradient(135deg, #ecfeff, #a5f3fc); 
+            color: #155e75; 
+            border: 2px solid #a5f3fc; 
+        }
+        .status.cancelada { 
+            background: linear-gradient(135deg, #fee2e2, #fecaca); 
+            color: #991b1b; 
+            border: 2px solid #fecaca; 
+        }
+        .muted {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 720px) { 
+            .appt-item { 
+                grid-template-columns: 1fr; 
+                align-items:flex-start; 
+                gap: 10px;
+            }
+            .hist-title {
+                font-size: 1.8rem;
+            }
+        }
     </style>
     <script src="JS/citas-historial.js"></script>
 </head>

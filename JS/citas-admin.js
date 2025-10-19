@@ -66,15 +66,16 @@
                             list[idx].dateTime = new Date(`${a.preferredDate}T${a.preferredTime}`).toISOString();
                         }
                     } else if (b.dataset.action === 'cancel') {
-                        list[idx].status = 'cancelled';
-                    } else if (b.dataset.action === 'pending') {
-                        const message = prompt('Mensaje para el usuario (ej: "Por favor elige otro horario, se me presentó algo"):');
+                        const message = prompt('Mensaje para el usuario (ej: "Disculpa, se me presentó un inconveniente, por favor elige otro día"):');
                         if (message && message.trim()) {
-                            list[idx].status = 'pending';
+                            list[idx].status = 'cancelled';
                             list[idx].adminMessage = message.trim();
                         } else {
                             return; // No hacer nada si no hay mensaje
                         }
+                    } else if (b.dataset.action === 'pending') {
+                        list[idx].status = 'pending';
+                        list[idx].adminMessage = ''; // Limpiar mensaje anterior
                     }
                     list[idx].updatedAt = new Date().toISOString();
                     saveAppointments(list);

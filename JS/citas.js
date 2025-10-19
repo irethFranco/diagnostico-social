@@ -31,6 +31,20 @@
         return null; // sin lógica de búsqueda avanzada por simplicidad
     }
 
+    function validateTime(time) {
+        const [hours, minutes] = time.split(':').map(Number);
+        const totalMinutes = hours * 60 + minutes;
+        
+        // Horarios permitidos: 8:00-12:00 (480-720 min) y 14:00-18:00 (840-1080 min)
+        const morningStart = 8 * 60; // 8:00 AM
+        const morningEnd = 12 * 60; // 12:00 PM
+        const afternoonStart = 14 * 60; // 2:00 PM
+        const afternoonEnd = 18 * 60; // 6:00 PM
+        
+        return (totalMinutes >= morningStart && totalMinutes <= morningEnd) || 
+               (totalMinutes >= afternoonStart && totalMinutes <= afternoonEnd);
+    }
+
     function onSubmit(e) {
         const form = e.target;
         const fullName = document.getElementById('fullName').value.trim();
@@ -44,6 +58,12 @@
 
         if (!consent) { alert('Debes aceptar el uso de datos.'); return; }
         if (!fullName || !email || !phone || !reason || !date || !time) { alert('Completa todos los campos.'); return; }
+        
+        // Validar horarios permitidos
+        if (!validateTime(time)) {
+            alert('Los horarios disponibles son de 8:00 AM a 12:00 PM y de 2:00 PM a 6:00 PM. Por favor, selecciona un horario válido.');
+            return;
+        }
 
         const id = generateId();
         const preferredDateTime = new Date(`${date}T${time}`);

@@ -6,17 +6,245 @@
     <title>Agendar Cita</title>
     <link rel="stylesheet" href="CSS/estilos.css?v=580">
     <style>
-        .appt-container { min-height: 100vh; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); padding: 40px 20px; }
-        .appt-card { max-width: 720px; margin: 0 auto; background: #fff; border-radius: 18px; border: 1px solid #e2e8f0; box-shadow: 0 12px 40px rgba(2,6,23,0.06); padding: 22px; }
-        .appt-title { font-size: 2rem; font-weight: 800; color: #1e293b; text-align: center; margin-bottom: 8px; }
-        .appt-subtitle { text-align: center; color: #64748b; margin-bottom: 22px; }
-        .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
-        .field label { font-weight: 600; color: #334155; }
-        .field input, .field select, .field textarea { border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 14px; font-size: 0.95rem; color: #0f172a; background: #f8fafc; outline: none; transition: box-shadow 0.2s ease, border-color 0.2s ease; }
-        .field input:focus, .field select:focus, .field textarea:focus { box-shadow: 0 0 0 4px rgba(59,130,246,0.15); border-color: #93c5fd; }
-        .btn { padding: 12px 16px; border-radius: 12px; border: none; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; font-weight: 700; cursor: pointer; box-shadow: 0 6px 20px rgba(59,130,246,0.35); }
-        .muted { color: #64748b; font-size: 0.9rem; }
-        .success { background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; padding: 10px 12px; border-radius: 12px; margin-top: 12px; display:none; }
+        .appt-container { 
+            min-height: 100vh; 
+            background: linear-gradient(135deg, #e0f2f7 0%, #f0f9ff 100%); 
+            padding: 40px 20px; 
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .appt-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .appt-card { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); 
+            border-radius: 30px; 
+            border: 2px solid rgba(59, 130, 246, 0.1); 
+            box-shadow: 0 25px 80px rgba(59, 130, 246, 0.2); 
+            padding: 40px; 
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+        }
+        
+        .appt-title { 
+            font-size: 2.5rem; 
+            font-weight: 800; 
+            text-align: center; 
+            margin-bottom: 15px; 
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+        
+        .appt-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 2px;
+        }
+        
+        .appt-subtitle { 
+            text-align: center; 
+            color: #64748b; 
+            margin-bottom: 35px; 
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .form-section {
+            background: rgba(59, 130, 246, 0.03);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+        
+        .field { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+            margin-bottom: 20px; 
+            position: relative;
+        }
+        
+        .field label { 
+            font-weight: 700; 
+            color: #374151; 
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .field label::before {
+            content: '📋';
+            font-size: 1.1rem;
+        }
+        
+        .field input, .field select, .field textarea { 
+            border: 2px solid rgba(59, 130, 246, 0.2); 
+            border-radius: 15px; 
+            padding: 16px 20px; 
+            font-size: 1rem; 
+            color: #1e293b; 
+            background: #ffffff; 
+            outline: none; 
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.05);
+        }
+        
+        .field input:focus, .field select:focus, .field textarea:focus { 
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15); 
+            border-color: #3b82f6; 
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+        }
+        
+        .field textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+        
+        .checkbox-container input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #3b82f6;
+        }
+        
+        .checkbox-container label {
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+        }
+        
+        .btn { 
+            padding: 18px 30px; 
+            border-radius: 15px; 
+            border: none; 
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8); 
+            color: #fff; 
+            font-weight: 700; 
+            cursor: pointer; 
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4); 
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(59, 130, 246, 0.5);
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .muted { 
+            color: #64748b; 
+            font-size: 0.9rem; 
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+        
+        .success { 
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5); 
+            border: 2px solid #a7f3d0; 
+            color: #065f46; 
+            padding: 20px; 
+            border-radius: 15px; 
+            margin-top: 20px; 
+            display: none;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .success.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .icon {
+            font-size: 1.2rem;
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .appt-card {
+                padding: 25px;
+                margin: 20px;
+            }
+            
+            .appt-title {
+                font-size: 2rem;
+            }
+            
+            .form-section {
+                padding: 20px;
+            }
+        }
     </style>
     <script src="JS/auth.js"></script>
     <script>
@@ -26,6 +254,37 @@
                 auth.checkUserSession();
                 auth.initUserSession();
             } catch(_) {}
+            
+            // Validación en tiempo real del horario
+            const timeInput = document.getElementById('time');
+            if (timeInput) {
+                timeInput.addEventListener('change', function() {
+                    const time = this.value;
+                    if (time) {
+                        const [hours, minutes] = time.split(':').map(Number);
+                        const totalMinutes = hours * 60 + minutes;
+                        
+                        // Horarios permitidos: 8:00-12:00 y 14:00-18:00
+                        const morningStart = 8 * 60; // 8:00 AM
+                        const morningEnd = 12 * 60; // 12:00 PM
+                        const afternoonStart = 14 * 60; // 2:00 PM
+                        const afternoonEnd = 18 * 60; // 6:00 PM
+                        
+                        const isValid = (totalMinutes >= morningStart && totalMinutes <= morningEnd) || 
+                                      (totalMinutes >= afternoonStart && totalMinutes <= afternoonEnd);
+                        
+                        if (!isValid) {
+                            this.style.borderColor = '#ef4444';
+                            this.style.backgroundColor = '#fef2f2';
+                            alert('⚠️ Horario no disponible. Los horarios son de 8:00 AM a 12:00 PM y de 2:00 PM a 6:00 PM.');
+                            this.value = '';
+                        } else {
+                            this.style.borderColor = '#10b981';
+                            this.style.backgroundColor = '#f0fdf4';
+                        }
+                    }
+                });
+            }
         });
     </script>
     <script src="JS/citas.js"></script>
@@ -36,41 +295,44 @@
             <h1 class="appt-title">Agendar Cita Presencial</h1>
             <p class="appt-subtitle">Completa los datos para solicitar una cita con la trabajadora social</p>
 
-            <form id="appointmentForm">
-                <div class="field">
-                    <label for="fullName">Nombre completo</label>
-                    <input id="fullName" required placeholder="Tu nombre y apellido">
-                </div>
-                <div class="field">
-                    <label for="email">Correo electrónico</label>
-                    <input id="email" type="email" required placeholder="tucorreo@ejemplo.com">
-                </div>
-                <div class="field">
-                    <label for="phone">Teléfono</label>
-                    <input id="phone" type="tel" required placeholder="Tu número de contacto">
-                </div>
-                <div class="field">
-                    <label for="reason">Motivo / Tema</label>
-                    <textarea id="reason" rows="3" required placeholder="Cuéntanos brevemente el motivo"></textarea>
-                </div>
-                <div class="field">
-                    <label for="date">Fecha preferida</label>
-                    <input id="date" type="date" required>
-                </div>
-                <div class="field">
-                    <label for="time">Hora preferida</label>
-                    <input id="time" type="time" required>
-                </div>
-                <div class="field" style="align-items:flex-start; gap:10px;">
-                    <label style="display:flex; align-items:center; gap:8px;">
+            <div class="form-section">
+                <form id="appointmentForm">
+                    <div class="field">
+                        <label for="fullName">Nombre completo</label>
+                        <input id="fullName" required placeholder="Tu nombre y apellido">
+                    </div>
+                    <div class="field">
+                        <label for="email">Correo electrónico</label>
+                        <input id="email" type="email" required placeholder="tucorreo@ejemplo.com">
+                    </div>
+                    <div class="field">
+                        <label for="phone">Teléfono</label>
+                        <input id="phone" type="tel" required placeholder="Tu número de contacto">
+                    </div>
+                    <div class="field">
+                        <label for="reason">Motivo / Tema</label>
+                        <textarea id="reason" rows="3" required placeholder="Cuéntanos brevemente el motivo"></textarea>
+                    </div>
+                    <div class="field">
+                        <label for="date">Fecha preferida</label>
+                        <input id="date" type="date" required>
+                    </div>
+                    <div class="field">
+                        <label for="time">Hora preferida</label>
+                        <input id="time" type="time" required min="08:00" max="18:00" step="1800">
+                        <small style="color: #64748b; font-size: 0.85rem; margin-top: 5px; display: block;">
+                            ⏰ Horarios disponibles: 8:00 AM - 12:00 PM y 2:00 PM - 6:00 PM
+                        </small>
+                    </div>
+                    <div class="checkbox-container">
                         <input id="consent" type="checkbox" required>
-                        <span>Acepto el uso de mis datos para la gestión de la cita</span>
-                    </label>
-                </div>
-                <button class="btn" type="submit">Solicitar cita</button>
-                <div id="successMsg" class="success">Tu solicitud fue registrada. Te avisaremos aquí cuando sea aceptada.</div>
-                <div class="muted" style="margin-top:8px;">Nota: La información se guarda en este dispositivo.</div>
-            </form>
+                        <label for="consent">Acepto el uso de mis datos para la gestión de la cita</label>
+                    </div>
+                    <button class="btn" type="submit">🚀 Solicitar cita</button>
+                    <div id="successMsg" class="success">Tu solicitud fue registrada. Te avisaremos aquí cuando sea aceptada.</div>
+                </form>
+            </div>
+            <div class="muted">Nota: La información se guarda en este dispositivo.</div>
         </div>
     </div>
 

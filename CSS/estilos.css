@@ -12,6 +12,49 @@ body {
     background-color: #e0f2f7;
 }
 
+/* Fuentes profesionales para títulos - Misma que "Bienvenido al diagnóstico social" */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.team-title, .contact-title, .hero-title {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+}
+
+/* Títulos específicos más profesionales */
+.team-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.team-subtitle {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-weight: 500;
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+.contact-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.contact-subtitle {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-weight: 500;
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
 /* Barra superior de información */
 .top-bar {
     background-color: #2d3748;
@@ -85,14 +128,14 @@ body {
 
 .nav-links {
     display: flex;
-  list-style: none;
+    list-style: none;
     gap: 30px;
     align-items: center;
 }
 
 .nav-links a {
     color: #2d3748;
-  text-decoration: none;
+    text-decoration: none;
     font-weight: 500;
     font-size: 14px;
     text-transform: uppercase;
@@ -163,9 +206,9 @@ body {
 }
 
 .hero-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .main-image {
@@ -197,7 +240,7 @@ body {
 .hero-description {
     font-size: 1.1rem;
     color: #4a5568;
-  margin-bottom: 30px;
+    margin-bottom: 30px;
     line-height: 1.6;
 }
 
@@ -229,14 +272,14 @@ body {
 .btn-filled {
     background-color: #2d3748;
     border: 2px solid #2d3748;
-  color: white;
+    color: white;
     padding: 12px 24px;
     font-size: 14px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     border-radius: 4px;
-  cursor: pointer;
+    cursor: pointer;
     transition: all 0.3s ease;
 }
 
@@ -440,7 +483,7 @@ body {
 
 .social-image {
     width: 100%;
-    height: 300px;
+    height: 400px;
     object-fit: cover;
     border-radius: 16px;
     transition: all 0.4s ease;
@@ -454,6 +497,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 25px;
+    justify-content: center;
 }
 
 /* Stats Toggle */
@@ -477,9 +521,6 @@ body {
     user-select: none;
     width: 60px;
     height: 20px;
-    position: relative;
-    z-index: 2;
-    overflow: hidden;
 }
 
 .stats-line:hover {
@@ -516,26 +557,26 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
     background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-    padding: 15px 40px;
+    padding: 20px 40px;
     border-radius: 16px;
     box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
     max-height: 0;
     overflow: hidden;
     transition: all 0.4s ease;
     opacity: 0;
-    width: 60%;
+    width: 70%;
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translateX(-50%) translateY(-50%) translateY(-10px);
-    z-index: 1000;
+    transform: translate(-50%, -50%) translateY(-10px);
+    z-index: 1001;
 }
 
 .stats-content.expanded {
-    max-height: 80px;
+    max-height: 100px;
     opacity: 1;
-    margin-top: 0;
-    transform: translateX(-50%) translateY(-50%) translateY(0);
+    transform: translate(-50%, -50%) translateY(0);
+    pointer-events: auto;
 }
 
 .stats-overlay {
@@ -544,7 +585,9 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     z-index: 999;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -562,19 +605,20 @@ body {
 }
 
 .stat-number {
-    font-size: 1.2rem;
+    font-size: 2rem;
     font-weight: 800;
-    margin-bottom: 2px;
+    margin-bottom: 5px;
     color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .stat-label {
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     font-weight: 500;
     opacity: 0.9;
     color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
-
 
 .mission-item, .vision-item {
     display: flex;
@@ -583,13 +627,6 @@ body {
     padding: 30px 0;
     border-bottom: 1px solid #e2e8f0;
     transition: all 0.4s ease;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: slideInUp 0.8s ease forwards;
-}
-
-.mission-item:nth-child(2) {
-    animation-delay: 0.2s;
 }
 
 .mission-item:last-child, .vision-item:last-child {
@@ -633,7 +670,6 @@ body {
     transition: all 0.3s ease;
     letter-spacing: -0.3px;
 }
-
 
 .mission-item:hover .mission-text h3, .vision-item:hover .vision-text h3 {
     color: #3b82f6;
@@ -1015,7 +1051,6 @@ footer p {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    /* Solo para móvil - no afecta PC */
     .top-bar, .navbar, .hero, .features-section {
         width: 100vw;
         margin: 0;
@@ -1072,7 +1107,6 @@ footer p {
 }
 
 @media (max-width: 480px) {
-    /* Solo para móviles pequeños - no afecta PC */
     .hero-title {
         font-size: 1.8rem;
         padding: 0 15px;
@@ -1102,100 +1136,6 @@ footer p {
         width: 100%;
         max-width: 200px;
     }
-}
-
-/* Animaciones de entrada */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes fadeInRight {
-    from {
-        opacity: 0;
-        transform: translateX(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes fadeInScale {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-/* Aplicar animaciones a elementos */
-.hero-title {
-    animation: fadeInUp 0.8s ease-out;
-}
-
-.hero-description {
-    animation: fadeInUp 0.8s ease-out 0.2s both;
-}
-
-.hero-buttons {
-    animation: fadeInUp 0.8s ease-out 0.4s both;
-}
-
-.features-title {
-    animation: fadeInLeft 0.8s ease-out;
-}
-
-.features-subtitle {
-    animation: fadeInLeft 0.8s ease-out 0.2s both;
-}
-
-.features-description {
-    animation: fadeInLeft 0.8s ease-out 0.4s both;
-}
-
-.feature-card {
-    animation: fadeInScale 0.8s ease-out;
-}
-
-.feature-card:nth-child(2) {
-    animation: fadeInScale 0.8s ease-out 0.2s both;
-}
-
-.mission-vision-title {
-    animation: fadeInRight 0.8s ease-out;
-}
-
-.mission-vision-subtitle {
-    animation: fadeInRight 0.8s ease-out 0.2s both;
-}
-
-.mission-vision-description {
-    animation: fadeInRight 0.8s ease-out 0.4s both;
-}
-
-.mission-vision-carousel {
-    animation: fadeInLeft 0.8s ease-out 0.2s both;
 }
 
 /* ----- USER ICON ESTILO ----- */
@@ -1289,6 +1229,328 @@ footer p {
     border-left-color: #dc2626;
 }
 
+/* Sección del Equipo */
+.team-section {
+    background: #f8fafc;
+    padding: 80px 0;
+    position: relative;
+}
+
+/* Efectos de scroll para las tarjetas del equipo */
+.scroll-fade-in {
+    opacity: 0;
+    transform: translateY(100px) scale(0.8) rotateY(20deg);
+    transition: all 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    filter: blur(5px);
+    will-change: transform, opacity, filter;
+}
+
+.scroll-fade-in.animate {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotateY(0deg);
+    filter: blur(0px);
+}
+
+/* Animación de entrada con temblor */
+@keyframes cardEntrance {
+    0% {
+        opacity: 0;
+        transform: translateY(100px) scale(0.8) rotateY(20deg);
+        filter: blur(5px);
+    }
+    30% {
+        opacity: 0.8;
+        transform: translateY(-15px) scale(1.1) rotateY(-8deg);
+        filter: blur(2px);
+    }
+    40% {
+        transform: translateY(-5px) scale(1.05) rotateY(3deg);
+    }
+    50% {
+        transform: translateY(-12px) scale(1.08) rotateY(-2deg);
+    }
+    60% {
+        transform: translateY(-3px) scale(1.03) rotateY(1deg);
+    }
+    70% {
+        transform: translateY(-8px) scale(1.06) rotateY(-1deg);
+    }
+    80% {
+        transform: translateY(-2px) scale(1.02) rotateY(0.5deg);
+    }
+    90% {
+        transform: translateY(-4px) scale(1.01) rotateY(-0.3deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotateY(0deg);
+        filter: blur(0px);
+    }
+}
+
+.scroll-fade-in.animate {
+    animation: cardEntrance 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Efecto de brillo que cruza la tarjeta */
+.scroll-fade-in::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 2s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.scroll-fade-in.animate::before {
+    left: 100%;
+}
+
+/* Sombra dinámica que aparece */
+.scroll-fade-in.animate {
+    box-shadow: 0 25px 80px rgba(59, 130, 246, 0.2);
+}
+
+.team-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, #3b82f6 20%, #1d4ed8 50%, #3b82f6 80%, transparent 100%);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.team-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.team-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.team-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 15px;
+    letter-spacing: -0.5px;
+}
+
+.team-subtitle {
+    font-size: 1.2rem;
+    color: #64748b;
+    font-weight: 400;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.team-member {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border-radius: 25px;
+    padding: 35px;
+    box-shadow: 0 15px 40px rgba(59, 130, 246, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.1);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.team-member::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    border-radius: 0 4px 4px 0;
+    transition: all 0.4s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 25px 60px rgba(59, 130, 246, 0.25);
+    border-color: #3b82f6;
+    background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+}
+
+.team-member:hover::before {
+    width: 8px;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+}
+
+.member-photo {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.member-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.team-member:hover .member-image {
+    transform: scale(1.05);
+    box-shadow: 0 12px 32px rgba(59, 130, 246, 0.3);
+}
+
+.member-info {
+    flex: 1;
+}
+
+.member-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+}
+
+.team-member:hover .member-name {
+    color: #3b82f6;
+}
+
+.member-specialty {
+    font-size: 1rem;
+    color: #3b82f6;
+    font-weight: 600;
+    margin-bottom: 8px;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.member-specialty::before {
+    content: '🎯';
+    font-size: 1.2rem;
+}
+
+.member-experience {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.member-contact {
+    margin-top: 20px;
+}
+
+/* Badges y elementos adicionales */
+.availability-badge {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: inline-block;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.rating-stars {
+    color: #fbbf24;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+}
+
+.price-tag {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: inline-block;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+}
+
+.contact-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+    background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
+}
+
+.whatsapp-btn .whatsapp-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    filter: none;
+}
+
+/* Responsive para el equipo */
+@media (max-width: 768px) {
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        max-width: 400px;
+    }
+    
+    .team-member {
+        padding: 25px;
+    }
+    
+    .team-title {
+        font-size: 2rem;
+    }
+    
+    .team-subtitle {
+        font-size: 1rem;
+    }
+    
+    .member-image {
+        width: 100px;
+        height: 100px;
+    }
+}
 
 /* Responsive para Misión y Visión */
 @media (max-width: 768px) {
@@ -1340,20 +1602,5 @@ footer p {
     
     .mission-vision-subtitle {
         font-size: 1.3rem;
-    }
-}
-
-/* Animación de entrada para las cartas */
-@keyframes fadeUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
     }
 }

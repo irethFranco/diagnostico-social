@@ -34,7 +34,13 @@
             item.className = 'appt-item';
             
             let messageHtml = '';
-            if (a.status === 'pending' && a.adminMessage) {
+            let currentStatus = a.status;
+            
+            // Si hay mensaje de la trabajadora, mostrar el mensaje
+            if (a.adminMessage) {
+                if (a.status === 'pending') {
+                    currentStatus = 'cancelled';
+                }
                 messageHtml = `<div style="margin-top:8px; padding:8px; background:#fff3cd; border:1px solid #ffeaa7; border-radius:8px; color:#856404; font-size:0.9rem;"><strong>Mensaje de la trabajadora:</strong> ${a.adminMessage}</div>`;
             }
             
@@ -45,7 +51,7 @@
                     ${messageHtml}
                 </div>
                 <div class="muted">${when}</div>
-                <div><span class="status ${statusToEs(a.status)}">${statusToEs(a.status)}</span></div>
+                <div><span class="status ${statusToEs(currentStatus)}">${statusToEs(currentStatus)}</span></div>
             `;
             listEl.appendChild(item);
         });
