@@ -623,21 +623,55 @@
     </script>
     
     <script>
+        let currentMode = null;
+        
         // Función para desplegar/contraer reseñas
-        function toggleReviews() {
+        function toggleReviews(mode) {
             const reviewsContent = document.getElementById('reviewsContent');
-            const toggleBtn = document.querySelector('.reviews-toggle-btn');
+            const formContainer = document.getElementById('reviewFormContainer');
+            const allButtons = document.querySelectorAll('.reviews-toggle-btn');
             
-            if (reviewsContent.classList.contains('active')) {
-                // Contraer
+            if (reviewsContent.classList.contains('active') && currentMode === mode) {
+                // Contraer si ya está abierto el mismo modo
                 reviewsContent.classList.remove('active');
-                toggleBtn.classList.remove('active');
-                toggleBtn.querySelector('.toggle-text').textContent = 'Ver testimonios y dejar reseña';
+                allButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    const text = btn.querySelector('.toggle-text');
+                    if (btn.onclick.toString().includes('all')) {
+                        text.textContent = 'Ver testimonios y dejar reseña';
+                    } else {
+                        text.textContent = 'Solo ver testimonios';
+                    }
+                });
+                currentMode = null;
             } else {
-                // Desplegar
+                // Desplegar nuevo modo
                 reviewsContent.classList.add('active');
-                toggleBtn.classList.add('active');
-                toggleBtn.querySelector('.toggle-text').textContent = 'Ocultar testimonios';
+                currentMode = mode;
+                
+                // Actualizar botones
+                allButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    const text = btn.querySelector('.toggle-text');
+                    if (btn.onclick.toString().includes('all')) {
+                        text.textContent = 'Ocultar testimonios';
+                    } else {
+                        text.textContent = 'Ocultar testimonios';
+                    }
+                });
+                
+                // Mostrar/ocultar formulario según el modo
+                if (mode === 'testimonials') {
+                    formContainer.style.display = 'none';
+                } else {
+                    formContainer.style.display = 'block';
+                }
+                
+                // Marcar botón activo
+                const activeBtn = document.querySelector(`[onclick="toggleReviews('${mode}')"]`);
+                if (activeBtn) {
+                    activeBtn.classList.add('active');
+                }
             }
         }
     </script>
@@ -645,13 +679,20 @@
     <!-- Sistema de Reseñas -->
     <section class="reviews-section">
         <div class="reviews-container">
-            <!-- Botón para desplegar reseñas -->
+            <!-- Botones para desplegar reseñas -->
             <div class="reviews-toggle-container">
-                <button class="reviews-toggle-btn" onclick="toggleReviews()">
-                    <span class="toggle-icon">💬</span>
-                    <span class="toggle-text">Ver testimonios y dejar reseña</span>
-                    <span class="toggle-arrow">▼</span>
-                </button>
+                <div class="reviews-buttons">
+                    <button class="reviews-toggle-btn" onclick="toggleReviews('all')">
+                        <span class="toggle-icon">💬</span>
+                        <span class="toggle-text">Ver testimonios y dejar reseña</span>
+                        <span class="toggle-arrow">▼</span>
+                    </button>
+                    <button class="reviews-toggle-btn secondary" onclick="toggleReviews('testimonials')">
+                        <span class="toggle-icon">⭐</span>
+                        <span class="toggle-text">Solo ver testimonios</span>
+                        <span class="toggle-arrow">▼</span>
+                    </button>
+                </div>
             </div>
             
             <!-- Contenido desplegable -->
@@ -662,7 +703,7 @@
                 </div>
             
             <!-- Formulario de Reseña -->
-            <div class="review-form-container">
+            <div class="review-form-container" id="reviewFormContainer">
                 <form id="reviewForm" class="review-form">
                     <div class="form-group">
                         <label for="reviewerName">Tu nombre (opcional)</label>
