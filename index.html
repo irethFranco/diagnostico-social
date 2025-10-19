@@ -216,7 +216,7 @@
                         <h3 class="member-name">Mariela</h3>
                         <p class="member-specialty">Especialista en Diagnóstico Social</p>
                         <p class="member-experience">Te ayuda a identificar problemáticas sociales y encontrar soluciones personalizadas</p>
-                        <div class="price-tag">💬 Consulta GRATIS</div>
+                        <div class="price-tag" id="price-mariela">💬 Consulta GRATIS</div>
                         <div class="member-contact">
                             <a href="https://wa.me/573147998289?text=Hola%20Mariela,%20vi%20tu%20perfil%20y%20me%20gustaría%20agendar%20una%20consulta%20contigo" target="_blank" class="contact-btn whatsapp-btn">
                                 <img src="imagenes/whatsapp.png" alt="WhatsApp" class="whatsapp-icon">
@@ -236,7 +236,7 @@
                         <h3 class="member-name">Francisca</h3>
                         <p class="member-specialty">Especialista en Trabajo Social</p>
                         <p class="member-experience">Acompaña en el proceso de diagnóstico y brinda orientación profesional</p>
-                        <div class="price-tag">💬 Consulta GRATIS</div>
+                        <div class="price-tag" id="price-francisca">💬 Consulta GRATIS</div>
                         <div class="member-contact">
                             <a href="https://wa.me/573215014266?text=Hola%20Francisca,%20vi%20tu%20perfil%20y%20me%20gustaría%20agendar%20una%20consulta%20contigo" target="_blank" class="contact-btn whatsapp-btn">
                                 <img src="imagenes/whatsapp.png" alt="WhatsApp" class="whatsapp-icon">
@@ -256,7 +256,7 @@
                         <h3 class="member-name">Yuli</h3>
                         <p class="member-specialty">Especialista en Terapia Familiar</p>
                         <p class="member-experience">Especializada en diagnósticos familiares y dinámicas relacionales</p>
-                        <div class="price-tag">💬 Consulta GRATIS</div>
+                        <div class="price-tag" id="price-yulianis">💬 Consulta GRATIS</div>
                         <div class="member-contact">
                             <a href="https://wa.me/573244851355?text=Hola%20Yulianis,%20vi%20tu%20perfil%20y%20me%20gustaría%20agendar%20una%20consulta%20contigo" target="_blank" class="contact-btn whatsapp-btn">
                                 <img src="imagenes/whatsapp.png" alt="WhatsApp" class="whatsapp-icon">
@@ -276,7 +276,7 @@
                         <h3 class="member-name">Marina</h3>
                         <p class="member-specialty">Especialista en Intervención Social</p>
                         <p class="member-experience">Facilita el proceso de diagnóstico y ofrece seguimiento personalizado</p>
-                        <div class="price-tag">💬 Consulta GRATIS</div>
+                        <div class="price-tag" id="price-mariana">💬 Consulta GRATIS</div>
                         <div class="member-contact">
                             <a href="https://wa.me/573235518739?text=Hola%20Mariana,%20vi%20tu%20perfil%20y%20me%20gustaría%20agendar%20una%20consulta%20contigo" target="_blank" class="contact-btn whatsapp-btn">
                                 <img src="imagenes/whatsapp.png" alt="WhatsApp" class="whatsapp-icon">
@@ -294,6 +294,9 @@
     <script src="JS/cards.js"></script>
     <script src="JS/main.js"></script>
     <script src="JS/reviews.js"></script>
+    <script src="JS/pricing.js"></script>
+    <script src="JS/metrics.js"></script>
+    <script src="JS/discount-system.js"></script>
     
     <!-- Conocer Más: Sección con animación y caption -->
     <style>
@@ -676,6 +679,45 @@
         }
     </script>
     
+
+    <!-- Dashboard de Métricas y Logros -->
+    <section class="metrics-section">
+        <div class="metrics-container">
+            <div class="metrics-header">
+                <h2 class="metrics-title">Nuestros Logros</h2>
+                <p class="metrics-subtitle">Cifras que respaldan nuestro compromiso</p>
+            </div>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">👥</div>
+                    <div class="metric-number" id="families-helped">0</div>
+                    <div class="metric-label">Familias Ayudadas</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">⭐</div>
+                    <div class="metric-number" id="reviews-count">0</div>
+                    <div class="metric-label">Reseñas Positivas</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">📅</div>
+                    <div class="metric-number" id="appointments-count">0</div>
+                    <div class="metric-label">Citas Realizadas</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">🏆</div>
+                    <div class="metric-number" id="years-experience">5+</div>
+                    <div class="metric-label">Años de Experiencia</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
     <!-- Sistema de Reseñas -->
     <section class="reviews-section">
         <div class="reviews-container">

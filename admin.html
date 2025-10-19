@@ -153,6 +153,7 @@
                     <div class="toolbar">
                         <button class="btn secondary" id="refreshAppointments">Actualizar</button>
                         <button class="btn" id="autoAcceptPending" style="padding: 8px 12px; font-size: 12px; min-width: auto;">Auto</button>
+                        <button class="btn" onclick="window.open('login-trabajadoras.html', '_blank')" style="background: linear-gradient(135deg, #10b981, #059669); padding: 8px 12px; font-size: 12px; min-width: auto;">👩‍💼 Trabajadoras</button>
                     </div>
                 </div>
 
@@ -168,6 +169,17 @@
                             <option value="pending">Pendiente</option>
                             <option value="confirmed">Confirmada</option>
                             <option value="cancelled">Cancelada</option>
+                        </select>
+                    </div>
+                    <div class="field" style="margin:0; min-width:180px;">
+                        <label for="workerFilter">Trabajadora</label>
+                        <select id="workerFilter">
+                            <option value="">Todas</option>
+                            <option value="mariela">Mariela</option>
+                            <option value="francisca">Francisca</option>
+                            <option value="yulianis">Yulianis</option>
+                            <option value="mariana">Mariana</option>
+                            <option value="unassigned">Sin asignar</option>
                         </select>
                     </div>
                     <button class="btn secondary" id="apptClearFilters" style="align-self:end;">Limpiar</button>
@@ -192,6 +204,45 @@
                 
                 <div id="reviewsList" class="list"></div>
                 <div class="muted" style="margin-top:10px">Fuente: reseñas guardadas en esta app (localStorage).</div>
+            </div>
+
+            <!-- Gestión de Precios y Ofertas -->
+            <div class="admin-card" style="padding-top: 18px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <h3 style="color:#1e293b; margin:0;">💰 Gestión de Precios</h3>
+                        <span class="chip"><span class="dot"></span> Local</span>
+                    </div>
+                    <div class="toolbar">
+                        <button class="btn secondary" onclick="refreshPricing()">🔄 Actualizar</button>
+                    </div>
+                </div>
+                
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                    <div class="field">
+                        <label for="mariela-price">Precio Mariela</label>
+                        <input type="text" id="mariela-price" placeholder="Ej: $50.000" value="💬 Consulta GRATIS">
+                    </div>
+                    <div class="field">
+                        <label for="francisca-price">Precio Francisca</label>
+                        <input type="text" id="francisca-price" placeholder="Ej: $50.000" value="💬 Consulta GRATIS">
+                    </div>
+                    <div class="field">
+                        <label for="yulianis-price">Precio Yulianis</label>
+                        <input type="text" id="yulianis-price" placeholder="Ej: $50.000" value="💬 Consulta GRATIS">
+                    </div>
+                    <div class="field">
+                        <label for="mariana-price">Precio Mariana</label>
+                        <input type="text" id="mariana-price" placeholder="Ej: $50.000" value="💬 Consulta GRATIS">
+                    </div>
+                </div>
+                
+                <div style="display:flex; gap: 10px; margin-bottom: 20px;">
+                    <button class="btn" onclick="updatePricing()">💾 Guardar Precios</button>
+                    <button class="btn secondary" onclick="resetPricing()">🔄 Restaurar</button>
+                </div>
+                
+                <div class="muted" style="margin-top:10px">Los precios se actualizarán inmediatamente en la página principal.</div>
             </div>
         </div>
     </div>
@@ -227,6 +278,7 @@
     <script src="JS/citas-admin.js"></script>
     <script src="JS/reviews.js"></script>
     <script src="JS/reviews-admin.js"></script>
+    <script src="JS/pricing.js"></script>
 </body>
 </html>
 

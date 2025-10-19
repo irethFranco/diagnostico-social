@@ -288,6 +288,7 @@
         });
     </script>
     <script src="JS/citas.js"></script>
+    <script src="JS/discount-system.js"></script>
 </head>
 <body>
     <div class="appt-container">
@@ -296,41 +297,41 @@
             <p class="appt-subtitle">Completa los datos para solicitar una cita con la trabajadora social</p>
 
             <div class="form-section">
-                <form id="appointmentForm">
-                    <div class="field">
-                        <label for="fullName">Nombre completo</label>
-                        <input id="fullName" required placeholder="Tu nombre y apellido">
-                    </div>
-                    <div class="field">
-                        <label for="email">Correo electrónico</label>
-                        <input id="email" type="email" required placeholder="tucorreo@ejemplo.com">
-                    </div>
-                    <div class="field">
-                        <label for="phone">Teléfono</label>
-                        <input id="phone" type="tel" required placeholder="Tu número de contacto">
-                    </div>
-                    <div class="field">
-                        <label for="reason">Motivo / Tema</label>
-                        <textarea id="reason" rows="3" required placeholder="Cuéntanos brevemente el motivo"></textarea>
-                    </div>
-                    <div class="field">
-                        <label for="date">Fecha preferida</label>
-                        <input id="date" type="date" required>
-                    </div>
-                    <div class="field">
-                        <label for="time">Hora preferida</label>
+            <form id="appointmentForm">
+                <div class="field">
+                    <label for="fullName">Nombre completo</label>
+                    <input id="fullName" required placeholder="Tu nombre y apellido">
+                </div>
+                <div class="field">
+                    <label for="email">Correo electrónico</label>
+                    <input id="email" type="email" required placeholder="tucorreo@ejemplo.com">
+                </div>
+                <div class="field">
+                    <label for="phone">Teléfono</label>
+                    <input id="phone" type="tel" required placeholder="Tu número de contacto">
+                </div>
+                <div class="field">
+                    <label for="reason">Motivo / Tema</label>
+                    <textarea id="reason" rows="3" required placeholder="Cuéntanos brevemente el motivo"></textarea>
+                </div>
+                <div class="field">
+                    <label for="date">Fecha preferida</label>
+                    <input id="date" type="date" required>
+                </div>
+                <div class="field">
+                    <label for="time">Hora preferida</label>
                         <input id="time" type="time" required min="08:00" max="18:00" step="1800">
                         <small style="color: #64748b; font-size: 0.85rem; margin-top: 5px; display: block;">
                             ⏰ Horarios disponibles: 8:00 AM - 12:00 PM y 2:00 PM - 6:00 PM
                         </small>
-                    </div>
+                </div>
                     <div class="checkbox-container">
                         <input id="consent" type="checkbox" required>
                         <label for="consent">Acepto el uso de mis datos para la gestión de la cita</label>
-                    </div>
+                </div>
                     <button class="btn" type="submit">🚀 Solicitar cita</button>
-                    <div id="successMsg" class="success">Tu solicitud fue registrada. Te avisaremos aquí cuando sea aceptada.</div>
-                </form>
+                <div id="successMsg" class="success">Tu solicitud fue registrada. Te avisaremos aquí cuando sea aceptada.</div>
+            </form>
             </div>
             <div class="muted">Nota: La información se guarda en este dispositivo.</div>
         </div>

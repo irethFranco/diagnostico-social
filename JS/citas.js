@@ -92,10 +92,20 @@
             createdAt: new Date().toISOString(),
             origin: assignMode === 'auto' ? 'auto' : 'manual'
         };
+        
+        // Aplicar descuento si está disponible
+        if (window.applyDiscountToAppointment) {
+            window.applyDiscountToAppointment(appt);
+        }
 
         const list = getAppointments();
         list.push(appt);
         saveAppointments(list);
+
+        // Limpiar descuentos después de agendar
+        if (window.clearDiscountAfterBooking) {
+            window.clearDiscountAfterBooking();
+        }
 
         const success = document.getElementById('successMsg');
         if (success) success.style.display = 'block';

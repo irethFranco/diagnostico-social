@@ -6,8 +6,19 @@
     function statusToEs(s) {
         if (s === 'pending') return 'pendiente';
         if (s === 'confirmed') return 'confirmada';
+        if (s === 'completed') return 'realizada';
         if (s === 'cancelled') return 'cancelada';
         return s || '';
+    }
+    
+    function getWorkerName(workerId) {
+        const workers = {
+            'mariela': 'Mariela - Especialista en Diagnóstico Social',
+            'francisca': 'Francisca - Especialista en Trabajo Social', 
+            'yulianis': 'Yulianis - Especialista en Terapia Familiar',
+            'mariana': 'Mariana - Especialista en Intervención Social'
+        };
+        return workers[workerId] || 'No asignada';
     }
 
     function render() {
@@ -44,15 +55,18 @@
                 messageHtml = `<div style="margin-top:8px; padding:8px; background:#fff3cd; border:1px solid #ffeaa7; border-radius:8px; color:#856404; font-size:0.9rem;"><strong>Mensaje de la trabajadora:</strong> ${a.adminMessage}</div>`;
             }
             
-            item.innerHTML = `
-                <div>
-                    <div style="font-weight:700; color:#1e293b">${a.reason || 'Cita'}</div>
-                    <div class="muted">${a.userName || ''} · ${a.userEmail || ''}</div>
-                    ${messageHtml}
-                </div>
-                <div class="muted">${when}</div>
-                <div><span class="status ${statusToEs(currentStatus)}">${statusToEs(currentStatus)}</span></div>
-            `;
+        item.innerHTML = `
+            <div>
+                <div style="font-weight:700; color:#1e293b">${a.reason || 'Cita'}</div>
+                <div class="muted">${a.userName || ''} · ${a.userEmail || ''}</div>
+                ${a.assignedWorker ? `<div style="margin-top: 5px; padding: 4px 8px; background: #e0f2fe; border-radius: 6px; font-size: 0.85rem; color: #0369a1;">
+                    <strong>👩‍💼 Asignada a:</strong> ${getWorkerName(a.assignedWorker)}
+                </div>` : ''}
+                ${messageHtml}
+            </div>
+            <div class="muted">${when}</div>
+            <div><span class="status ${statusToEs(currentStatus)}">${statusToEs(currentStatus)}</span></div>
+        `;
             listEl.appendChild(item);
         });
     }
