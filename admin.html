@@ -176,6 +176,23 @@
                 <div id="appointmentsList" class="list"></div>
                 <div class="muted" style="margin-top:10px">Las citas se almacenan sólo en este navegador.</div>
             </div>
+
+            <!-- Moderar Reseñas -->
+            <div class="admin-card" style="padding-top: 18px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <h3 style="color:#1e293b; margin:0;">⭐ Moderar Reseñas</h3>
+                        <span class="chip"><span class="dot"></span> Local</span>
+                    </div>
+                    <div class="toolbar">
+                        <button class="btn secondary" onclick="refreshReviews()">🔄 Actualizar</button>
+                        <button class="btn secondary" onclick="exportReviews()">📥 Exportar</button>
+                    </div>
+                </div>
+                
+                <div id="reviewsList" class="list"></div>
+                <div class="muted" style="margin-top:10px">Fuente: reseñas guardadas en esta app (localStorage).</div>
+            </div>
         </div>
     </div>
 
@@ -208,6 +225,8 @@
     </script>
     <script src="JS/admin.js"></script>
     <script src="JS/citas-admin.js"></script>
+    <script src="JS/reviews.js"></script>
+    <script src="JS/reviews-admin.js"></script>
 </body>
 </html>
 

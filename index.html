@@ -289,16 +289,11 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>Somos trabajadoras sociales</p>
-        <p>&copy; 2025 Diagnóstico Social. Todos los derechos reservados.</p>
-    </footer>
-
     <!-- Scripts organizados -->
     <script src="JS/auth.js"></script>
     <script src="JS/cards.js"></script>
     <script src="JS/main.js"></script>
+    <script src="JS/reviews.js"></script>
     
     <!-- Conocer Más: Sección con animación y caption -->
     <style>
@@ -627,6 +622,94 @@
         document.addEventListener('DOMContentLoaded', initScrollAnimations);
     </script>
     
+    <script>
+        // Función para desplegar/contraer reseñas
+        function toggleReviews() {
+            const reviewsContent = document.getElementById('reviewsContent');
+            const toggleBtn = document.querySelector('.reviews-toggle-btn');
+            
+            if (reviewsContent.classList.contains('active')) {
+                // Contraer
+                reviewsContent.classList.remove('active');
+                toggleBtn.classList.remove('active');
+                toggleBtn.querySelector('.toggle-text').textContent = 'Ver testimonios y dejar reseña';
+            } else {
+                // Desplegar
+                reviewsContent.classList.add('active');
+                toggleBtn.classList.add('active');
+                toggleBtn.querySelector('.toggle-text').textContent = 'Ocultar testimonios';
+            }
+        }
+    </script>
+    
+    <!-- Sistema de Reseñas -->
+    <section class="reviews-section">
+        <div class="reviews-container">
+            <!-- Botón para desplegar reseñas -->
+            <div class="reviews-toggle-container">
+                <button class="reviews-toggle-btn" onclick="toggleReviews()">
+                    <span class="toggle-icon">💬</span>
+                    <span class="toggle-text">Ver testimonios y dejar reseña</span>
+                    <span class="toggle-arrow">▼</span>
+                </button>
+            </div>
+            
+            <!-- Contenido desplegable -->
+            <div class="reviews-content" id="reviewsContent">
+                <div class="reviews-header">
+                    <h2 class="reviews-title">¿Qué opinan nuestros usuarios?</h2>
+                    <p class="reviews-subtitle">Comparte tu experiencia y ayuda a otros a conocernos</p>
+                </div>
+            
+            <!-- Formulario de Reseña -->
+            <div class="review-form-container">
+                <form id="reviewForm" class="review-form">
+                    <div class="form-group">
+                        <label for="reviewerName">Tu nombre (opcional)</label>
+                        <input type="text" id="reviewerName" placeholder="Ej: María González">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reviewRating">Calificación</label>
+                        <div class="star-rating">
+                            <input type="radio" id="star5" name="rating" value="5">
+                            <label for="star5">⭐</label>
+                            <input type="radio" id="star4" name="rating" value="4">
+                            <label for="star4">⭐</label>
+                            <input type="radio" id="star3" name="rating" value="3">
+                            <label for="star3">⭐</label>
+                            <input type="radio" id="star2" name="rating" value="2">
+                            <label for="star2">⭐</label>
+                            <input type="radio" id="star1" name="rating" value="1">
+                            <label for="star1">⭐</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reviewComment">Tu comentario</label>
+                        <textarea id="reviewComment" placeholder="Cuéntanos sobre tu experiencia con nuestro servicio..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-review-btn">💬 Enviar Reseña</button>
+                </form>
+            </div>
+            
+            <!-- Sección de Testimonios -->
+            <div class="testimonials-container">
+                <h3 class="testimonials-title">Testimonios de nuestros usuarios</h3>
+                <div id="testimonialsList" class="testimonials-grid">
+                    <!-- Las reseñas se cargarán aquí dinámicamente -->
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Somos trabajadoras sociales</p>
+        <p>&copy; 2025 Diagnóstico Social. Todos los derechos reservados.</p>
+    </footer>
 
 </body>
 </html>
