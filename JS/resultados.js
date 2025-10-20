@@ -511,8 +511,12 @@ class ResultsSystem {
 
     // Exportar resultados
     exportResults() {
-        // Simular exportación de PDF
-        alert('Funcionalidad de exportación en desarrollo...');
+        // Mostrar modal de pago para descargar PDF
+        if (window.showPaymentModal) {
+            window.showPaymentModal();
+        } else {
+            alert('Sistema de pago no disponible. Por favor recarga la página.');
+        }
     }
 }
 

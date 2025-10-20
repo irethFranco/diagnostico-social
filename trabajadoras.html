@@ -289,6 +289,36 @@
             box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
         }
         
+        .revenue-section {
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(16, 185, 129, 0.2);
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.1);
+        }
+        
+        .section-description {
+            color: #64748b;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+        
+        .revenue-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .revenue-actions .btn-primary,
+        .revenue-actions .btn-secondary {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
         @media (max-width: 768px) {
             .worker-card {
                 padding: 25px;
@@ -343,6 +373,19 @@
                 </div>
             </div>
             
+            <div class="revenue-section">
+                <h2 class="section-title">💰 Panel de Ingresos</h2>
+                <p class="section-description">Gestiona y visualiza los ingresos generados por descargas de PDF</p>
+                <div class="revenue-actions">
+                    <a href="ingresos-trabajadoras.html" class="btn-primary">
+                        💵 Ver Ingresos
+                    </a>
+                    <button class="btn-secondary" onclick="showRevenueSummary()">
+                        📊 Resumen Rápido
+                    </button>
+                </div>
+            </div>
+            
             <div class="appointments-section">
                 <h2 class="section-title">📅 Mis Citas Asignadas</h2>
                 <div id="appointmentsList">
@@ -354,5 +397,33 @@
 
     <script src="JS/auth.js"></script>
     <script src="JS/worker-panel.js"></script>
+    <script>
+        // Función para mostrar resumen rápido de ingresos
+        function showRevenueSummary() {
+            try {
+                const revenueData = JSON.parse(localStorage.getItem('systemRevenue') || '{"total": 0, "downloads": 0}');
+                const downloads = JSON.parse(localStorage.getItem('pdfDownloads') || '[]');
+                
+                const totalRevenue = revenueData.total || 0;
+                const totalDownloads = Array.isArray(downloads) ? downloads.length : 0;
+                
+                // Calcular ingresos de hoy
+                const today = new Date().toDateString();
+                const todayRevenue = downloads
+                    .filter(download => new Date(download.date).toDateString() === today)
+                    .reduce((total, download) => total + (download.amount || 0), 0);
+                
+                alert(`💰 RESUMEN DE INGRESOS\n\n` +
+                      `💵 Ingresos Totales: $${totalRevenue.toLocaleString('es-CO')} COP\n` +
+                      `📄 PDFs Descargados: ${totalDownloads}\n` +
+                      `📅 Ingresos Hoy: $${todayRevenue.toLocaleString('es-CO')} COP\n\n` +
+                      `Para ver más detalles, haz clic en "Ver Ingresos"`);
+                      
+            } catch (error) {
+                console.error('Error mostrando resumen:', error);
+                alert('Error cargando datos de ingresos');
+            }
+        }
+    </script>
 </body>
 </html>

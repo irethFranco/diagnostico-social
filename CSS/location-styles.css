@@ -1,0 +1,845 @@
+/* ===========================================
+   ESTILOS PARA SISTEMA DE GEOREFERENCIACIÓN
+   =========================================== */
+
+/* Contenedor de información de ubicación */
+.location-info {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-radius: 16px;
+    padding: 25px;
+    margin: 20px 0;
+    border: 2px solid rgba(59, 130, 246, 0.2);
+    box-shadow: 0 10px 40px rgba(59, 130, 246, 0.1);
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Estilos para mensaje de carga */
+.location-loading {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+    border-radius: 12px;
+    border: 2px solid #e2e8f0;
+}
+
+.loading-spinner {
+    font-size: 3rem;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+.location-loading h3 {
+    color: #1e293b;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.location-loading p {
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.location-detected {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.location-fallback {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.location-icon {
+    font-size: 3rem;
+    opacity: 0.8;
+}
+
+.location-details h3 {
+    color: #1e293b;
+    margin: 0 0 10px 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.location-details p {
+    color: #64748b;
+    margin: 5px 0;
+    font-size: 1rem;
+}
+
+.location-actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-location {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-location:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+}
+
+/* Modal de ubicación */
+.location-modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.location-modal-content {
+    background: white;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+.location-modal-header {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: white;
+    padding: 25px 30px;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.location-modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.location-modal-body {
+    padding: 30px;
+}
+
+.location-modal-body h3 {
+    color: #1e293b;
+    margin: 20px 0 15px 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.location-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.location-option {
+    padding: 15px 20px;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    font-weight: 600;
+    color: #374151;
+}
+
+.location-option:hover {
+    background: #e0f2fe;
+    border-color: #3b82f6;
+    transform: translateY(-2px);
+}
+
+/* Modal de información del municipio */
+.municipality-modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.municipality-modal-content {
+    background: white;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+.municipality-modal-header {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    padding: 25px 30px;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.municipality-modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.municipality-modal-body {
+    padding: 30px;
+}
+
+.municipality-info,
+.municipality-economy,
+.municipality-services,
+.municipality-programs,
+.municipality-contacts {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #e2e8f0;
+}
+
+.municipality-info h3,
+.municipality-economy h3,
+.municipality-services h3,
+.municipality-programs h3,
+.municipality-contacts h3 {
+    color: #1e293b;
+    margin: 0 0 15px 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.municipality-info p,
+.municipality-economy p,
+.municipality-services p,
+.municipality-contacts p {
+    color: #374151;
+    margin: 8px 0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.municipality-programs ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.municipality-programs li {
+    color: #374151;
+    margin: 8px 0;
+    padding-left: 20px;
+    position: relative;
+}
+
+.municipality-programs li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #10b981;
+    font-weight: bold;
+}
+
+.municipality-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    padding: 20px 30px;
+    background: #f8fafc;
+    border-radius: 0 0 20px 20px;
+}
+
+.btn-cancel {
+    padding: 12px 24px;
+    border: 2px solid #e2e8f0;
+    background: white;
+    color: #64748b;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+}
+
+.btn-download {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-download:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+}
+
+/* Botón de cerrar modal */
+.close-modal {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.close-modal:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .location-info {
+        padding: 20px;
+        margin: 15px 0;
+    }
+
+    .location-detected,
+    .location-fallback {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .location-actions {
+        flex-direction: column;
+    }
+
+    .btn-location {
+        width: 100%;
+        text-align: center;
+    }
+
+    .location-modal-content,
+    .municipality-modal-content {
+        width: 95%;
+        margin: 10px;
+    }
+
+    .location-modal-header,
+    .municipality-modal-header {
+        padding: 20px;
+    }
+
+    .location-modal-body,
+    .municipality-modal-body {
+        padding: 20px;
+    }
+
+    .location-options {
+        grid-template-columns: 1fr;
+    }
+
+    .municipality-actions {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .btn-cancel,
+    .btn-download {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Estilos para el nuevo selector de municipios */
+.search-box {
+    margin-bottom: 25px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
+
+/* Estilos para departamentos */
+.departamentos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.departamento-section {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    background: #f8fafc;
+}
+
+.departamento-section h4 {
+    margin: 0 0 15px 0;
+    color: #1e293b;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.municipios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.location-option.more-options {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    font-style: italic;
+}
+
+.location-option small {
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+/* Estilos para el mapa de ubicación */
+.location-map-container {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-radius: 16px;
+    padding: 25px;
+    margin: 20px 0;
+    border: 2px solid rgba(59, 130, 246, 0.2);
+    box-shadow: 0 10px 40px rgba(59, 130, 246, 0.1);
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.location-map-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.location-map-header h3 {
+    color: #1e293b;
+    margin: 0 0 10px 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.location-map-header p {
+    color: #64748b;
+    margin: 0;
+    font-size: 1rem;
+}
+
+.location-map-wrapper {
+    margin-bottom: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.location-map-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.location-map-actions .btn-location {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    color: white;
+}
+
+.location-map-actions .btn-location:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para el mapa simple */
+.simple-map {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-radius: 12px;
+    padding: 20px;
+    min-height: 400px;
+    position: relative;
+    overflow: hidden;
+}
+
+.map-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+    height: 100%;
+    align-items: center;
+    justify-items: center;
+}
+
+.map-region {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.map-region:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-color: #3b82f6;
+}
+
+.map-region:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.city-marker {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}
+
+.city-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.2;
+}
+
+/* Destacar Sincelejo */
+.map-region[data-city="sincelejo"] {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border-color: #059669;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.map-region[data-city="sincelejo"]:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+}
+
+.map-region[data-city="sincelejo"] .city-name {
+    color: white;
+    font-weight: 700;
+}
+
+/* Estilos para el mapa visual de ubicación */
+.location-map-visual {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 2px solid #e2e8f0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.location-map-visual h4 {
+    margin: 0 0 20px 0;
+    color: #1e293b;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-align: center;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.mini-map {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.map-container {
+    flex: 1;
+    position: relative;
+    background: 
+        linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0369a1 100%),
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 100% 100%, 30px 30px, 40px 40px;
+    border-radius: 12px;
+    height: 250px;
+    border: 3px solid #0ea5e9;
+    overflow: hidden;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.colombia-outline {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-radius: 6px;
+    overflow: hidden;
+    clip-path: polygon(
+        20% 5%, 35% 8%, 50% 5%, 65% 8%, 80% 12%, 85% 20%, 
+        90% 35%, 88% 50%, 85% 65%, 80% 75%, 75% 85%, 70% 90%, 
+        60% 88%, 50% 85%, 40% 88%, 30% 90%, 20% 85%, 15% 75%, 
+        10% 60%, 8% 45%, 10% 30%, 15% 20%, 20% 5%
+    );
+}
+
+.colombia-outline::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+        radial-gradient(circle at 75% 30%, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+        radial-gradient(circle at 50% 60%, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+        radial-gradient(circle at 30% 80%, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+    background-size: 20px 20px, 25px 25px, 30px 30px, 22px 22px;
+}
+
+.colombia-outline::after {
+    content: "🇨🇴";
+    font-size: 1.5rem;
+    opacity: 0.3;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.location-marker {
+    position: absolute;
+    z-index: 10;
+    animation: pulse 2s infinite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.marker-pin {
+    font-size: 2rem;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+    background: white;
+    border-radius: 50%;
+    padding: 4px;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.marker-label {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    margin-top: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    min-width: 80px;
+}
+
+.map-info {
+    flex: 1;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px solid #e2e8f0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.map-info p {
+    margin: 10px 0;
+    color: #374151;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.map-info p:first-child {
+    color: #1e293b;
+    font-weight: 700;
+    font-size: 1.1rem;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.map-info p:not(:first-child) {
+    background: #f1f5f9;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border-left: 3px solid #3b82f6;
+}
+
+/* Animación del marcador */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Responsive para el mapa visual */
+@media (max-width: 768px) {
+    .mini-map {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .map-container {
+        height: 150px;
+    }
+    
+    .map-info {
+        width: 100%;
+    }
+    
+    .marker-label {
+        font-size: 0.7rem;
+        padding: 3px 6px;
+    }
+}
+
+/* Responsive para el mapa */
+@media (max-width: 768px) {
+    .location-map-container {
+        padding: 15px;
+        margin: 15px 0;
+    }
+    
+    .location-map-wrapper {
+        height: 300px !important;
+    }
+    
+    .location-map-actions {
+        flex-direction: column;
+    }
+    
+    .location-map-actions .btn-location {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .map-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 10px;
+    }
+    
+    .map-region {
+        padding: 10px;
+        min-height: 60px;
+    }
+    
+    .city-marker {
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+    }
+    
+    .city-name {
+        font-size: 0.8rem;
+    }
+}
+

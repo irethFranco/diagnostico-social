@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba del Sistema de Georeferenciación</title>
+    <link rel="stylesheet" href="CSS/estilos.css?v=42">
+    <link rel="stylesheet" href="CSS/location-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <style>
+        .test-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 40px 20px;
+        }
+
+        .test-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .test-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .test-subtitle {
+            font-size: 1.2rem;
+            color: #64748b;
+        }
+
+        .test-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .test-section h3 {
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+
+        .test-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .test-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .test-results {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .test-results h4 {
+            color: #166534;
+            margin-bottom: 10px;
+        }
+
+        .test-results pre {
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1 class="test-title">🗺️ Prueba del Sistema de Georeferenciación</h1>
+            <p class="test-subtitle">Verificación del sistema de ubicación y descarga por municipios</p>
+        </div>
+
+        <div class="test-content">
+            <!-- Sección de ubicación -->
+            <div class="location-section">
+                <h2 style="color: #1e293b; margin-bottom: 20px; text-align: center; font-size: 1.8rem; font-weight: 700;">📍 Información de Tu Zona</h2>
+                <div id="locationInfo">
+                    <div style="text-align: center; color: #64748b; padding: 20px;">
+                        <div style="font-size: 2rem; margin-bottom: 10px;">🔄</div>
+                        <p>Detectando tu ubicación...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-section">
+                <h3>🧪 Pruebas del Sistema</h3>
+                <p>Prueba las diferentes funcionalidades del sistema de georeferenciación:</p>
+                <div class="test-buttons">
+                    <button class="test-btn btn-primary" onclick="testLocationDetection()">
+                        📍 Detectar Ubicación
+                    </button>
+                    <button class="test-btn btn-secondary" onclick="testLocationSelector()">
+                        🗺️ Selector Manual
+                    </button>
+                    <button class="test-btn btn-warning" onclick="testMunicipalityInfo()">
+                        📊 Ver Info Municipio
+                    </button>
+                </div>
+            </div>
+
+            <div class="test-section">
+                <h3>💰 Pruebas de Pago</h3>
+                <p>Prueba el sistema de pago para descarga de información por municipio:</p>
+                <div class="test-buttons">
+                    <button class="test-btn btn-primary" onclick="testMunicipalityPayment()">
+                        💳 Probar Pago ($3.000)
+                    </button>
+                    <button class="test-btn btn-secondary" onclick="testDirectMunicipalityPDF()">
+                        📄 PDF Directo
+                    </button>
+                </div>
+            </div>
+
+            <div class="test-section">
+                <h3>📊 Datos del Sistema</h3>
+                <p>Verifica los datos cargados y el estado del sistema:</p>
+                <div class="test-buttons">
+                    <button class="test-btn btn-primary" onclick="showLocationData()">
+                        📍 Ver Datos de Ubicación
+                    </button>
+                    <button class="test-btn btn-secondary" onclick="showMunicipalityData()">
+                        🏙️ Ver Datos de Municipios
+                    </button>
+                    <button class="test-btn btn-warning" onclick="checkSystemStatus()">
+                        🔍 Estado del Sistema
+                    </button>
+                </div>
+            </div>
+
+            <div id="testResults" class="test-results" style="display: none;">
+                <h4>📋 Resultados de Prueba</h4>
+                <pre id="resultsContent"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script src="JS/location-system.js"></script>
+    <script>
+        // Probar detección de ubicación
+        function testLocationDetection() {
+            if (window.locationSystem) {
+                window.locationSystem.detectUserLocation();
+                showResult('📍 Iniciando detección de ubicación...');
+            } else {
+                showResult('❌ Error: Sistema de ubicación no disponible');
+            }
+        }
+
+        // Probar selector de ubicación
+        function testLocationSelector() {
+            if (window.locationSystem) {
+                window.locationSystem.showLocationSelector();
+                showResult('🗺️ Selector de ubicación abierto');
+            } else {
+                showResult('❌ Error: Sistema de ubicación no disponible');
+            }
+        }
+
+        // Probar información del municipio
+        function testMunicipalityInfo() {
+            if (window.locationSystem && window.locationSystem.detectedMunicipality) {
+                window.locationSystem.showMunicipalityModal();
+                showResult('📊 Mostrando información del municipio');
+            } else {
+                showResult('❌ Error: No se ha detectado ubicación. Usa "Detectar Ubicación" primero.');
+            }
+        }
+
+        // Probar pago de municipio
+        function testMunicipalityPayment() {
+            if (window.locationSystem && window.locationSystem.detectedMunicipality) {
+                window.locationSystem.downloadMunicipalityInfo();
+                showResult('💳 Procesando pago para información del municipio...');
+            } else {
+                showResult('❌ Error: No se ha detectado ubicación. Usa "Detectar Ubicación" primero.');
+            }
+        }
+
+        // Probar PDF directo
+        function testDirectMunicipalityPDF() {
+            try {
+                if (window.locationSystem && window.locationSystem.detectedMunicipality) {
+                    const municipalityData = window.locationSystem.getMunicipalityData(window.locationSystem.detectedMunicipality.id);
+                    if (municipalityData) {
+                        window.locationSystem.generateMunicipalityPDF(municipalityData);
+                        showResult('📄 PDF del municipio generado y descargado');
+                    } else {
+                        showResult('❌ Error: No hay datos del municipio');
+                    }
+                } else {
+                    showResult('❌ Error: No se ha detectado ubicación');
+                }
+            } catch (error) {
+                showResult('❌ Error generando PDF: ' + error.message);
+            }
+        }
+
+        // Mostrar datos de ubicación
+        function showLocationData() {
+            if (window.locationSystem) {
+                const data = {
+                    userLocation: window.locationSystem.userLocation,
+                    detectedMunicipality: window.locationSystem.detectedMunicipality,
+                    municipalityData: window.locationSystem.municipalityData ? 'Cargado' : 'No cargado'
+                };
+                showResult('📍 Datos de ubicación:\n' + JSON.stringify(data, null, 2));
+            } else {
+                showResult('❌ Error: Sistema de ubicación no disponible');
+            }
+        }
+
+        // Mostrar datos de municipios
+        function showMunicipalityData() {
+            if (window.locationSystem && window.locationSystem.municipalityData) {
+                const data = {
+                    municipios_disponibles: Object.keys(window.locationSystem.municipalityData.municipios || {}),
+                    zonas_rurales: Object.keys(window.locationSystem.municipalityData.zonas_rurales || {}),
+                    total_municipios: Object.keys(window.locationSystem.municipalityData.municipios || {}).length
+                };
+                showResult('🏙️ Datos de municipios:\n' + JSON.stringify(data, null, 2));
+            } else {
+                showResult('❌ Error: Datos de municipios no cargados');
+            }
+        }
+
+        // Verificar estado del sistema
+        function checkSystemStatus() {
+            const status = {
+                locationSystem: typeof window.LocationSystem !== 'undefined',
+                locationSystemInstance: !!window.locationSystem,
+                municipalityData: !!window.locationSystem?.municipalityData,
+                userLocation: !!window.locationSystem?.userLocation,
+                detectedMunicipality: !!window.locationSystem?.detectedMunicipality,
+                jsPDF: typeof window.jspdf !== 'undefined'
+            };
+
+            const statusText = Object.entries(status)
+                .map(([key, value]) => `${key}: ${value ? '✅' : '❌'}`)
+                .join('\n');
+
+            showResult('🔍 Estado del Sistema de Ubicación:\n' + statusText);
+        }
+
+        // Mostrar resultado
+        function showResult(message) {
+            const resultsDiv = document.getElementById('testResults');
+            const contentDiv = document.getElementById('resultsContent');
+            
+            resultsDiv.style.display = 'block';
+            contentDiv.textContent = message;
+            
+            // Auto-ocultar después de 10 segundos
+            setTimeout(() => {
+                resultsDiv.style.display = 'none';
+            }, 10000);
+        }
+
+        // Verificar estado inicial
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                checkSystemStatus();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
+

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados del Diagnóstico - Diagnóstico Social</title>
     <link rel="stylesheet" href="CSS/estilos.css?v=42">
+    <link rel="stylesheet" href="CSS/location-styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Chart.js removido para usar sistema simple -->
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -325,6 +326,325 @@
                 transform: scale(1);
             }
         }
+
+        /* Estilos del Modal de Pago */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .payment-modal-content {
+            background-color: #ffffff;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .payment-header {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .payment-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .payment-info {
+            padding: 30px;
+            background: #f8fafc;
+        }
+
+        .price-info {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .price-info h3 {
+            font-size: 2rem;
+            color: #1e293b;
+            margin: 0 0 10px 0;
+            font-weight: 800;
+        }
+
+        .price-info p {
+            color: #64748b;
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .payment-benefits {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .payment-benefits h4 {
+            color: #1e293b;
+            margin: 0 0 15px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .payment-benefits ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .payment-benefits li {
+            padding: 8px 0;
+            color: #475569;
+            font-size: 0.95rem;
+        }
+
+        .payment-form {
+            padding: 30px;
+        }
+
+        .payment-methods h4 {
+            color: #1e293b;
+            margin: 0 0 15px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .payment-option:hover {
+            border-color: #3b82f6;
+            background: #f0f9ff;
+        }
+
+        .payment-option input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        .payment-option input[type="radio"]:checked + .payment-icon {
+            color: #3b82f6;
+        }
+
+        .payment-option:has(input:checked) {
+            border-color: #3b82f6;
+            background: #f0f9ff;
+        }
+
+        .payment-icon {
+            font-size: 1.5rem;
+            margin-right: 12px;
+            width: 30px;
+            text-align: center;
+        }
+
+        .payment-details {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 25px;
+        }
+
+        .payment-details h4 {
+            color: #1e293b;
+            margin: 0 0 20px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #374151;
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .payment-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+
+        .btn-cancel {
+            padding: 12px 24px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            color: #64748b;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cancel:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .btn-pay {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-pay:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-pay:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-loading {
+            display: none;
+        }
+
+        .btn-pay.loading .btn-text {
+            display: none;
+        }
+
+        .btn-pay.loading .btn-loading {
+            display: inline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .payment-modal-content {
+                margin: 10% auto;
+                width: 95%;
+                max-height: 85vh;
+            }
+
+            .payment-header {
+                padding: 20px;
+            }
+
+            .payment-header h2 {
+                font-size: 1.3rem;
+            }
+
+            .payment-info, .payment-form {
+                padding: 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .payment-actions {
+                flex-direction: column;
+            }
+
+            .btn-cancel, .btn-pay {
+                width: 100%;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -385,6 +705,17 @@
             </div>
         </div>
 
+        <!-- Información de Ubicación -->
+        <div class="location-section" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-radius: 20px; padding: 30px; margin: 30px auto; max-width: 1000px; border: 2px solid rgba(59, 130, 246, 0.2); box-shadow: 0 10px 40px rgba(59, 130, 246, 0.1); animation: fadeInUp 0.8s ease-out 1.2s both;">
+            <h2 style="color: #1e293b; margin-bottom: 20px; text-align: center; font-size: 1.8rem; font-weight: 700;">📍 Información de Tu Zona</h2>
+            <div id="locationInfo">
+                <div style="text-align: center; color: #64748b; padding: 20px;">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">🔄</div>
+                    <p>Detectando tu ubicación...</p>
+                </div>
+            </div>
+        </div>
+
         <!-- Botones de Acción -->
         <div class="action-buttons" style="animation: fadeInUp 0.8s ease-out 1s both;">
             <button class="action-btn btn-success" onclick="saveToProfile()">
@@ -393,13 +724,112 @@
             <a href="index.html" class="action-btn btn-primary">
                 🏠 Volver al Inicio
             </a>
-            <button class="action-btn btn-secondary" onclick="exportResults()">
-                📄 Exportar PDF
+            <button class="action-btn btn-secondary" onclick="showPaymentModal()">
+                💳 Descargar PDF ($5.000)
             </button>
         </div>
     </div>
 
+    <!-- Modal de Pago -->
+    <div id="paymentModal" class="payment-modal">
+        <div class="payment-modal-content">
+            <div class="payment-header">
+                <h2>💳 Descargar PDF del Diagnóstico</h2>
+                <button class="close-modal" onclick="closePaymentModal()">&times;</button>
+            </div>
+            
+            <div class="payment-info">
+                <div class="price-info">
+                    <h3>Precio: $5.000 COP</h3>
+                    <p>Obtén tu diagnóstico completo en PDF con todas las recomendaciones y análisis detallado.</p>
+                </div>
+                
+                <div class="payment-benefits">
+                    <h4>✅ Incluye:</h4>
+                    <ul>
+                        <li>📊 Análisis completo por categorías</li>
+                        <li>📋 Recomendaciones personalizadas</li>
+                        <li>📈 Gráficos y visualizaciones</li>
+                        <li>📝 Diagnóstico detallado</li>
+                        <li>💾 Formato profesional para imprimir</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="payment-form">
+                <div class="payment-methods">
+                    <h4>Métodos de Pago:</h4>
+                    <div class="payment-options">
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="card" checked>
+                            <span class="payment-icon">💳</span>
+                            <span>Tarjeta de Crédito/Débito</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="nequi">
+                            <span class="payment-icon">📱</span>
+                            <span>Nequi</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="daviplata">
+                            <span class="payment-icon">💰</span>
+                            <span>Daviplata</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="payment-details" id="cardDetails">
+                    <h4>Datos de la Tarjeta:</h4>
+                    <div class="form-group">
+                        <label>Número de Tarjeta:</label>
+                        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Fecha de Vencimiento:</label>
+                            <input type="text" id="cardExpiry" placeholder="MM/AA" maxlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label>CVV:</label>
+                            <input type="text" id="cardCVV" placeholder="123" maxlength="3">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre del Titular:</label>
+                        <input type="text" id="cardName" placeholder="Nombre como aparece en la tarjeta">
+                    </div>
+                </div>
+                
+                <div class="payment-details" id="mobileDetails" style="display: none;">
+                    <h4>Datos del Pago Móvil:</h4>
+                    <div class="form-group">
+                        <label>Número de Celular:</label>
+                        <input type="tel" id="mobileNumber" placeholder="300 123 4567">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirmar Número:</label>
+                        <input type="tel" id="mobileConfirm" placeholder="300 123 4567">
+                    </div>
+                </div>
+                
+                <div class="payment-actions">
+                    <button class="btn-cancel" onclick="closePaymentModal()">Cancelar</button>
+                    <button class="btn-pay" onclick="processPayment()">
+                        <span class="btn-text">Pagar $5.000</span>
+                        <span class="btn-loading" style="display: none;">Procesando...</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="JS/resultados-simple.js"></script>
+    <script src="JS/payment-system.js"></script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="JS/location-system-simple.js"></script>
     <script>
         // Inicializar gráfico cuando la página cargue
         document.addEventListener('DOMContentLoaded', function() {
