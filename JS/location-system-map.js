@@ -180,7 +180,7 @@ class LocationSystemMap {
                 this.getLocationDetailsFromMap(new google.maps.LatLng(userLocation.lat, userLocation.lng));
             },
             (error) => {
-                console.log('Error obteniendo ubicación:', error);
+                // No mostrar error, solo usar fallback
                 this.hideLoadingMessage();
             },
             {

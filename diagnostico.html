@@ -333,17 +333,32 @@
         </div>
     </div>
 
-    <script src="JS/diagnostic.js"></script>
+    <script src="JS/diagnostic.js?v=51"></script>
     <script src="JS/main.js"></script>
     <script>
-        // Inicializar el formulario de diagnóstico cuando la página cargue
+        // Inicialización directa del formulario
         document.addEventListener('DOMContentLoaded', function() {
-            if (typeof DiagnosticForm !== 'undefined') {
-                window.diagnosticForm = new DiagnosticForm();
-                console.log('Formulario de diagnóstico inicializado');
-            } else {
-                console.error('DiagnosticForm no está disponible');
-            }
+            // Esperar un poco más para asegurar que todo esté cargado
+            setTimeout(() => {
+                if (typeof DiagnosticForm !== 'undefined') {
+                    window.diagnosticForm = new DiagnosticForm();
+                    console.log('✅ Formulario inicializado directamente');
+                    
+                    // Agregar event listener directo al botón como respaldo
+                    const nextBtn = document.getElementById('nextBtn');
+                    if (nextBtn) {
+                        nextBtn.addEventListener('click', function() {
+                            console.log('🖱️ Botón siguiente clickeado - event listener directo');
+                            if (window.diagnosticForm) {
+                                window.diagnosticForm.nextQuestion();
+                            }
+                        });
+                        console.log('✅ Event listener directo agregado al botón');
+                    }
+                } else {
+                    console.error('❌ DiagnosticForm no disponible');
+                }
+            }, 200);
         });
     </script>
 </body>

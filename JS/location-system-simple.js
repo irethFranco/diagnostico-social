@@ -35,6 +35,12 @@ class LocationSystemSimple {
 
     // Iniciar detección de ubicación
     startLocationDetection() {
+        // Evitar ejecución múltiple
+        if (this.detectionStarted) {
+            return;
+        }
+        this.detectionStarted = true;
+        
         console.log('🚀 Iniciando detección automática de ubicación...');
         this.showLoadingMessage();
         this.tryAutoDetection();
@@ -64,6 +70,12 @@ class LocationSystemSimple {
             return;
         }
 
+        // Intentar obtener ubicación directamente
+        this.requestLocation();
+    }
+
+    // Solicitar ubicación
+    requestLocation() {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 console.log('✅ Ubicación obtenida:', position.coords);
@@ -81,13 +93,13 @@ class LocationSystemSimple {
                 this.displayLocationInfo();
             },
             (error) => {
-                console.error('❌ Error obteniendo ubicación:', error);
+                // No mostrar error en consola, solo usar fallback
                 this.showLocationFallback();
             },
             {
                 enableHighAccuracy: true,
-                timeout: 15000,
-                maximumAge: 300000
+                timeout: 20000,
+                maximumAge: 60000
             }
         );
     }
@@ -128,7 +140,8 @@ class LocationSystemSimple {
             'quibdo': { lat: 5.6909, lng: -76.6586, radius: 0.3 },
             'arauca': { lat: 7.0903, lng: -70.7617, radius: 0.3 },
             'leticia': { lat: -4.2153, lng: -69.9406, radius: 0.3 },
-            'sincelejo': { lat: 9.3105, lng: -75.3686, radius: 0.1 }
+            'sincelejo': { lat: 9.3105, lng: -75.3686, radius: 0.1 },
+            'cecar': { lat: 9.3047, lng: -75.3978, radius: 0.05 }
         };
 
         // Buscar ciudad más cercana
@@ -180,7 +193,8 @@ class LocationSystemSimple {
             'quibdo': 'Quibdó',
             'arauca': 'Arauca',
             'leticia': 'Leticia',
-            'sincelejo': 'Sincelejo'
+            'sincelejo': 'Sincelejo',
+            'cecar': 'CECAR'
         };
         return names[cityId] || cityId;
     }
@@ -211,7 +225,8 @@ class LocationSystemSimple {
             'quibdo': 'Chocó',
             'arauca': 'Arauca',
             'leticia': 'Amazonas',
-            'sincelejo': 'Sucre'
+            'sincelejo': 'Sucre',
+            'cecar': 'Sucre'
         };
         return departments[cityId] || 'N/A';
     }
@@ -348,27 +363,21 @@ class LocationSystemSimple {
         const locationInfo = document.getElementById('locationInfo');
         if (!locationInfo) return;
 
-        locationInfo.innerHTML = `
-            <div class="location-fallback">
-                <div class="location-icon">❓</div>
-                <div class="location-details">
-                    <h3>Ubicación No Detectada</h3>
-                    <p>No pudimos detectar tu ubicación automáticamente.</p>
-                    <p>Esto puede deberse a:</p>
-                    <ul style="text-align: left; margin: 10px 0;">
-                        <li>Permisos de ubicación denegados</li>
-                        <li>Ubicación no disponible</li>
-                        <li>Problemas de conectividad</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="location-actions">
-                <button class="btn-location" onclick="locationSystemSimple.tryAutoDetection()" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
-                    🔄 Intentar Nuevamente
-                </button>
-            </div>
-        `;
+        // Usar ubicación de Sincelejo, Sucre como fallback
+        this.userLocation = {
+            latitude: 9.3047,
+            longitude: -75.3978
+        };
+        
+        this.detectedMunicipality = {
+            id: 'sincelejo',
+            name: 'Sincelejo',
+            departamento: 'Sucre',
+            coordinates: { lat: 9.3047, lng: -75.3978 }
+        };
+
+        // Mostrar información con mapa
+        this.displayLocationInfo();
     }
 
     // Mostrar modal de información del municipio

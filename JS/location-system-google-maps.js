@@ -102,8 +102,7 @@ class LocationSystemGoogleMaps {
             await this.getLocationDetailsFromGoogleMaps();
             
         } catch (error) {
-            console.log('Error obteniendo ubicación:', error);
-            // Limpiar timeout
+            // No mostrar error, solo limpiar timeout
             clearTimeout(timeoutId);
             // Mostrar fallback
             this.showLocationFallback();

@@ -86,7 +86,7 @@ class LocationSystemFallback {
             },
             (error) => {
                 clearTimeout(timeoutId);
-                console.log('Error obteniendo ubicación:', error);
+                // No mostrar error, solo usar fallback
                 this.showLocationFallback();
             },
             {

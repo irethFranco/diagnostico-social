@@ -88,8 +88,7 @@ class LocationSystem {
             this.displayLocationInfo();
             
         } catch (error) {
-            console.error('Error obteniendo ubicación:', error);
-            // Limpiar timeout
+            // No mostrar error, solo limpiar timeout
             clearTimeout(timeoutId);
             // Mostrar fallback inmediatamente si hay error
             this.showLocationFallback();

@@ -699,7 +699,7 @@ class LocationSystemRealMap {
                 this.displayLocationInfo();
             },
             (error) => {
-                console.log('Error obteniendo ubicación:', error);
+                // No mostrar error, solo usar fallback
                 this.hideLoadingMessage();
                 this.showLocationFallback();
             },

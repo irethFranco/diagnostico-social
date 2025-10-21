@@ -71,10 +71,8 @@ class MainApp {
     }
 
     initDiagnosticPage() {
-        console.log('Inicializando página de diagnóstico...');
-        
-        // Inicializar sistema de diagnóstico
-        const diagnostic = new DiagnosticForm();
+        console.log('Página de diagnóstico detectada - inicialización manejada por diagnostico.html');
+        // La inicialización se maneja directamente en diagnostico.html
     }
 }
 

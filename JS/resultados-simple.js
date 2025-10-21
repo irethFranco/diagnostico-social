@@ -30,28 +30,37 @@ class SimpleResultsSystem {
 
     // Mostrar resultados
     displayResults(data) {
-        console.log('Mostrando resultados:', data);
+        console.log('🔍 DEBUG - Mostrando resultados:', data);
+        console.log('🔍 DEBUG - Categorías disponibles:', data.categories);
+        console.log('🔍 DEBUG - Puntuación general:', data.generalScore);
+        console.log('🔍 DEBUG - Recomendaciones:', data.recommendations);
         
         // Mostrar diagnóstico específico
         if (data.diagnosis) {
+            console.log('🔍 DEBUG - Mostrando diagnóstico específico:', data.diagnosis);
             this.displaySpecificDiagnosis(data.diagnosis);
         }
         
         // Mostrar diagnóstico de IA
         if (data.aiDiagnosis) {
+            console.log('🔍 DEBUG - Mostrando diagnóstico de IA:', data.aiDiagnosis);
             this.displayAIDiagnosis(data.aiDiagnosis);
         }
         
         // Actualizar gráfico
+        console.log('🔍 DEBUG - Actualizando gráfico con categorías:', data.categories);
         this.updateChart(data.categories);
         
         // Actualizar recomendaciones
+        console.log('🔍 DEBUG - Actualizando recomendaciones:', data.recommendations);
         this.updateRecommendations(data.recommendations);
         
         // Actualizar nivel de riesgo
+        console.log('🔍 DEBUG - Actualizando nivel de riesgo:', data.generalScore);
         this.updateRiskLevel(data.generalScore);
         
         // Actualizar puntuación general
+        console.log('🔍 DEBUG - Actualizando puntuación general:', data.generalScore);
         this.updateGeneralScore(data.generalScore);
     }
 
@@ -83,10 +92,9 @@ class SimpleResultsSystem {
             // Formatear texto correctamente
             let cleanDiagnosis = aiDiagnosis.trim();
             
-            // Asegurar que el texto esté completo
-            if (cleanDiagnosis.length < 200) {
-                cleanDiagnosis = 'Querido/a Usuario, según el análisis de tus respuestas, se ha completado tu diagnóstico social. Los resultados muestran información importante sobre tu situación actual.';
-            }
+            // Mostrar el texto completo del diagnóstico sin limitaciones
+            console.log('🔍 DEBUG - Texto del diagnóstico completo:', cleanDiagnosis);
+            console.log('🔍 DEBUG - Longitud del texto:', cleanDiagnosis.length);
             
             // Reemplazar saltos de línea con <br> para HTML
             cleanDiagnosis = cleanDiagnosis.replace(/\n/g, '<br>');
@@ -172,7 +180,11 @@ class SimpleResultsSystem {
     // Actualizar gráfico con datos reales
     updateChart(categories) {
         const chartContainer = document.getElementById('chart');
-        if (!chartContainer) return;
+        console.log('🔍 DEBUG - Contenedor del gráfico encontrado:', !!chartContainer);
+        if (!chartContainer) {
+            console.error('❌ No se encontró el contenedor del gráfico');
+            return;
+        }
 
         console.log('🔍 DEBUG - Actualizando gráfico con categorías:', categories);
         console.log('🔍 DEBUG - Tipo de datos:', typeof categories);
@@ -216,10 +228,18 @@ class SimpleResultsSystem {
 
     // Actualizar recomendaciones
     updateRecommendations(recommendations) {
-        if (!recommendations) return;
+        console.log('🔍 DEBUG - Actualizando recomendaciones:', recommendations);
+        if (!recommendations) {
+            console.warn('⚠️ No se recibieron recomendaciones');
+            return;
+        }
         
         const recommendationsContainer = document.querySelector('.recommendations-list');
-        if (!recommendationsContainer) return;
+        console.log('🔍 DEBUG - Contenedor de recomendaciones encontrado:', !!recommendationsContainer);
+        if (!recommendationsContainer) {
+            console.error('❌ No se encontró el contenedor de recomendaciones');
+            return;
+        }
 
         let html = '';
         recommendations.forEach((rec, index) => {
@@ -234,6 +254,7 @@ class SimpleResultsSystem {
         });
         
         recommendationsContainer.innerHTML = html;
+        console.log('✅ Recomendaciones actualizadas exitosamente');
     }
 
     // Expandir recomendaciones cortas conocidas a versiones más detalladas (fallback UI)
