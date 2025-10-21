@@ -175,7 +175,8 @@ class PaymentSystem {
             // Simular procesamiento de pago
             await this.simulatePayment(paymentMethod);
             
-            // Si el pago es exitoso, generar y descargar PDF
+            // Si el pago es exitoso, guardar en perfil y generar PDF
+            this.saveToProfile();
             await this.generateAndDownloadPDF();
             
             this.showSuccess();
@@ -437,6 +438,36 @@ class PaymentSystem {
         };
     }
 
+    // Guardar en perfil del usuario
+    saveToProfile() {
+        try {
+            // Obtener resultados del diagnóstico
+            const results = JSON.parse(localStorage.getItem('diagnosticResults') || '{}');
+            
+            // Crear objeto para guardar en historial
+            const profileData = {
+                date: new Date().toISOString(),
+                generalScore: results.generalScore || document.getElementById('generalScore')?.textContent || 'N/A',
+                categories: results.categories || {},
+                recommendations: results.recommendations || [],
+                diagnosis: results.diagnosis || {},
+                aiDiagnosis: results.aiDiagnosis || null,
+                answers: results.answers || null,
+                userName: results.userName || localStorage.getItem('userName') || 'Usuario'
+            };
+
+            // Guardar en historial del perfil
+            let history = JSON.parse(localStorage.getItem('diagnosticHistory') || '[]');
+            history.push(profileData);
+            localStorage.setItem('diagnosticHistory', JSON.stringify(history));
+            
+            console.log('✅ Diagnóstico guardado en perfil del usuario');
+            
+        } catch (error) {
+            console.error('Error guardando en perfil:', error);
+        }
+    }
+
     // Registrar descarga exitosa
     recordSuccessfulDownload() {
         try {
@@ -488,7 +519,7 @@ class PaymentSystem {
             <div style="font-size: 1.5rem;">✅</div>
             <div>
                 <div>¡Pago exitoso!</div>
-                <div style="font-size: 0.9rem; font-weight: 400; margin-top: 4px;">Tu PDF se está descargando...</div>
+                <div style="font-size: 0.9rem; font-weight: 400; margin-top: 4px;">Diagnóstico guardado en tu perfil y PDF descargándose...</div>
             </div>
         `;
         

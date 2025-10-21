@@ -1782,16 +1782,7 @@ ${answersText}`;
         
         // Recomendaciones específicas basadas en vulnerabilidades
         if (vulnerabilityAreas.length > 0) {
-            const areas = [...vulnerabilityAreas];
-            let areasText = '';
-            if (areas.length === 1) {
-                areasText = areas[0];
-            } else if (areas.length === 2) {
-                areasText = `${areas[0]} y ${areas[1]}`;
-            } else {
-                areasText = `${areas.slice(0, -1).join(', ')} y ${areas[areas.length - 1]}`;
-            }
-            diagnosis += `Se recomienda atención prioritaria en las áreas de: ${areasText}. `;
+            diagnosis += `Se recomienda atención prioritaria en las áreas mencionadas anteriormente. `;
         }
         
         if (!hasSpecificIssues) {
@@ -1806,3 +1797,6 @@ ${answersText}`;
 
 // Exportar para uso global
 window.DiagnosticForm = DiagnosticForm;
+/ /   C a c h e   b u s t e r   -   E r r o r   d e   d u p l i c a d o s   c o r r e g i d o   1 0 / 2 0 / 2 0 2 5   2 2 : 4 1 : 2 5 
+ 
+ 

@@ -14,22 +14,45 @@
         /* Estilos específicos para resultados */
         .results-container {
             min-height: 100vh;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            padding: 40px 20px;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 30%, #cbd5e1 100%);
+            padding: 30px 15px;
+            position: relative;
+        }
+
+        .results-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 15% 85%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 15%, rgba(16, 185, 129, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.04) 0%, transparent 60%);
+            pointer-events: none;
         }
 
         .results-header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
             animation: fadeInUp 0.8s ease-out;
+            position: relative;
+            z-index: 1;
+            padding: 20px;
         }
 
         .results-title {
-            font-size: 3rem;
-            font-weight: 800;
+            font-size: 2.5rem;
+            font-weight: 900;
             color: #1e293b;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             letter-spacing: -0.5px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #1e293b 0%, #3b82f6 50%, #1d4ed8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .results-subtitle {
@@ -42,25 +65,28 @@
         }
 
         .results-content {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 30px;
-            margin-bottom: 60px;
+            gap: 25px;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
         }
 
         .score-card {
-            background: #ffffff;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
             border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e2e8f0;
+            padding: 35px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1), 0 5px 20px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(59, 130, 246, 0.2);
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
             flex: 1;
+            backdrop-filter: blur(15px);
         }
 
         .score-card::before {
@@ -74,28 +100,34 @@
         }
 
         .score-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15), 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-color: rgba(59, 130, 246, 0.25);
         }
 
         .score-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
+            font-size: 3.5rem;
+            margin-bottom: 25px;
             display: block;
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
+            transition: all 0.3s ease;
         }
 
         .score-title {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: #1e293b;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            letter-spacing: -0.4px;
         }
 
         .score-value {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 800;
             color: #3b82f6;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            text-shadow: 0 3px 6px rgba(59, 130, 246, 0.25);
+            letter-spacing: -0.6px;
         }
 
         .score-description {
@@ -105,15 +137,21 @@
         }
 
         .chart-container {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e2e8f0;
-            margin-bottom: 30px;
-            max-width: 100%;
-            margin-left: auto;
-            margin-right: auto;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 4px 15px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(59, 130, 246, 0.12);
+            margin-bottom: 15px;
+            backdrop-filter: blur(15px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+        }
+
+        .chart-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.12), 0 12px 30px rgba(0, 0, 0, 0.08);
+            border-color: rgba(59, 130, 246, 0.2);
         }
 
         .chart-container canvas {
@@ -125,17 +163,26 @@
             font-size: 1.5rem;
             font-weight: 700;
             color: #1e293b;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             text-align: center;
         }
 
         .recommendations-section {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e2e8f0;
-            margin-bottom: 40px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 4px 15px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(59, 130, 246, 0.12);
+            margin-bottom: 15px;
+            backdrop-filter: blur(15px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+        }
+
+        .recommendations-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.12), 0 12px 30px rgba(0, 0, 0, 0.08);
+            border-color: rgba(59, 130, 246, 0.2);
         }
 
         .recommendations-title {
@@ -149,51 +196,66 @@
         .recommendation-item {
             display: flex;
             align-items: center;
-            padding: 20px;
-            background: #f8fafc;
+            padding: 16px;
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
             border-radius: 12px;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
+            margin-bottom: 12px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border-left: 4px solid #3b82f6;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(59, 130, 246, 0.12);
         }
 
         .recommendation-item:hover {
-            background: #e0f2fe;
-            transform: translateX(5px);
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+            transform: translateX(8px) translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+            border-left-color: #1d4ed8;
         }
 
         .recommendation-icon {
-            font-size: 1.5rem;
-            margin-right: 15px;
+            font-size: 1.2rem;
+            margin-right: 12px;
             color: #3b82f6;
+            filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.2));
+            transition: all 0.3s ease;
+        }
+
+        .recommendation-item:hover .recommendation-icon {
+            transform: scale(1.1);
+            filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.3));
         }
 
         .recommendation-text {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: #475569;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
         .action-buttons {
             display: flex;
-            gap: 20px;
+            gap: 25px;
             justify-content: center;
-            margin-top: 40px;
-            max-width: 800px;
+            margin-top: 50px;
+            max-width: 900px;
             margin-left: auto;
             margin-right: auto;
+            position: relative;
+            z-index: 1;
         }
 
         .action-btn {
-            padding: 15px 30px;
+            padding: 18px 35px;
             border: none;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1rem;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
             display: inline-block;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
         }
 
         .btn-primary {
@@ -239,6 +301,16 @@
             .score-cards {
                 max-width: 100%;
             }
+            
+            .score-cards-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .chart-recommendations-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -280,6 +352,16 @@
             .score-title {
                 font-size: 1.3rem;
             }
+            
+            .score-cards-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .chart-recommendations-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -314,6 +396,106 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scroll-animate.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-animate-left {
+            opacity: 0;
+            transform: translateX(-60px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scroll-animate-left.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scroll-animate-right {
+            opacity: 0;
+            transform: translateX(60px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scroll-animate-right.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scroll-animate-scale {
+            opacity: 0;
+            transform: scale(0.85) translateY(20px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scroll-animate-scale.animate {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        /* Centrar botones de ubicación */
+        .location-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Efecto especial para Análisis y Recomendaciones */
+        .chart-recommendations-row {
+            opacity: 0;
+            transform: scale(0.7) translateY(60px) rotateX(15deg);
+            transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: blur(3px);
+        }
+
+        .chart-recommendations-row.animate {
+            opacity: 1;
+            transform: scale(1) translateY(0) rotateX(0deg);
+            filter: blur(0px);
         }
 
         @keyframes fadeInScale {
@@ -656,13 +838,13 @@
         </div>
 
         <!-- Diagnóstico Específico -->
-        <div class="diagnosis-section" style="background: #ffffff; border-radius: 20px; padding: 40px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0; margin-bottom: 40px; animation: fadeInUp 0.8s ease-out 0.1s both;">
-            <h2 class="diagnosis-title" style="font-size: 2rem; font-weight: 700; color: #1e293b; margin-bottom: 20px; text-align: center;">🎯 Diagnóstico Personalizado</h2>
+        <div class="diagnosis-section scroll-animate" style="background: #ffffff; border-radius: 20px; padding: 30px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0; margin: 0 auto 40px auto; max-width: 1200px;">
+            <h2 class="diagnosis-title" style="font-size: 1.8rem; font-weight: 700; color: #1e293b; margin-bottom: 15px; text-align: center;">🎯 Diagnóstico Personalizado</h2>
             <div class="diagnosis-content" id="diagnosisContent">
-                <div class="diagnosis-greeting" style="font-size: 1.3rem; color: #1e293b; margin-bottom: 20px; text-align: center; font-weight: 600;">
+                <div class="diagnosis-greeting" style="font-size: 1.2rem; color: #1e293b; margin-bottom: 15px; text-align: center; font-weight: 600;">
                     <span id="userGreeting">Hola,</span> según tus respuestas:
                 </div>
-                <div class="diagnosis-text" style="font-size: 1.2rem; color: #1e293b; line-height: 1.6; text-align: center; padding: 25px; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: 15px; border-left: 5px solid #3b82f6; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+                <div class="diagnosis-text" style="font-size: 1.1rem; color: #1e293b; line-height: 1.6; text-align: left; padding: 20px; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: 12px; border-left: 4px solid #3b82f6; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
                     <span id="diagnosisText">Cargando diagnóstico...</span>
                 </div>
             </div>
@@ -670,43 +852,49 @@
 
         <!-- Contenido Principal -->
         <div class="results-content">
-            <!-- Puntuación General -->
-            <div class="score-card" style="animation: fadeInScale 0.8s ease-out 0.2s both;">
-                <div class="score-icon">📊</div>
-                <h2 class="score-title">Puntuación General</h2>
-                <div class="score-value" id="generalScore">85</div>
-                <p class="score-description">Tu bienestar social se encuentra en un nivel satisfactorio con algunas áreas de mejora.</p>
-            </div>
+            <!-- Puntuación y Riesgo lado a lado -->
+            <div class="score-cards-row scroll-animate" style="display: flex; gap: 30px; margin-bottom: 35px; max-width: 1200px; margin-left: auto; margin-right: auto;">
+                <!-- Puntuación General -->
+                <div class="score-card">
+                    <div class="score-icon">📊</div>
+                    <h2 class="score-title">Puntuación General</h2>
+                    <div class="score-value" id="generalScore">85</div>
+                    <p class="score-description">Tu bienestar social se encuentra en un nivel satisfactorio con algunas áreas de mejora.</p>
+                </div>
 
-            <!-- Nivel de Riesgo -->
-            <div class="score-card" style="animation: fadeInScale 0.8s ease-out 0.4s both;">
-                <div class="score-icon">⚠️</div>
-                <h2 class="score-title">Nivel de Riesgo</h2>
-                <div class="score-value" style="color: #f59e0b;">BAJO</div>
-                <p class="score-description">No se detectan factores de riesgo significativos en tu situación actual.</p>
+                <!-- Nivel de Riesgo -->
+                <div class="score-card">
+                    <div class="score-icon">⚠️</div>
+                    <h2 class="score-title">Nivel de Riesgo</h2>
+                    <div class="score-value" style="color: #f59e0b;">BAJO</div>
+                    <p class="score-description">No se detectan factores de riesgo significativos en tu situación actual.</p>
+                </div>
             </div>
         </div>
 
-        <!-- Gráfico de Categorías -->
-        <div class="chart-container" style="animation: fadeInUp 0.8s ease-out 0.6s both;">
-            <h2 class="chart-title">Análisis por Categorías</h2>
-            <div id="chart" style="padding: 20px; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);"></div>
-        </div>
+        <!-- Gráfico y Recomendaciones lado a lado -->
+        <div class="chart-recommendations-row scroll-animate-scale" style="display: flex; flex-direction: column; gap: 25px; margin-bottom: 30px; max-width: 1200px; margin-left: auto; margin-right: auto;">
+            <!-- Gráfico de Categorías -->
+            <div class="chart-container">
+                <h2 class="chart-title">Análisis por Categorías</h2>
+                <div id="chart" style="padding: 20px; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);"></div>
+            </div>
 
-        <!-- Recomendaciones -->
-        <div class="recommendations-section" style="animation: fadeInUp 0.8s ease-out 0.8s both;">
-            <h2 class="recommendations-title">Recomendaciones Personalizadas</h2>
-            <!-- Contenedor dinámico poblado por JS/resultados-simple.js -->
-            <div class="recommendations-list">
-                <div class="recommendation-item">
-                    <div class="recommendation-icon">⏳</div>
-                    <div class="recommendation-text">Cargando recomendaciones personalizadas...</div>
+            <!-- Recomendaciones -->
+            <div class="recommendations-section">
+                <h2 class="recommendations-title">Recomendaciones Personalizadas</h2>
+                <!-- Contenedor dinámico poblado por JS/resultados-simple.js -->
+                <div class="recommendations-list">
+                    <div class="recommendation-item">
+                        <div class="recommendation-icon">⏳</div>
+                        <div class="recommendation-text">Cargando recomendaciones personalizadas...</div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Información de Ubicación -->
-        <div class="location-section" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-radius: 20px; padding: 30px; margin: 30px auto; max-width: 1000px; border: 2px solid rgba(59, 130, 246, 0.2); box-shadow: 0 10px 40px rgba(59, 130, 246, 0.1); animation: fadeInUp 0.8s ease-out 1.2s both;">
+        <div class="location-section scroll-animate" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-radius: 20px; padding: 30px; margin: 30px auto; max-width: 1200px; border: 2px solid rgba(59, 130, 246, 0.2); box-shadow: 0 10px 40px rgba(59, 130, 246, 0.1);">
             <h2 style="color: #1e293b; margin-bottom: 20px; text-align: center; font-size: 1.8rem; font-weight: 700;">📍 Información de Tu Zona</h2>
             <div id="locationInfo">
                 <div style="text-align: center; color: #64748b; padding: 20px;">
@@ -718,14 +906,11 @@
 
         <!-- Botones de Acción -->
         <div class="action-buttons" style="animation: fadeInUp 0.8s ease-out 1s both;">
-            <button class="action-btn btn-success" onclick="saveToProfile()">
-                💾 Guardar en Mi Perfil
-            </button>
             <a href="index.html" class="action-btn btn-primary">
                 🏠 Volver al Inicio
             </a>
-            <button class="action-btn btn-secondary" onclick="showPaymentModal()">
-                💳 Descargar PDF ($5.000)
+            <button class="action-btn btn-success" onclick="showPaymentModal()">
+                💾 Guardar en Mi Perfil y Descargar PDF ($5.000)
             </button>
         </div>
     </div>
@@ -734,24 +919,25 @@
     <div id="paymentModal" class="payment-modal">
         <div class="payment-modal-content">
             <div class="payment-header">
-                <h2>💳 Descargar PDF del Diagnóstico</h2>
+                <h2>💳 Guardar en Perfil y Descargar PDF</h2>
                 <button class="close-modal" onclick="closePaymentModal()">&times;</button>
             </div>
             
             <div class="payment-info">
                 <div class="price-info">
                     <h3>Precio: $5.000 COP</h3>
-                    <p>Obtén tu diagnóstico completo en PDF con todas las recomendaciones y análisis detallado.</p>
+                    <p>Guarda tu diagnóstico en tu perfil y obtén el PDF profesional completo.</p>
                 </div>
                 
                 <div class="payment-benefits">
                     <h4>✅ Incluye:</h4>
                     <ul>
+                        <li>💾 Guardado automático en tu perfil</li>
                         <li>📊 Análisis completo por categorías</li>
                         <li>📋 Recomendaciones personalizadas</li>
                         <li>📈 Gráficos y visualizaciones</li>
                         <li>📝 Diagnóstico detallado</li>
-                        <li>💾 Formato profesional para imprimir</li>
+                        <li>📄 PDF profesional para imprimir</li>
                     </ul>
                 </div>
             </div>
@@ -825,6 +1011,53 @@
 
     <script src="JS/resultados-simple.js"></script>
     <script src="JS/payment-system.js"></script>
+    
+    <script>
+        // Efecto de aparición profesional al hacer scroll
+        function handleScrollAnimations() {
+            const elements = document.querySelectorAll('.scroll-animate, .scroll-animate-left, .scroll-animate-right, .scroll-animate-scale, .chart-recommendations-row');
+            
+            elements.forEach((element, index) => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 200;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    // Delay especial para Análisis y Recomendaciones
+                    if (element.classList.contains('chart-recommendations-row')) {
+                        setTimeout(() => {
+                            element.classList.add('animate');
+                        }, 300); // Delay más largo para efecto dramático
+                    } else {
+                        // Delay escalonado para otros elementos
+                        setTimeout(() => {
+                            element.classList.add('animate');
+                        }, index * 100);
+                    }
+                }
+            });
+        }
+        
+        // Throttle para mejor rendimiento
+        function throttle(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+        
+        // Activar animaciones al cargar la página
+        window.addEventListener('load', () => {
+            setTimeout(handleScrollAnimations, 100);
+        });
+        
+        // Activar animaciones al hacer scroll con throttling
+        window.addEventListener('scroll', throttle(handleScrollAnimations, 50));
+    </script>
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <!-- Leaflet JS -->

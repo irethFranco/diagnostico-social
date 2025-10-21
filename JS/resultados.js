@@ -461,7 +461,7 @@ class ResultsSystem {
         // Guardar en historial
         this.saveToHistory(results);
         
-        alert('¡Diagnóstico guardado en tu perfil!');
+        alert('¡Diagnóstico guardado en tu perfil! Puedes verlo en la sección "Mi Perfil". Para descargar el PDF profesional, usa el botón "Descargar PDF Premium".');
     }
 
     // Obtener datos de categorías
@@ -529,3 +529,7 @@ function initResultsPage() {
 window.ResultsSystem = ResultsSystem;
 window.initResultsPage = initResultsPage;
 
+/ /   C a c h e   b u s t e r   -   M e j o r a s   v i s u a l e s   a p l i c a d a s   1 0 / 2 0 / 2 0 2 5   2 3 : 1 3 : 0 9  
+ / *   C a c h e   b u s t e r   -   1 0 / 2 0 / 2 0 2 5   2 3 : 1 4 : 1 6   * /  
+ / *   F O R C E   R E L O A D   -     * /  
+ 
