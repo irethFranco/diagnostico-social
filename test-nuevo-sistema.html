@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Nuevo Sistema de Diagnóstico</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .test-title {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .test-result {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success { color: #28a745; }
+        .error { color: #dc3545; }
+        .info { color: #17a2b8; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .diagnosis-output {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Test del Nuevo Sistema de Diagnóstico</h1>
+        
+        <div class="test-section">
+            <h2 class="test-title">1. Carga de Datos JSON</h2>
+            <button onclick="testJSONLoad()">Probar Carga de JSON</button>
+            <div id="jsonResult" class="test-result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2 class="test-title">2. Simulación de Respuestas</h2>
+            <button onclick="testAnswers()">Probar Respuestas de Prueba</button>
+            <div id="answersResult" class="test-result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2 class="test-title">3. Generación de Diagnóstico</h2>
+            <button onclick="testDiagnosis()">Generar Diagnóstico</button>
+            <div id="diagnosisResult" class="test-result"></div>
+            <div id="diagnosisOutput" class="diagnosis-output" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2 class="test-title">4. Test Completo</h2>
+            <button onclick="testComplete()">Ejecutar Test Completo</button>
+            <div id="completeResult" class="test-result"></div>
+        </div>
+    </div>
+
+    <script src="JS/diagnostic.js"></script>
+    <script>
+        let testForm = null;
+        
+        // Test 1: Carga de JSON
+        async function testJSONLoad() {
+            const resultDiv = document.getElementById('jsonResult');
+            resultDiv.innerHTML = '🔄 Cargando datos JSON...';
+            
+            try {
+                const response = await fetch('JS/diagnostico-data.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <div class="success">✅ JSON cargado exitosamente</div>
+                    <div class="info">📊 Preguntas: ${data.preguntas ? data.preguntas.length : 0}</div>
+                    <div class="info">📋 Categorías: ${data.categorias ? Object.keys(data.categorias).length : 0}</div>
+                    <div class="info">🎯 Niveles: ${data.niveles_vulnerabilidad ? Object.keys(data.niveles_vulnerabilidad).length : 0}</div>
+                `;
+                
+                return true;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Error cargando JSON: ${error.message}</div>`;
+                return false;
+            }
+        }
+        
+        // Test 2: Simulación de respuestas
+        async function testAnswers() {
+            const resultDiv = document.getElementById('answersResult');
+            resultDiv.innerHTML = '🔄 Simulando respuestas...';
+            
+            try {
+                // Crear instancia del formulario
+                testForm = new DiagnosticForm();
+                
+                // Simular respuestas de prueba
+                const testAnswers = {
+                    q1: 'urbana',
+                    q2: ['falta_empleo', 'acceso_salud'],
+                    q3: 'mucho',
+                    q4: 'desempleado',
+                    q5: 'no',
+                    q6: 'si',
+                    q7: 'deficiente',
+                    q8: 'secundaria',
+                    q9: 'apoyo_economico',
+                    q10: 'si'
+                };
+                
+                // Aplicar respuestas
+                Object.keys(testAnswers).forEach(question => {
+                    testForm.answers[question] = testAnswers[question];
+                });
+                
+                resultDiv.innerHTML = `
+                    <div class="success">✅ Respuestas simuladas exitosamente</div>
+                    <div class="info">📝 Respuestas aplicadas: ${Object.keys(testAnswers).length}</div>
+                    <div class="info">🔢 Puntuación total: ${testForm.calculateGeneralScore()}</div>
+                `;
+                
+                return true;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Error simulando respuestas: ${error.message}</div>`;
+                return false;
+            }
+        }
+        
+        // Test 3: Generación de diagnóstico
+        async function testDiagnosis() {
+            const resultDiv = document.getElementById('diagnosisResult');
+            const outputDiv = document.getElementById('diagnosisOutput');
+            resultDiv.innerHTML = '🔄 Generando diagnóstico...';
+            
+            try {
+                if (!testForm) {
+                    await testAnswers();
+                }
+                
+                // Generar diagnóstico
+                const diagnosis = testForm.generateFallbackDiagnosis();
+                
+                resultDiv.innerHTML = `
+                    <div class="success">✅ Diagnóstico generado exitosamente</div>
+                    <div class="info">📏 Longitud del texto: ${diagnosis.length} caracteres</div>
+                `;
+                
+                outputDiv.innerHTML = diagnosis;
+                outputDiv.style.display = 'block';
+                
+                return true;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Error generando diagnóstico: ${error.message}</div>`;
+                return false;
+            }
+        }
+        
+        // Test 4: Test completo
+        async function testComplete() {
+            const resultDiv = document.getElementById('completeResult');
+            resultDiv.innerHTML = '🔄 Ejecutando test completo...';
+            
+            try {
+                let allTestsPassed = true;
+                
+                // Test 1: Carga de JSON
+                const jsonTest = await testJSONLoad();
+                if (!jsonTest) allTestsPassed = false;
+                
+                // Test 2: Respuestas
+                const answersTest = await testAnswers();
+                if (!answersTest) allTestsPassed = false;
+                
+                // Test 3: Diagnóstico
+                const diagnosisTest = await testDiagnosis();
+                if (!diagnosisTest) allTestsPassed = false;
+                
+                if (allTestsPassed) {
+                    resultDiv.innerHTML = `
+                        <div class="success">🎉 ¡Todos los tests pasaron exitosamente!</div>
+                        <div class="info">✅ Sistema de diagnóstico funcionando correctamente</div>
+                        <div class="info">🚀 El nuevo JSON está operativo</div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">❌ Algunos tests fallaron</div>
+                        <div class="info">🔍 Revisa los resultados individuales</div>
+                    `;
+                }
+                
+                return allTestsPassed;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Error en test completo: ${error.message}</div>`;
+                return false;
+            }
+        }
+        
+        // Inicializar cuando la página cargue
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🧪 Test del nuevo sistema de diagnóstico cargado');
+        });
+    </script>
+</body>
+</html>
