@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Trabajadoras Sociales</title>
+    <link rel="stylesheet" href="CSS/estilos.css">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e0f2f7 0%, #f0f9ff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .login-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 80px rgba(59, 130, 246, 0.2);
+            border: 2px solid rgba(59, 130, 246, 0.1);
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .login-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .login-subtitle {
+            color: #64748b;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.95rem;
+        }
+        
+        .form-group input {
+            padding: 15px 20px;
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            border-radius: 12px;
+            font-size: 1rem;
+            color: #1e293b;
+            background: #ffffff;
+            outline: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .form-group input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .login-btn {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(59, 130, 246, 0.5);
+        }
+        
+        .login-btn:hover::before {
+            left: 100%;
+        }
+        
+        .back-btn {
+            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+            color: #374151;
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .back-btn:hover {
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+            transform: translateY(-1px);
+        }
+        
+        .error-message {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            color: #991b1b;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid #fecaca;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: none;
+            margin-bottom: 15px;
+        }
+        
+        .workers-info {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 2px solid rgba(59, 130, 246, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .workers-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .worker-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        
+        .worker-item {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            font-size: 0.9rem;
+        }
+        
+        .worker-name {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 3px;
+        }
+        
+        .worker-credentials {
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+        
+        @media (max-width: 768px) {
+            .login-card {
+                padding: 25px;
+            }
+            
+            .login-title {
+                font-size: 1.8rem;
+            }
+            
+            .worker-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1 class="login-title">👩‍💼 Panel de Trabajadoras</h1>
+                <p class="login-subtitle">Accede a tu panel de gestión</p>
+            </div>
+            
+            <div id="errorMessage" class="error-message"></div>
+            
+            <form class="login-form" id="workerLoginForm">
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <input type="text" id="username" placeholder="Tu usuario" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" placeholder="Tu contraseña" required>
+                </div>
+                
+                <button type="submit" class="login-btn">🚀 Iniciar Sesión</button>
+            </form>
+            
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="admin.html" class="back-btn">← Volver al Admin</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Datos de las trabajadoras
+        const WORKERS = {
+            'mariela': {
+                name: 'Mariela',
+                specialty: 'Especialista en Diagnóstico Social',
+                username: 'mariela',
+                password: 'mariela123'
+            },
+            'francisca': {
+                name: 'Francisca', 
+                specialty: 'Especialista en Trabajo Social',
+                username: 'francisca',
+                password: 'francisca123'
+            },
+            'yulianis': {
+                name: 'Yulianis',
+                specialty: 'Especialista en Terapia Familiar', 
+                username: 'yulianis',
+                password: 'yulianis123'
+            },
+            'mariana': {
+                name: 'Mariana',
+                specialty: 'Especialista en Intervención Social',
+                username: 'mariana', 
+                password: 'mariana123'
+            }
+        };
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        function loginWorker(username, password) {
+            // Buscar trabajadora por username
+            const worker = Object.values(WORKERS).find(w => w.username === username);
+            
+            if (!worker) {
+                showError('Usuario no encontrado');
+                return false;
+            }
+            
+            if (worker.password !== password) {
+                showError('Contraseña incorrecta');
+                return false;
+            }
+            
+            // Guardar sesión
+            localStorage.setItem('currentWorker', worker.username);
+            
+            // Redirigir al panel
+            window.location.href = 'trabajadoras.html';
+            return true;
+        }
+
+        document.getElementById('workerLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            if (!username || !password) {
+                showError('Completa todos los campos');
+                return;
+            }
+            
+            loginWorker(username, password);
+        });
+
+        // Verificar si ya está logueado
+        const currentWorker = localStorage.getItem('currentWorker');
+        if (currentWorker && WORKERS[currentWorker]) {
+            window.location.href = 'trabajadoras.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Recomendaciones Extensas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .recommendations {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #007bff;
+        }
+        .recommendation-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 3px solid #28a745;
+        }
+        .recommendation-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .recommendation-description {
+            color: #666;
+            line-height: 1.6;
+        }
+        .scenario {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .clear-button {
+            background: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🎯 Prueba de Recomendaciones Extensas</h1>
+        <p>Esta página permite probar que las recomendaciones ahora sean más extensas y detalladas.</p>
+        
+        <div class="scenario">
+            <h3>Probar Recomendaciones Extensas</h3>
+            <p>Simula diferentes escenarios para ver las recomendaciones detalladas</p>
+            <button class="test-button" onclick="testExtendedRecommendations()">Probar Recomendaciones Extensas</button>
+            <button class="clear-button" onclick="clearResults()">Limpiar Resultados</button>
+        </div>
+        
+        <div class="scenario">
+            <h3>Ver Recomendaciones Actuales</h3>
+            <p>Muestra las recomendaciones que están guardadas en localStorage</p>
+            <button class="test-button" onclick="showCurrentRecommendations()">Ver Recomendaciones Actuales</button>
+        </div>
+        
+        <div id="recommendations" class="recommendations" style="display: none;"></div>
+    </div>
+
+    <script src="JS/diagnostic.js"></script>
+    <script>
+        // Función para mostrar recomendaciones
+        function showRecommendations(title, recommendations) {
+            const recommendationsDiv = document.getElementById('recommendations');
+            recommendationsDiv.style.display = 'block';
+            
+            let html = `<h3>${title}</h3>`;
+            html += `<p><strong>Total de recomendaciones:</strong> ${recommendations.length}</p>`;
+            
+            recommendations.forEach((rec, index) => {
+                // Dividir la recomendación en título y descripción si tiene punto
+                const parts = rec.split('. ');
+                const title = parts[0];
+                const description = parts.slice(1).join('. ');
+                
+                html += `
+                    <div class="recommendation-item">
+                        <div class="recommendation-title">${index + 1}. ${title}</div>
+                        ${description ? `<div class="recommendation-description">${description}</div>` : ''}
+                    </div>
+                `;
+            });
+            
+            recommendationsDiv.innerHTML = html;
+        }
+
+        // Función para probar recomendaciones extensas
+        function testExtendedRecommendations() {
+            console.log('🧪 Probando recomendaciones extensas...');
+            
+            // Simular respuestas que generen recomendaciones extensas
+            const answers = {
+                q1: 'rural',
+                q2: ['falta_empleo', 'acceso_salud'],
+                q3: 'mucho',
+                q4: 'desempleado',
+                q5: 'no',
+                q6: 'si',
+                q7: 'inexistente',
+                q8: 'primaria',
+                q9: 'apoyo_economico',
+                q10: 'no'
+            };
+            
+            // Crear instancia del sistema de diagnóstico
+            const diagnostic = new DiagnosticForm();
+            diagnostic.answers = answers;
+            
+            // Generar análisis detallado
+            const analysis = diagnostic.generateDetailedAnalysis();
+            console.log('📊 Análisis generado:', analysis);
+            
+            // Calcular puntuación y nivel de vulnerabilidad
+            const generalScore = diagnostic.calculateGeneralScore();
+            const vulnerabilityLevel = diagnostic.getVulnerabilityLevel(generalScore);
+            console.log('📈 Puntuación:', generalScore, 'Nivel:', vulnerabilityLevel.nombre);
+            
+            // Generar recomendaciones específicas
+            const recommendations = diagnostic.generateSpecificRecommendations(analysis, vulnerabilityLevel.nombre);
+            console.log('💡 Recomendaciones generadas:', recommendations);
+            
+            // Guardar en localStorage para que se muestren en resultados
+            const results = {
+                date: new Date().toISOString(),
+                generalScore: generalScore,
+                categories: diagnostic.calculateCategoriesFromAnswers(),
+                diagnosis: diagnostic.generateSpecificDiagnosis(),
+                recommendations: recommendations,
+                aiDiagnosis: diagnostic.generateSpecificDiagnosisText(),
+                answers: answers,
+                userName: 'Usuario de Prueba'
+            };
+            
+            localStorage.setItem('diagnosticResults', JSON.stringify(results));
+            console.log('✅ Resultados guardados en localStorage');
+            
+            showRecommendations('Recomendaciones Extensas Generadas', recommendations);
+        }
+
+        // Función para mostrar recomendaciones actuales
+        function showCurrentRecommendations() {
+            const results = localStorage.getItem('diagnosticResults');
+            if (results) {
+                try {
+                    const data = JSON.parse(results);
+                    if (data.recommendations && data.recommendations.length > 0) {
+                        showRecommendations('Recomendaciones Actuales en localStorage', data.recommendations);
+                    } else {
+                        document.getElementById('recommendations').innerHTML = '<h3>No hay recomendaciones guardadas</h3>';
+                        document.getElementById('recommendations').style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Error cargando recomendaciones:', error);
+                    document.getElementById('recommendations').innerHTML = '<h3>Error cargando recomendaciones</h3>';
+                    document.getElementById('recommendations').style.display = 'block';
+                }
+            } else {
+                document.getElementById('recommendations').innerHTML = '<h3>No hay resultados guardados</h3>';
+                document.getElementById('recommendations').style.display = 'block';
+            }
+        }
+
+        // Función para limpiar resultados
+        function clearResults() {
+            localStorage.removeItem('diagnosticResults');
+            document.getElementById('recommendations').style.display = 'none';
+            console.log('🧹 Resultados limpiados');
+        }
+
+        // Cargar datos de diagnóstico al iniciar
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🧪 Página de prueba de recomendaciones extensas cargada');
+        });
+    </script>
+</body>
+</html>

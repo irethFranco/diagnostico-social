@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Diagnóstico</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        .test-button:hover {
+            background: #2563eb;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Test del Sistema de Diagnóstico</h1>
+        <p>Este es un test para verificar que el sistema de diagnóstico funciona correctamente.</p>
+        
+        <button class="test-button" onclick="testDiagnosis()">🔍 Probar Diagnóstico</button>
+        <button class="test-button" onclick="testChart()">📊 Probar Gráfica</button>
+        <button class="test-button" onclick="clearResults()">🗑️ Limpiar Resultados</button>
+        
+        <div id="testResult" class="result" style="display: none;">
+            <h3>Resultado del Test:</h3>
+            <div id="testContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // Simular respuestas de prueba
+        const testAnswers = {
+            q1: 'urbana',
+            q2: ['falta_empleo', 'salud', 'ambientales'],
+            q3: 'mucho',
+            q4: 'desempleado',
+            q5: 'no',
+            q6: 'si',
+            q7: 'deficiente',
+            q8: 'secundaria',
+            q9: 'capacitacion',
+            q10: 'si'
+        };
+
+        function testDiagnosis() {
+            // Simular el sistema de diagnóstico
+            const diagnosticForm = {
+                answers: testAnswers,
+                
+                generateDetailedAnalysis() {
+                    const analysis = {
+                        primaryIssue: 'vulnerabilidad económica severa',
+                        specificProblems: ['Falta de empleo o ingresos estables', 'Deficiente acceso a salud', 'Problemas ambientales'],
+                        economicImpact: 'se presenta una situación económica crítica con desempleo y ingresos insuficientes para cubrir necesidades básicas',
+                        socialImpact: 'existe disposición para participar en procesos comunitarios, lo cual es una fortaleza para el desarrollo social',
+                        educationalImpact: 'existe interés en capacitación, lo cual es positivo para el desarrollo personal',
+                        healthImpact: 'se presenta un acceso deficiente a servicios de salud, lo cual es una vulnerabilidad crítica',
+                        specificRecommendations: [
+                            'Buscar programas de empleo y apoyo económico inmediato',
+                            'Acceder a programas de apoyo económico y alimentario',
+                            'Buscar atención en centros de salud públicos y programas de salud comunitaria',
+                            'Buscar programas de capacitación técnica y profesional'
+                        ]
+                    };
+                    return analysis;
+                },
+
+                generateFallbackDiagnosis() {
+                    const userName = 'Usuario de Prueba';
+                    const analysis = this.generateDetailedAnalysis();
+                    
+                    let fallbackText = `Querido/a ${userName}, según el análisis detallado de tus respuestas, `;
+                    
+                    if (analysis.primaryIssue) {
+                        fallbackText += `tu diagnóstico social indica ${analysis.primaryIssue}. `;
+                    }
+                    
+                    if (analysis.specificProblems.length > 0) {
+                        fallbackText += `Se identificaron las siguientes problemáticas principales: ${analysis.specificProblems.join(', ')}. `;
+                    }
+                    
+                    if (analysis.economicImpact) {
+                        fallbackText += `En el aspecto económico, ${analysis.economicImpact}. `;
+                    }
+                    
+                    if (analysis.socialImpact) {
+                        fallbackText += `En el aspecto social, ${analysis.socialImpact}. `;
+                    }
+                    
+                    if (analysis.educationalImpact) {
+                        fallbackText += `En el aspecto educativo, ${analysis.educationalImpact}. `;
+                    }
+                    
+                    if (analysis.healthImpact) {
+                        fallbackText += `En el aspecto de salud, ${analysis.healthImpact}. `;
+                    }
+                    
+                    // Recomendaciones específicas
+                    if (analysis.specificRecommendations.length > 0) {
+                        fallbackText += `\n\nRecomendaciones específicas para tu situación:\n`;
+                        analysis.specificRecommendations.forEach((rec, index) => {
+                            fallbackText += `${index + 1}. ${rec}\n`;
+                        });
+                    }
+                    
+                    // Mensaje de apoyo
+                    fallbackText += `\n\nRecuerda que cada paso que tomes hacia la mejora de tu situación es valioso. Te recomendamos buscar apoyo en programas locales de desarrollo social y consultar con un especialista en trabajo social para obtener un análisis más detallado.`;
+                    
+                    return fallbackText;
+                }
+            };
+
+            const diagnosis = diagnosticForm.generateFallbackDiagnosis();
+            
+            document.getElementById('testResult').style.display = 'block';
+            document.getElementById('testContent').innerHTML = `
+                <h4>✅ Diagnóstico Generado:</h4>
+                <div style="background: white; padding: 15px; border-radius: 5px; margin: 10px 0; white-space: pre-line; line-height: 1.6;">${diagnosis}</div>
+                <p><strong>Longitud del texto:</strong> ${diagnosis.length} caracteres</p>
+                <p><strong>Estado:</strong> ${diagnosis.length > 100 ? '✅ Texto completo' : '❌ Texto cortado'}</p>
+            `;
+        }
+
+        function testChart() {
+            // Esperar un poco para que Chart.js se cargue
+            setTimeout(() => {
+                document.getElementById('testResult').style.display = 'block';
+                document.getElementById('testContent').innerHTML = `
+                    <h4>📊 Test de Gráfica:</h4>
+                    <p><strong>Chart.js disponible:</strong> ${typeof Chart !== 'undefined' ? '✅ Sí' : '❌ No'}</p>
+                    <p><strong>Canvas disponible:</strong> ${document.getElementById('categoriesChart') ? '✅ Sí' : '❌ No'}</p>
+                    <p><strong>Estado:</strong> ${typeof Chart !== 'undefined' ? '✅ Gráfica lista' : '❌ Chart.js no cargado'}</p>
+                    ${typeof Chart !== 'undefined' ? '<p style="color: green;">🎉 ¡Chart.js está funcionando correctamente!</p>' : '<p style="color: red;">⚠️ Chart.js no se pudo cargar. Recarga la página.</p>'}
+                `;
+            }, 1000);
+        }
+
+        function clearResults() {
+            localStorage.removeItem('diagnosticResults');
+            document.getElementById('testResult').style.display = 'none';
+            alert('Resultados limpiados');
+        }
+    </script>
+</body>
+</html>
