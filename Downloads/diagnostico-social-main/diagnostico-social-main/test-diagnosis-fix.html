@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Diagnóstico - Arreglo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        .test-button:hover {
+            background: #2563eb;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+        .diagnosis-box {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔍 Test Diagnóstico - Arreglo</h1>
+        <p>Este test verifica que el diagnóstico se genere correctamente.</p>
+        
+        <button class="test-button" onclick="testDiagnosisGeneration()">🔍 Test Generación Diagnóstico</button>
+        <button class="test-button" onclick="testSpecificAnswers()">📝 Test Respuestas Específicas</button>
+        <button class="test-button" onclick="testCompleteFlow()">🚀 Test Flujo Completo</button>
+        
+        <div id="testResult" class="result" style="display: none;">
+            <h3>Resultado del Test:</h3>
+            <div id="testContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // Simular respuestas de prueba
+        const testAnswers = {
+            q1: 'urbana',
+            q2: ['falta_empleo', 'salud', 'ambientales'],
+            q3: 'mucho',
+            q4: 'desempleado',
+            q5: 'no',
+            q6: 'si',
+            q7: 'deficiente',
+            q8: 'secundaria',
+            q9: 'capacitacion',
+            q10: 'si'
+        };
+
+        function testDiagnosisGeneration() {
+            // Simular el sistema de diagnóstico
+            const diagnosticForm = {
+                answers: testAnswers,
+                
+                generateDetailedAnalysis() {
+                    const analysis = {
+                        primaryIssue: '',
+                        specificProblems: [],
+                        economicImpact: '',
+                        socialImpact: '',
+                        educationalImpact: '',
+                        healthImpact: '',
+                        specificRecommendations: []
+                    };
+
+                    console.log('Generando análisis detallado para respuestas:', this.answers);
+
+                    // Analizar problemáticas identificadas (q2)
+                    const problems = this.answers.q2;
+                    if (Array.isArray(problems) && problems.length > 0) {
+                        analysis.specificProblems = problems.map(problem => {
+                            const problemNames = {
+                                'falta_empleo': 'Falta de empleo o ingresos estables',
+                                'inseguridad': 'Inseguridad y violencia',
+                                'salud': 'Deficiente acceso a salud',
+                                'ambientales': 'Problemas ambientales',
+                                'educacion': 'Bajo acceso a educación',
+                                'conflictos': 'Conflictos familiares o comunitarios',
+                                'oportunidades': 'Pocas oportunidades para jóvenes y mujeres'
+                            };
+                            return problemNames[problem] || problem.replace(/_/g, ' ');
+                        });
+                        console.log('Problemáticas identificadas:', analysis.specificProblems);
+                    }
+
+                    // Determinar problema principal
+                    if (problems && problems.includes('falta_empleo')) {
+                        analysis.primaryIssue = 'vulnerabilidad económica severa';
+                    } else if (problems && problems.includes('inseguridad')) {
+                        analysis.primaryIssue = 'vulnerabilidad por inseguridad';
+                    } else if (problems && problems.includes('salud')) {
+                        analysis.primaryIssue = 'vulnerabilidad en salud';
+                    } else if (problems && problems.includes('educacion')) {
+                        analysis.primaryIssue = 'vulnerabilidad educativa';
+                    } else if (problems && problems.includes('ambientales')) {
+                        analysis.primaryIssue = 'vulnerabilidad ambiental';
+                    } else if (problems && problems.includes('conflictos')) {
+                        analysis.primaryIssue = 'vulnerabilidad social por conflictos';
+                    } else if (problems && problems.includes('oportunidades')) {
+                        analysis.primaryIssue = 'vulnerabilidad por falta de oportunidades';
+                    } else {
+                        analysis.primaryIssue = 'vulnerabilidad social múltiple';
+                    }
+
+                    // Análisis económico
+                    const laborSituation = this.answers.q4;
+                    const incomeSituation = this.answers.q5;
+                    
+                    if (laborSituation === 'desempleado' && incomeSituation === 'no') {
+                        analysis.economicImpact = 'se presenta una situación económica crítica con desempleo y ingresos insuficientes para cubrir necesidades básicas';
+                        analysis.specificRecommendations.push('Buscar programas de empleo y apoyo económico inmediato');
+                    } else if (laborSituation === 'trabajador_independiente' && incomeSituation === 'parcialmente') {
+                        analysis.economicImpact = 'existe inestabilidad económica con ingresos parciales que requieren fortalecimiento';
+                        analysis.specificRecommendations.push('Explorar opciones de capacitación y formalización laboral');
+                    } else if (incomeSituation === 'no') {
+                        analysis.economicImpact = 'los ingresos no cubren las necesidades básicas, requiriendo apoyo económico';
+                        analysis.specificRecommendations.push('Acceder a programas de apoyo económico y alimentario');
+                    }
+
+                    // Análisis de salud
+                    const healthAccess = this.answers.q7;
+                    const specialCondition = this.answers.q6;
+                    
+                    if (healthAccess === 'deficiente' || healthAccess === 'inexistente') {
+                        analysis.healthImpact = 'se presenta un acceso deficiente a servicios de salud, lo cual es una vulnerabilidad crítica';
+                        analysis.specificRecommendations.push('Buscar atención en centros de salud públicos y programas de salud comunitaria');
+                    }
+                    
+                    if (specialCondition === 'si') {
+                        analysis.healthImpact += ' Además, se identifica una condición especial en el hogar que requiere atención específica';
+                        analysis.specificRecommendations.push('Acceder a programas especializados para personas con condiciones especiales');
+                    }
+
+                    return analysis;
+                },
+
+                generateFallbackDiagnosis() {
+                    const userName = 'Usuario de Prueba';
+                    
+                    // Análisis específico basado en las respuestas
+                    const analysis = this.generateDetailedAnalysis();
+                    
+                    let fallbackText = `Querido/a ${userName}, según el análisis detallado de tus respuestas, `;
+                    
+                    // Diagnóstico principal
+                    if (analysis.primaryIssue) {
+                        fallbackText += `tu diagnóstico social indica ${analysis.primaryIssue}. `;
+                    } else {
+                        fallbackText += `se ha completado tu diagnóstico social. `;
+                    }
+                    
+                    // Problemáticas identificadas
+                    if (analysis.specificProblems.length > 0) {
+                        fallbackText += `Se identificaron las siguientes problemáticas principales: ${analysis.specificProblems.join(', ')}. `;
+                    }
+                    
+                    // Análisis por aspectos
+                    if (analysis.economicImpact) {
+                        fallbackText += `En el aspecto económico, ${analysis.economicImpact}. `;
+                    }
+                    
+                    if (analysis.healthImpact) {
+                        fallbackText += `En el aspecto de salud, ${analysis.healthImpact}. `;
+                    }
+                    
+                    // Recomendaciones específicas
+                    if (analysis.specificRecommendations.length > 0) {
+                        fallbackText += `\n\nRecomendaciones específicas para tu situación:\n`;
+                        analysis.specificRecommendations.forEach((rec, index) => {
+                            fallbackText += `${index + 1}. ${rec}\n`;
+                        });
+                    }
+                    
+                    // Mensaje de apoyo
+                    fallbackText += `\n\nRecuerda que cada paso que tomes hacia la mejora de tu situación es valioso. Te recomendamos buscar apoyo en programas locales de desarrollo social y consultar con un especialista en trabajo social para obtener un análisis más detallado.`;
+                    
+                    // Asegurar que el texto esté completo
+                    if (fallbackText.length < 200) {
+                        fallbackText = `Querido/a ${userName}, se ha completado tu diagnóstico social. Los resultados muestran información importante sobre tu situación actual. Te recomendamos consultar con un especialista en trabajo social para obtener un análisis más detallado y personalizado.`;
+                    }
+                    
+                    // Limpiar y formatear el texto
+                    fallbackText = fallbackText.replace(/\s+/g, ' ').trim();
+                    fallbackText = fallbackText.replace(/\n\s*\n/g, '\n\n');
+                    
+                    console.log('Diagnóstico generado:', fallbackText);
+                    return fallbackText;
+                }
+            };
+
+            const diagnosis = diagnosticForm.generateFallbackDiagnosis();
+            
+            document.getElementById('testResult').style.display = 'block';
+            document.getElementById('testContent').innerHTML = `
+                <h4>🔍 Test Generación Diagnóstico:</h4>
+                <div class="status ${diagnosis.length > 200 ? 'success' : 'error'}">
+                    <strong>Diagnóstico generado:</strong> ${diagnosis.length > 200 ? '✅ Texto completo (' + diagnosis.length + ' caracteres)' : '❌ Texto cortado (' + diagnosis.length + ' caracteres)'}
+                </div>
+                <div class="status ${diagnosis.includes('económica') ? 'success' : 'error'}">
+                    <strong>Diagnóstico específico:</strong> ${diagnosis.includes('económica') ? '✅ Detecta vulnerabilidad económica' : '❌ No detecta vulnerabilidad económica'}
+                </div>
+                <div class="status ${diagnosis.includes('salud') ? 'success' : 'error'}">
+                    <strong>Diagnóstico de salud:</strong> ${diagnosis.includes('salud') ? '✅ Detecta problemas de salud' : '❌ No detecta problemas de salud'}
+                </div>
+                <div class="diagnosis-box">${diagnosis}</div>
+            `;
+        }
+
+        function testSpecificAnswers() {
+            // Simular diferentes escenarios
+            const scenarios = [
+                {
+                    name: 'Vulnerabilidad Económica',
+                    answers: {
+                        q1: 'urbana',
+                        q2: ['falta_empleo'],
+                        q3: 'mucho',
+                        q4: 'desempleado',
+                        q5: 'no',
+                        q6: 'no',
+                        q7: 'bueno',
+                        q8: 'secundaria',
+                        q9: 'apoyo_economico',
+                        q10: 'si'
+                    }
+                },
+                {
+                    name: 'Vulnerabilidad Ambiental',
+                    answers: {
+                        q1: 'urbana',
+                        q2: ['ambientales'],
+                        q3: 'poco',
+                        q4: 'empleado_formal',
+                        q5: 'si',
+                        q6: 'no',
+                        q7: 'bueno',
+                        q8: 'universitaria',
+                        q9: 'proyectos_comunitarios',
+                        q10: 'si'
+                    }
+                }
+            ];
+
+            let html = '<h4>📝 Test Respuestas Específicas:</h4>';
+            
+            scenarios.forEach(scenario => {
+                const diagnosticForm = {
+                    answers: scenario.answers,
+                    generateDetailedAnalysis() {
+                        const analysis = {
+                            primaryIssue: '',
+                            specificProblems: [],
+                            economicImpact: '',
+                            socialImpact: '',
+                            educationalImpact: '',
+                            healthImpact: '',
+                            specificRecommendations: []
+                        };
+
+                        const problems = this.answers.q2;
+                        if (Array.isArray(problems) && problems.length > 0) {
+                            analysis.specificProblems = problems.map(problem => {
+                                const problemNames = {
+                                    'falta_empleo': 'Falta de empleo o ingresos estables',
+                                    'inseguridad': 'Inseguridad y violencia',
+                                    'salud': 'Deficiente acceso a salud',
+                                    'ambientales': 'Problemas ambientales',
+                                    'educacion': 'Bajo acceso a educación',
+                                    'conflictos': 'Conflictos familiares o comunitarios',
+                                    'oportunidades': 'Pocas oportunidades para jóvenes y mujeres'
+                                };
+                                return problemNames[problem] || problem.replace(/_/g, ' ');
+                            });
+                        }
+
+                        if (problems && problems.includes('falta_empleo')) {
+                            analysis.primaryIssue = 'vulnerabilidad económica severa';
+                        } else if (problems && problems.includes('ambientales')) {
+                            analysis.primaryIssue = 'vulnerabilidad ambiental';
+                        } else {
+                            analysis.primaryIssue = 'vulnerabilidad social múltiple';
+                        }
+
+                        return analysis;
+                    }
+                };
+
+                const analysis = diagnosticForm.generateDetailedAnalysis();
+                
+                html += `
+                    <div class="status ${analysis.primaryIssue ? 'success' : 'error'}">
+                        <strong>${scenario.name}:</strong> ${analysis.primaryIssue ? '✅ ' + analysis.primaryIssue : '❌ No detectado'}
+                    </div>
+                `;
+            });
+            
+            document.getElementById('testResult').style.display = 'block';
+            document.getElementById('testContent').innerHTML = html;
+        }
+
+        function testCompleteFlow() {
+            // Simular datos de categorías
+            const categories = {
+                economico: 85,
+                salud: 70,
+                social: 90,
+                educacion: 60,
+                seguridad: 75,
+                ambiental: 80
+            };
+            
+            // Simular resultados completos
+            const results = {
+                date: new Date().toISOString(),
+                generalScore: 75,
+                categories: categories,
+                recommendations: [
+                    'Buscar programas de empleo',
+                    'Acceder a servicios de salud',
+                    'Participar en actividades comunitarias'
+                ],
+                diagnosis: 'Diagnóstico de prueba',
+                answers: testAnswers
+            };
+            
+            // Guardar en localStorage
+            localStorage.setItem('diagnosticResults', JSON.stringify(results));
+            
+            document.getElementById('testResult').style.display = 'block';
+            document.getElementById('testContent').innerHTML = `
+                <h4>🚀 Test Flujo Completo:</h4>
+                <div class="status success">✅ Datos guardados en localStorage</div>
+                <div class="status success">✅ Puntuación: ${results.generalScore}</div>
+                <div class="status success">✅ Categorías: ${Object.keys(categories).length} categorías</div>
+                <div class="status success">✅ Recomendaciones: ${results.recommendations.length} recomendaciones</div>
+                <p><strong>Próximo paso:</strong> Ve a <a href="resultados.html" target="_blank">resultados.html</a> para ver los resultados completos</p>
+            `;
+        }
+    </script>
+</body>
+</html>

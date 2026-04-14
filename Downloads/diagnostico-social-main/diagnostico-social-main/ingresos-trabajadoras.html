@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Ingresos - Trabajadoras</title>
+    <link rel="stylesheet" href="CSS/estilos.css?v=42">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos específicos para el panel de ingresos */
+        .revenue-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 40px 20px;
+        }
+
+        .revenue-header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .revenue-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .revenue-subtitle {
+            font-size: 1.2rem;
+            color: #64748b;
+            font-weight: 400;
+        }
+
+        .revenue-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+            animation: fadeInScale 0.8s ease-out;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-card.total {
+            border-left: 4px solid #10b981;
+        }
+
+        .stat-card.downloads {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .stat-card.today {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .stat-card.week {
+            border-left: 4px solid #8b5cf6;
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            opacity: 0.8;
+        }
+
+        .stat-content h3 {
+            font-size: 1rem;
+            color: #64748b;
+            margin: 0 0 8px 0;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin: 0;
+        }
+
+        .revenue-details {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 30px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .revenue-details h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+
+        .revenue-chart {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .revenue-history {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 30px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .revenue-history h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+
+        .downloads-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .download-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-item:hover {
+            background-color: #f8fafc;
+        }
+
+        .download-item:last-child {
+            border-bottom: none;
+        }
+
+        .download-info {
+            flex: 1;
+        }
+
+        .download-file {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .download-date {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .download-amount {
+            font-weight: 700;
+            color: #10b981;
+            font-size: 1.1rem;
+        }
+
+        .no-downloads {
+            text-align: center;
+            color: #64748b;
+            padding: 40px;
+            font-style: italic;
+        }
+
+        .revenue-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .btn-refresh, .btn-export {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-refresh {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-refresh:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .btn-export {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-export:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .back-button:hover {
+            background: #f8fafc;
+            border-color: #3b82f6;
+            transform: scale(1.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .revenue-container {
+                padding: 20px 15px;
+            }
+
+            .revenue-title {
+                font-size: 2rem;
+            }
+
+            .revenue-stats {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .stat-card {
+                padding: 20px;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+            }
+
+            .revenue-actions {
+                flex-direction: column;
+            }
+
+            .btn-refresh, .btn-export {
+                width: 100%;
+                text-align: center;
+            }
+
+            .back-button {
+                top: 15px;
+                left: 15px;
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="revenue-container">
+        <!-- Botón de regreso -->
+        <a href="trabajadoras.html" class="back-button" title="Volver al Panel de Trabajadoras">
+            ←
+        </a>
+
+        <!-- Header -->
+        <div class="revenue-header">
+            <h1 class="revenue-title">💰 Panel de Ingresos</h1>
+            <p class="revenue-subtitle">Ganancias generadas por descargas de PDF del diagnóstico</p>
+        </div>
+
+        <!-- Panel de Ingresos -->
+        <div id="revenueDashboard">
+            <!-- El contenido se carga dinámicamente -->
+        </div>
+    </div>
+
+    <script src="JS/revenue-dashboard.js"></script>
+    <script>
+        // Inicializar panel de ingresos cuando la página cargue
+        document.addEventListener('DOMContentLoaded', function() {
+            initRevenueDashboard();
+        });
+    </script>
+</body>
+</html>
+

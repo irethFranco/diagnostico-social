@@ -1,0 +1,240 @@
+{
+  "municipios": {
+    "bogota": {
+      "nombre": "Bogotá D.C.",
+      "departamento": "Cundinamarca",
+      "poblacion": 7412563,
+      "area": 1775,
+      "altitud": 2640,
+      "clima": "Templado",
+      "economia": {
+        "sectores_principales": ["Servicios", "Comercio", "Industria", "Tecnología"],
+        "pib_per_capita": 15000000,
+        "desempleo": 12.5
+      },
+      "servicios_sociales": {
+        "salud": {
+          "hospitales": 45,
+          "centros_salud": 120,
+          "cobertura": 95
+        },
+        "educacion": {
+          "colegios_publicos": 380,
+          "universidades": 25,
+          "cobertura_primaria": 98
+        },
+        "transporte": {
+          "transmilenio": true,
+          "sitp": true,
+          "metro": "En construcción"
+        }
+      },
+      "programas_sociales": [
+        "Familias en Acción",
+        "Jóvenes en Acción", 
+        "Más Familias en Acción",
+        "Bogotá Sin Hambre",
+        "Bogotá Te Cuida"
+      ],
+      "contactos_importantes": {
+        "alcaldia": "311 123 4567",
+        "secretaria_salud": "364 9090",
+        "secretaria_educacion": "324 1000",
+        "secretaria_integracion": "335 6700"
+      }
+    },
+    "medellin": {
+      "nombre": "Medellín",
+      "departamento": "Antioquia", 
+      "poblacion": 2529403,
+      "area": 382,
+      "altitud": 1538,
+      "clima": "Templado",
+      "economia": {
+        "sectores_principales": ["Textil", "Automotriz", "Tecnología", "Servicios"],
+        "pib_per_capita": 12000000,
+        "desempleo": 10.8
+      },
+      "servicios_sociales": {
+        "salud": {
+          "hospitales": 25,
+          "centros_salud": 80,
+          "cobertura": 92
+        },
+        "educacion": {
+          "colegios_publicos": 200,
+          "universidades": 15,
+          "cobertura_primaria": 96
+        },
+        "transporte": {
+          "metro": true,
+          "metrocable": true,
+          "buses": true
+        }
+      },
+      "programas_sociales": [
+        "Medellín Solidaria",
+        "Jóvenes con Futuro",
+        "Familias Fuertes",
+        "Medellín Me Cuida"
+      ],
+      "contactos_importantes": {
+        "alcaldia": "444 4144",
+        "secretaria_salud": "444 4144 ext 1000",
+        "secretaria_educacion": "444 4144 ext 2000",
+        "secretaria_integracion": "444 4144 ext 3000"
+      }
+    },
+    "cali": {
+      "nombre": "Cali",
+      "departamento": "Valle del Cauca",
+      "poblacion": 2250000,
+      "area": 564,
+      "altitud": 1000,
+      "clima": "Cálido",
+      "economia": {
+        "sectores_principales": ["Azucarero", "Textil", "Servicios", "Comercio"],
+        "pib_per_capita": 10000000,
+        "desempleo": 14.2
+      },
+      "servicios_sociales": {
+        "salud": {
+          "hospitales": 20,
+          "centros_salud": 60,
+          "cobertura": 88
+        },
+        "educacion": {
+          "colegios_publicos": 150,
+          "universidades": 12,
+          "cobertura_primaria": 94
+        },
+        "transporte": {
+          "mio": true,
+          "buses": true
+        }
+      },
+      "programas_sociales": [
+        "Cali Progresa",
+        "Jóvenes con Oportunidades",
+        "Familias Caleñas",
+        "Cali Te Cuida"
+      ],
+      "contactos_importantes": {
+        "alcaldia": "660 0000",
+        "secretaria_salud": "660 0000 ext 1000",
+        "secretaria_educacion": "660 0000 ext 2000",
+        "secretaria_integracion": "660 0000 ext 3000"
+      }
+    },
+    "barranquilla": {
+      "nombre": "Barranquilla",
+      "departamento": "Atlántico",
+      "poblacion": 1232000,
+      "area": 166,
+      "altitud": 18,
+      "clima": "Cálido",
+      "economia": {
+        "sectores_principales": ["Portuario", "Industrial", "Comercio", "Servicios"],
+        "pib_per_capita": 8500000,
+        "desempleo": 16.5
+      },
+      "servicios_sociales": {
+        "salud": {
+          "hospitales": 15,
+          "centros_salud": 40,
+          "cobertura": 85
+        },
+        "educacion": {
+          "colegios_publicos": 100,
+          "universidades": 8,
+          "cobertura_primaria": 90
+        },
+        "transporte": {
+          "transmetro": true,
+          "buses": true
+        }
+      },
+      "programas_sociales": [
+        "Barranquilla Cómo Vamos",
+        "Jóvenes con Futuro",
+        "Familias Barranquilleras"
+      ],
+      "contactos_importantes": {
+        "alcaldia": "344 0000",
+        "secretaria_salud": "344 0000 ext 1000",
+        "secretaria_educacion": "344 0000 ext 2000",
+        "secretaria_integracion": "344 0000 ext 3000"
+      }
+    },
+    "cartagena": {
+      "nombre": "Cartagena",
+      "departamento": "Bolívar",
+      "poblacion": 914552,
+      "area": 709,
+      "altitud": 2,
+      "clima": "Cálido",
+      "economia": {
+        "sectores_principales": ["Turismo", "Portuario", "Petroquímico", "Servicios"],
+        "pib_per_capita": 9000000,
+        "desempleo": 18.2
+      },
+      "servicios_sociales": {
+        "salud": {
+          "hospitales": 12,
+          "centros_salud": 35,
+          "cobertura": 82
+        },
+        "educacion": {
+          "colegios_publicos": 80,
+          "universidades": 6,
+          "cobertura_primaria": 88
+        },
+        "transporte": {
+          "buses": true,
+          "transcaribe": true
+        }
+      },
+      "programas_sociales": [
+        "Cartagena Cómo Vamos",
+        "Jóvenes con Oportunidades",
+        "Familias Cartageneras"
+      ],
+      "contactos_importantes": {
+        "alcaldia": "660 0000",
+        "secretaria_salud": "660 0000 ext 1000",
+        "secretaria_educacion": "660 0000 ext 2000",
+        "secretaria_integracion": "660 0000 ext 3000"
+      }
+    }
+  },
+  "zonas_rurales": {
+    "cundinamarca": {
+      "municipios": ["Chía", "Cajicá", "Zipaquirá", "Soacha", "Facatativá"],
+      "caracteristicas": {
+        "poblacion_rural": 45,
+        "acceso_salud": 70,
+        "acceso_educacion": 75,
+        "programas_sociales": ["Familias en Acción", "Jóvenes en Acción", "Más Familias en Acción"]
+      }
+    },
+    "antioquia": {
+      "municipios": ["Bello", "Itagüí", "Envigado", "Sabaneta", "La Estrella"],
+      "caracteristicas": {
+        "poblacion_rural": 35,
+        "acceso_salud": 80,
+        "acceso_educacion": 85,
+        "programas_sociales": ["Medellín Solidaria", "Jóvenes con Futuro"]
+      }
+    },
+    "valle_del_cauca": {
+      "municipios": ["Palmira", "Buenaventura", "Tuluá", "Cartago", "Buga"],
+      "caracteristicas": {
+        "poblacion_rural": 55,
+        "acceso_salud": 65,
+        "acceso_educacion": 70,
+        "programas_sociales": ["Cali Progresa", "Jóvenes con Oportunidades"]
+      }
+    }
+  }
+}
+
