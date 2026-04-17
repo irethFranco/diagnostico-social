@@ -59,18 +59,28 @@
     <section class="hero">
         <div class="hero-container">
             <div class="hero-image">
-                <img src="imagenes/fonfo.jpg" alt="Diagnóstico Social" class="main-image">
+                <img src="imagenes/fonfo.jpg" alt="Diagnóstico Social" class="main-image" id="heroMainImage">
             </div>
             <div class="hero-content">
-                <h1 class="hero-title">Bienvenido al diagnostico social</h1>
-                <p class="hero-description">Comparte tu problemática social y recibe un diagnóstico orientado hacia alternativas de solución, empoderamiento y transformación personal y colectiva.</p>
+                <h1 class="hero-title" id="heroTitle">Bienvenido al diagnostico social</h1>
+                <p class="hero-description" id="heroDescription">Comparte tu problemática social y recibe un diagnóstico orientado hacia alternativas de solución, empoderamiento y transformación personal y colectiva.</p>
                 <div class="hero-buttons">
-                    <button class="btn-outline" onclick="window.location.href='diagnostico.html'">COMENZAR DIAGNÓSTICO</button>
+                    <button class="btn-outline" id="heroPrimaryBtn" onclick="window.location.href='diagnostico.html'">COMENZAR DIAGNÓSTICO</button>
                     <button class="btn-filled" id="knowMoreBtn">CONOCER MÁS</button>
                 </div>
             </div>
         </div>
     </section>
+
+    <div id="promoBanner" class="promo-banner-wrap" style="display:none; max-width:1200px; margin:14px auto 8px auto; padding:0 20px;">
+        <div class="promo-banner-card" style="background: linear-gradient(135deg, #9cc7df, #78adcf); color:#0f172a; border:1px solid #5c94ba; border-radius:14px; padding:18px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px; box-shadow: 0 14px 30px rgba(30,41,59,0.18);">
+            <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+                <img id="promoBannerImage" class="promo-banner-image" src="" alt="Promoción" style="display:none; width:120px; height:82px; object-fit:cover; border-radius:12px; border:1px solid #5c94ba;">
+                <span id="promoBannerText" class="promo-banner-text" style="font-weight:900; font-size:1.25rem; line-height:1.35;"></span>
+            </div>
+            <button id="promoBannerCloseBtn" class="promo-banner-close" type="button" style="border:1px solid #1e3a5f; background:#1e3a5f; color:#f8fafc; border-radius:10px; padding:9px 14px; font-weight:800; font-size:0.95rem; cursor:pointer;">Cerrar</button>
+        </div>
+    </div>
 
     <!-- Sección Conocer Más (despliegue en la misma página) -->
     <section id="knowMoreSection" class="know-more" aria-label="Conocer más">
@@ -86,9 +96,9 @@
     <section class="features-section">
         <div class="features-container">
             <div class="features-content">
-                <h2 class="features-title">Tecnología para el trabajo social</h2>
-                <h3 class="features-subtitle">Transformando comunidades</h3>
-                <p class="features-description">Utilizamos tecnología avanzada para brindar diagnósticos sociales precisos y soluciones innovadoras que empoderan a las comunidades y promueven el cambio social positivo.</p>
+                <h2 class="features-title" id="featuresTitle">Tecnología para el trabajo social</h2>
+                <h3 class="features-subtitle" id="featuresSubtitle">Transformando comunidades</h3>
+                <p class="features-description" id="featuresDescription">Utilizamos tecnología avanzada para brindar diagnósticos sociales precisos y soluciones innovadoras que empoderan a las comunidades y promueven el cambio social positivo.</p>
             </div>
             <div class="features-cards">
                 <div class="feature-card">
@@ -133,7 +143,7 @@
             
             <div class="mission-vision-content">
                 <div class="mission-vision-image">
-                    <img src="imagenes/social.jpg" alt="Equipo de trabajo social profesional" class="social-image">
+                    <img src="imagenes/social.jpg" alt="Equipo de trabajo social profesional" class="social-image" id="missionImage">
                 </div>
                 
                 <div class="mission-vision-text">
@@ -278,7 +288,8 @@
                         <p class="member-experience">Facilita el proceso de diagnóstico y ofrece seguimiento personalizado</p>
                         <div class="price-tag" id="price-jimena">💬 Consulta GRATIS</div>
                         <div class="member-contact">
-                            <a href="https://wa.me/573235518739?text=Hola%20Jimena,%20vi%20tu%20perfil%20y%20me%20gustaría%20agendar%20una%20consulta%20contigo" target="_blank" class="contact-btn whatsapp-btn">
+                            <a href="https://wa.me/573235518739?text=Hola%20Mariana,%20vi%20tu%20perfil%20y%20me%20gustaría%20agendar%20una%20consulta%20contigo" target="_blank" class="contact-btn whatsapp-btn">
+
                                 <img src="imagenes/whatsapp.png" alt="WhatsApp" class="whatsapp-icon">
                                 WhatsApp
                             </a>
@@ -297,9 +308,48 @@
     <script src="JS/pricing.js"></script>
     <script src="JS/metrics.js"></script>
     <script src="JS/discount-system.js"></script>
+    <script src="JS/content-manager.js"></script>
     
     <!-- Conocer Más: Sección con animación y caption -->
     <style>
+        .promo-banner-wrap { animation: promoSlideIn 520ms cubic-bezier(.2,.7,.2,1); }
+        .promo-banner-card { position: relative; overflow: hidden; transition: transform .25s ease, box-shadow .25s ease; }
+        .promo-banner-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 70%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+            transform: skewX(-20deg);
+            animation: promoShine 4.2s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .promo-banner-card:hover { transform: translateY(-2px); box-shadow: 0 18px 34px rgba(30,41,59,.22); }
+        .promo-banner-image { animation: promoFloat 2.8s ease-in-out infinite; }
+        .promo-banner-text { animation: promoPulseText 2.8s ease-in-out infinite; }
+        .promo-banner-close { transition: transform .2s ease, filter .2s ease; }
+        .promo-banner-close:hover { transform: translateY(-1px) scale(1.03); filter: brightness(1.05); }
+
+        @keyframes promoSlideIn {
+            from { opacity: 0; transform: translateY(-8px) scale(.985); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes promoShine {
+            0% { left: -120%; }
+            55% { left: 140%; }
+            100% { left: 140%; }
+        }
+        @keyframes promoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+        @keyframes promoPulseText {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .86; }
+        }
+
         .know-more { max-width: 1200px; margin: 0 auto; padding: 0 20px; overflow: hidden; max-height: 0; opacity: 0; transition: max-height 550ms cubic-bezier(.2,.7,.2,1), opacity 400ms ease; cursor: pointer; transform: translateY(-8px); }
         .know-more.open { max-height: 85vh; opacity: 1; transform: translateY(0); }
         .know-more-container { margin: 24px 0 8px 0; }
@@ -753,7 +803,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="reviewRating">Calificación</label>
+                        <label>Calificación</label>
                         <div class="star-rating">
                             <input type="radio" id="star5" name="rating" value="5">
                             <label for="star5">⭐</label>

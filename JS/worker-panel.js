@@ -43,6 +43,14 @@
         localStorage.setItem('appointments', JSON.stringify(list));
     }
 
+    function getDiagnosticAssignments() {
+        try {
+            return JSON.parse(localStorage.getItem('diagnosticWorkerAssignments') || '[]');
+        } catch (_) {
+            return [];
+        }
+    }
+
     // Función para verificar autenticación de trabajadora
     function checkWorkerAuth() {
         const workerId = localStorage.getItem('currentWorker');
@@ -172,6 +180,77 @@
         }).join('');
     }
 
+    function renderDiagnosticAssignments() {
+        if (!currentWorker) return;
+
+        const assignments = getDiagnosticAssignments()
+            .filter(item => item.workerId === currentWorker.username)
+            .sort((a, b) => new Date(b.assignedAt) - new Date(a.assignedAt));
+
+        let section = document.getElementById('diagnosticAssignmentsSection');
+        if (!section) {
+            section = document.createElement('div');
+            section.id = 'diagnosticAssignmentsSection';
+            section.className = 'appointments-section';
+            const appointmentsSection = document.querySelector('.appointments-section');
+            if (appointmentsSection && appointmentsSection.parentNode) {
+                appointmentsSection.parentNode.insertBefore(section, appointmentsSection);
+            }
+        }
+
+        if (!section) return;
+
+        if (assignments.length === 0) {
+            section.innerHTML = `
+                <h2 class="section-title">🧾 Diagnósticos asignados automáticamente</h2>
+                <div class="no-appointments">
+                    <h3>Sin diagnósticos asignados</h3>
+                    <p>Cuando los usuarios finalicen el formulario, aparecerán aquí.</p>
+                </div>
+            `;
+            return;
+        }
+
+        section.innerHTML = `
+            <h2 class="section-title">🧾 Diagnósticos asignados automáticamente</h2>
+            ${assignments.map(item => {
+                const assignedDate = item.assignedAt
+                    ? new Date(item.assignedAt).toLocaleString('es-ES')
+                    : 'Sin fecha';
+                return `
+                    <div class="appointment-item">
+                        <div class="appointment-header">
+                            <div class="appointment-client">${item.userName || 'Usuario'}</div>
+                            <div class="appointment-status status-confirmed">Asignado</div>
+                        </div>
+                        <div class="appointment-details">
+                            <div class="detail-item">
+                                <div class="detail-label">📧 Email</div>
+                                <div class="detail-value">${item.userEmail || 'No especificado'}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">📊 Puntaje</div>
+                                <div class="detail-value">${item.score ?? 'No disponible'}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">🧠 Diagnóstico</div>
+                                <div class="detail-value">${item.diagnosisTitle || 'Diagnóstico social'}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">🕒 Fecha de asignación</div>
+                                <div class="detail-value">${assignedDate}</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">📌 Motivo de asignación</div>
+                            <div class="detail-value">${item.reason || 'Asignación automática del sistema.'}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('')}
+        `;
+    }
+
     // Función para confirmar cita
     window.confirmAppointment = function(appointmentId) {
         if (confirm('¿Confirmar esta cita?')) {
@@ -275,11 +354,13 @@
         
         loadWorkerInfo();
         calculateStats();
+        renderDiagnosticAssignments();
         renderAppointments();
         
         // Actualizar cada 30 segundos
         setInterval(() => {
             calculateStats();
+            renderDiagnosticAssignments();
             renderAppointments();
         }, 30000);
     }

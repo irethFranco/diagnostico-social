@@ -11,6 +11,7 @@ class ProfileSystem {
 
     init() {
         this.loadUserData();
+        this.renderAssignedWorkerInfo();
         this.loadHistory();
         this.initChart();
         this.bindEvents();
@@ -35,6 +36,40 @@ class ProfileSystem {
         this.displayHistory(history);
         this.updateStats(history);
         this.initChart();
+    }
+
+    renderAssignedWorkerInfo() {
+        const profileContent = document.querySelector('.profile-content');
+        if (!profileContent) return;
+
+        const assignedWorker = JSON.parse(localStorage.getItem('assignedWorkerProfile') || 'null');
+        if (!assignedWorker) return;
+
+        let workerCard = document.getElementById('assignedWorkerCard');
+        if (!workerCard) {
+            workerCard = document.createElement('div');
+            workerCard.id = 'assignedWorkerCard';
+            workerCard.style.background = 'linear-gradient(135deg, #ecfeff 0%, #e0f2fe 100%)';
+            workerCard.style.border = '1px solid #bae6fd';
+            workerCard.style.borderRadius = '16px';
+            workerCard.style.padding = '18px';
+            workerCard.style.boxShadow = '0 8px 25px rgba(14, 116, 144, 0.12)';
+            workerCard.style.gridColumn = '1 / -1';
+            workerCard.style.marginTop = '-10px';
+            profileContent.appendChild(workerCard);
+        }
+
+        const assignedDate = assignedWorker.assignedAt
+            ? new Date(assignedWorker.assignedAt).toLocaleString('es-ES')
+            : 'No disponible';
+
+        workerCard.innerHTML = `
+            <h3 style="margin:0 0 8px 0;color:#0f172a;">Trabajadora social asignada automáticamente</h3>
+            <p style="margin:4px 0;color:#0f172a;"><strong>Nombre:</strong> ${assignedWorker.workerName}</p>
+            <p style="margin:4px 0;color:#334155;"><strong>Especialidad:</strong> ${assignedWorker.workerSpecialty}</p>
+            <p style="margin:4px 0;color:#334155;"><strong>Motivo de asignación:</strong> ${assignedWorker.reason || 'Asignación automática del sistema.'}</p>
+            <p style="margin:4px 0;color:#475569;"><strong>Fecha:</strong> ${assignedDate}</p>
+        `;
     }
 
     // (Eliminado) Datos de ejemplo: ya no se generan automáticamente para no sobreescribir el historial real

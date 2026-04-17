@@ -282,6 +282,7 @@ class DiagnosticForm {
         }
         
         // Guardar resultados
+        const riskInfo = this.getRiskInfo(generalScore);
         const results = {
             date: new Date().toISOString(),
             generalScore: generalScore, // Usar puntuación real calculada
@@ -290,12 +291,15 @@ class DiagnosticForm {
             diagnosis: specificDiagnosis,
             aiDiagnosis: diagnosis,
             answers: this.answers,
-            userName: userName
+            userName: userName,
+            riskLevel: riskInfo.level,
+            riskPriority: riskInfo.priority
         };
         
         console.log('🔍 DEBUG - Guardando resultados:', results);
         console.log('🔍 DEBUG - Categorías calculadas:', categories);
         localStorage.setItem('diagnosticResults', JSON.stringify(results));
+        this.assignWorkerAfterDiagnostic(results);
         
         // También agregar la ejecución al historial del perfil (solo si no existe ya)
         try {
@@ -342,6 +346,10 @@ class DiagnosticForm {
                     date: results.date,
                     generalScore: results.generalScore,
                     diagnosisTitle: results?.diagnosis?.escenario || results?.diagnosis?.diagnostico || 'Diagnóstico',
+                    diagnosisDescription: results?.diagnosis?.descripcion || '',
+                    aiDiagnosis: results?.aiDiagnosis || '',
+                    riskLevel: results.riskLevel,
+                    riskPriority: results.riskPriority
                 };
                 if (existingIdx >= 0) {
                     adminUsers[existingIdx].diagnostics = adminUsers[existingIdx].diagnostics || [];
@@ -368,6 +376,128 @@ class DiagnosticForm {
         
         // Redirigir
             window.location.href = 'resultados.html';
+    }
+
+    assignWorkerAfterDiagnostic(results) {
+        try {
+            const userName = localStorage.getItem('username') || localStorage.getItem('userName') || 'Usuario';
+            const userEmail = localStorage.getItem('userEmail') || '';
+            const assignedWorker = this.selectBestWorker(results);
+            const assignedAt = new Date().toISOString();
+
+            const assignmentRecord = {
+                id: `assign_${Date.now()}`,
+                assignedAt,
+                userName,
+                userEmail,
+                workerId: assignedWorker.id,
+                workerName: assignedWorker.name,
+                workerSpecialty: assignedWorker.specialty,
+                reason: assignedWorker.reason,
+                score: results.generalScore,
+                riskLevel: results.riskLevel || '',
+                riskPriority: results.riskPriority || 0,
+                diagnosisTitle: results?.diagnosis?.escenario || 'Diagnóstico social',
+                categories: results.categories || {}
+            };
+
+            const assignmentForProfile = {
+                workerId: assignedWorker.id,
+                workerName: assignedWorker.name,
+                workerSpecialty: assignedWorker.specialty,
+                reason: assignedWorker.reason,
+                assignedAt
+            };
+
+            localStorage.setItem('assignedWorkerProfile', JSON.stringify(assignmentForProfile));
+
+            const allAssignments = JSON.parse(localStorage.getItem('diagnosticWorkerAssignments') || '[]');
+            allAssignments.push(assignmentRecord);
+            localStorage.setItem('diagnosticWorkerAssignments', JSON.stringify(allAssignments));
+
+            console.log('✅ Trabajadora asignada automáticamente:', assignmentRecord);
+        } catch (error) {
+            console.error('No se pudo asignar trabajadora automáticamente:', error);
+        }
+    }
+
+    selectBestWorker(results) {
+        const workers = {
+            mariela: {
+                id: 'mariela',
+                name: 'Mariela',
+                specialty: 'Especialista en Diagnóstico Social'
+            },
+            francisca: {
+                id: 'francisca',
+                name: 'Francisca',
+                specialty: 'Especialista en Trabajo Social'
+            },
+            yulianis: {
+                id: 'yulianis',
+                name: 'Yulianis',
+                specialty: 'Especialista en Terapia Familiar'
+            },
+            mariana: {
+                id: 'mariana',
+                name: 'Mariana',
+                specialty: 'Especialista en Intervención Social'
+            }
+        };
+
+        const selectedProblems = Array.isArray(this.answers.q2) ? this.answers.q2 : [];
+        const selectedHelp = this.answers.q9 || '';
+        const laborStatus = this.answers.q4 || '';
+        const incomeStatus = this.answers.q5 || '';
+        const score = Number(results.generalScore || 0);
+        const categories = results.categories || {};
+
+        const hasFamilyConflict = selectedProblems.includes('conflictos_familiares') || selectedHelp === 'atencion_psicologica';
+        if (hasFamilyConflict) {
+            return { ...workers.yulianis, reason: 'Prioridad en terapia familiar por conflictos o apoyo psicosocial.' };
+        }
+
+        const economicLoad = Number(categories['Económica'] || 0);
+        const needsEconomicSupport = selectedProblems.includes('falta_empleo') ||
+            selectedHelp === 'apoyo_economico' ||
+            selectedHelp === 'programas_empleo' ||
+            laborStatus === 'desempleado' ||
+            incomeStatus === 'no' ||
+            economicLoad >= 7;
+        if (needsEconomicSupport) {
+            return { ...workers.mariela, reason: 'Prioridad económica detectada en el diagnóstico.' };
+        }
+
+        const interventionNeed = selectedProblems.includes('inseguridad') ||
+            selectedProblems.includes('problemas_ambientales') ||
+            selectedProblems.includes('oportunidades_jovenes') ||
+            selectedHelp === 'proyectos_comunitarios' ||
+            score >= 30;
+        if (interventionNeed) {
+            return { ...workers.mariana, reason: 'Requiere intervención social comunitaria o prioritaria.' };
+        }
+
+        const socialGuidanceNeed = selectedProblems.includes('acceso_salud') ||
+            selectedProblems.includes('acceso_educacion') ||
+            selectedHelp === 'capacitacion';
+        if (socialGuidanceNeed) {
+            return { ...workers.francisca, reason: 'Necesita orientación en acceso a redes de apoyo social.' };
+        }
+
+        const allAssignments = JSON.parse(localStorage.getItem('diagnosticWorkerAssignments') || '[]');
+        const workloadByWorker = allAssignments.reduce((acc, item) => {
+            const workerId = item.workerId;
+            acc[workerId] = (acc[workerId] || 0) + 1;
+            return acc;
+        }, {});
+
+        const fallback = Object.values(workers).sort((a, b) => {
+            const countA = workloadByWorker[a.id] || 0;
+            const countB = workloadByWorker[b.id] || 0;
+            return countA - countB;
+        })[0];
+
+        return { ...fallback, reason: 'Asignación automática balanceada según carga actual.' };
     }
 
     validateCurrentQuestion() {
@@ -627,6 +757,13 @@ class DiagnosticForm {
         } else {
             return { nombre: 'baja', descripcion: 'Vulnerabilidad baja' };
         }
+    }
+
+    getRiskInfo(score) {
+        if (score >= 30) return { level: 'crítica', priority: 4 };
+        if (score >= 20) return { level: 'alta', priority: 3 };
+        if (score >= 10) return { level: 'media', priority: 2 };
+        return { level: 'baja', priority: 1 };
     }
 
     generateSpecificRecommendations(analysis, level) {
