@@ -37,6 +37,9 @@
         .muted { color: #64748b; font-size: 0.9rem; }
         .chip { display: inline-flex; align-items: center; gap: 8px; background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; padding: 4px 10px; border-radius: 999px; font-size: 0.85rem; font-weight: 600; }
         .chip .dot { width: 8px; height: 8px; background: #3b82f6; border-radius: 50%; }
+        .cm-preview-wrap { margin-top: 8px; border: 1px dashed #cbd5e1; border-radius: 10px; background: #f8fafc; padding: 8px; min-height: 120px; display: flex; align-items: center; justify-content: center; }
+        .cm-preview-wrap img { max-width: 100%; max-height: 220px; border-radius: 10px; object-fit: cover; display: none; box-shadow: 0 8px 20px rgba(2,6,23,0.15); }
+        .cm-preview-empty { color: #64748b; font-size: 0.85rem; text-align: center; }
 
         @media (max-width: 900px) {
             .admin-grid { grid-template-columns: 1fr; }
@@ -137,10 +140,30 @@
                         <input type="text" id="userFilter" placeholder="Nombre de usuario" style="margin:0;">
                     </div>
                     <button class="btn secondary" id="clearFilters" style="align-self:end;">Limpiar Filtros</button>
+                    <button class="btn" id="schedulePriorityBtn" style="align-self:end;">Programar mayor riesgo</button>
                 </div>
                 
                 <div id="usersList" class="list"></div>
                 <div class="muted" style="margin-top:10px">Fuente: actividad guardada en esta app (localStorage).</div>
+            </div>
+
+            <div class="admin-card" style="padding-top: 18px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <h3 style="color:#1e293b; margin:0;">Cola de priorización por riesgo</h3>
+                        <span class="chip"><span class="dot"></span> Automática</span>
+                    </div>
+                    <div class="toolbar">
+                        <select id="riskQueueFilter" style="padding: 10px 12px; border-radius: 10px; border:1px solid #e2e8f0;">
+                            <option value="all">Todos</option>
+                            <option value="high">Mayor riesgo (Crítica/Alta)</option>
+                            <option value="low">Menor riesgo (Media/Baja)</option>
+                        </select>
+                        <button class="btn secondary" id="refreshRiskQueue">Actualizar cola</button>
+                    </div>
+                </div>
+                <div id="riskQueueList" class="list"></div>
+                <div class="muted" style="margin-top:10px">Ordenado por prioridad: Crítica, Alta, Media y Baja.</div>
             </div>
 
             <!-- Citas agendadas -->
@@ -244,6 +267,111 @@
                 
                 <div class="muted" style="margin-top:10px">Los precios se actualizarán inmediatamente en la página principal.</div>
             </div>
+
+            <div class="admin-card" style="padding-top: 18px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <h3 style="color:#1e293b; margin:0;">📝 Gestión de contenido (Inicio)</h3>
+                        <span class="chip"><span class="dot"></span> Local</span>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px;">
+                    <div class="field">
+                        <label for="cmHeroTitle">Título principal</label>
+                        <input id="cmHeroTitle" type="text" placeholder="Título del hero">
+                    </div>
+                    <div class="field">
+                        <label for="cmHeroButtonText">Texto botón principal</label>
+                        <input id="cmHeroButtonText" type="text" placeholder="COMENZAR DIAGNÓSTICO">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="cmHeroDescription">Descripción principal</label>
+                    <textarea id="cmHeroDescription" rows="3" placeholder="Descripción del hero"></textarea>
+                </div>
+
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px;">
+                    <div class="field">
+                        <label for="cmFeaturesTitle">Título sección características</label>
+                        <input id="cmFeaturesTitle" type="text" placeholder="Tecnología para el trabajo social">
+                    </div>
+                    <div class="field">
+                        <label for="cmFeaturesSubtitle">Subtítulo características</label>
+                        <input id="cmFeaturesSubtitle" type="text" placeholder="Transformando comunidades">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="cmFeaturesDescription">Descripción características</label>
+                    <textarea id="cmFeaturesDescription" rows="3" placeholder="Descripción de características"></textarea>
+                </div>
+
+                <hr style="border:none; border-top:1px solid #e2e8f0; margin:14px 0;">
+
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px;">
+                    <div class="field">
+                        <label for="cmPromoEnabled">Publicidad de descuento</label>
+                        <select id="cmPromoEnabled">
+                            <option value="false">Desactivada</option>
+                            <option value="true">Activada</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="cmPromoText">Texto del banner</label>
+                        <input id="cmPromoText" type="text" placeholder="Ej: 20% de descuento esta semana">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="cmPromoImage">Imagen publicidad (URL o ruta local)</label>
+                    <input id="cmPromoImage" type="text" placeholder="Ej: imagenes/promo.jpg">
+                    <input id="cmPromoImageFile" type="file" accept="image/*" style="margin-top:8px;">
+                    <div class="cm-preview-wrap">
+                        <img id="cmPromoImagePreview" alt="Vista previa publicidad">
+                        <div class="cm-preview-empty" id="cmPromoImageEmpty">Sin imagen de publicidad</div>
+                    </div>
+                </div>
+
+                <hr style="border:none; border-top:1px solid #e2e8f0; margin:14px 0;">
+
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px;">
+                    <div class="field">
+                        <label for="cmHeroImage">Imagen principal (hero)</label>
+                        <input id="cmHeroImage" type="text" placeholder="Ej: imagenes/fonfo.jpg">
+                        <input id="cmHeroImageFile" type="file" accept="image/*" style="margin-top:8px;">
+                        <div class="cm-preview-wrap">
+                            <img id="cmHeroImagePreview" alt="Vista previa hero">
+                            <div class="cm-preview-empty" id="cmHeroImageEmpty">Sin imagen principal</div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="cmKnowMoreImage">Imagen sección Conocer más</label>
+                        <input id="cmKnowMoreImage" type="text" placeholder="Ej: imagenes/conocer.jpg">
+                        <input id="cmKnowMoreImageFile" type="file" accept="image/*" style="margin-top:8px;">
+                        <div class="cm-preview-wrap">
+                            <img id="cmKnowMoreImagePreview" alt="Vista previa conocer más">
+                            <div class="cm-preview-empty" id="cmKnowMoreImageEmpty">Sin imagen de Conocer más</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="cmMissionImage">Imagen Misión/Visión</label>
+                    <input id="cmMissionImage" type="text" placeholder="Ej: imagenes/social.jpg">
+                    <input id="cmMissionImageFile" type="file" accept="image/*" style="margin-top:8px;">
+                    <div class="cm-preview-wrap">
+                        <img id="cmMissionImagePreview" alt="Vista previa misión y visión">
+                        <div class="cm-preview-empty" id="cmMissionImageEmpty">Sin imagen de Misión/Visión</div>
+                    </div>
+                </div>
+
+                <div style="display:flex; gap:10px; margin-top: 8px;">
+                    <button class="btn" id="saveContentConfig">💾 Guardar contenido</button>
+                    <button class="btn secondary" id="resetContentConfig">🔄 Restaurar por defecto</button>
+                </div>
+                <div class="muted" style="margin-top:10px">Esto modifica solo lo visual de la página de inicio.</div>
+            </div>
         </div>
     </div>
 
@@ -279,6 +407,7 @@
     <script src="JS/reviews.js"></script>
     <script src="JS/reviews-admin.js"></script>
     <script src="JS/pricing.js"></script>
+    <script src="JS/content-admin.js"></script>
 </body>
 </html>
 
