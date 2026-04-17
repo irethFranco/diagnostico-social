@@ -1,0 +1,422 @@
+{
+  "preguntas": [
+    {
+      "id": "q1",
+      "pregunta": "¿En qué tipo de comunidad vives?",
+      "tipo": "radio",
+      "opciones": [
+        {"valor": "urbana", "texto": "Urbana", "puntos": 1},
+        {"valor": "rural", "texto": "Rural", "puntos": 2},
+        {"valor": "semiurbana", "texto": "Semiurbana", "puntos": 1.5}
+      ]
+    },
+    {
+      "id": "q2",
+      "pregunta": "¿Cuáles son las principales problemáticas que identificas en tu comunidad?",
+      "tipo": "checkbox",
+      "opciones": [
+        {"valor": "falta_empleo", "texto": "Falta de empleo o ingresos estables", "puntos": 3, "categoria": "economica"},
+        {"valor": "inseguridad", "texto": "Inseguridad y violencia", "puntos": 3, "categoria": "social"},
+        {"valor": "acceso_salud", "texto": "Deficiente acceso a salud", "puntos": 3, "categoria": "salud"},
+        {"valor": "problemas_ambientales", "texto": "Problemas ambientales", "puntos": 2, "categoria": "ambiental"},
+        {"valor": "acceso_educacion", "texto": "Bajo acceso a educación", "puntos": 2, "categoria": "educativa"},
+        {"valor": "conflictos_familiares", "texto": "Conflictos familiares", "puntos": 2, "categoria": "social"},
+        {"valor": "oportunidades_jovenes", "texto": "Pocas oportunidades para jóvenes", "puntos": 2, "categoria": "social"}
+      ]
+    },
+    {
+      "id": "q3",
+      "pregunta": "¿Cómo te afecta personalmente esta problemática?",
+      "tipo": "radio",
+      "opciones": [
+        {"valor": "mucho", "texto": "Mucho", "puntos": 3},
+        {"valor": "poco", "texto": "Poco", "puntos": 1},
+        {"valor": "nada", "texto": "Nada", "puntos": 0}
+      ]
+    },
+    {
+      "id": "q4",
+      "pregunta": "¿Cuál es tu situación laboral actual?",
+      "tipo": "radio",
+      "opciones": [
+        {"valor": "empleado_formal", "texto": "Empleado/a formal", "puntos": 0, "categoria": "economica"},
+        {"valor": "trabajador_independiente", "texto": "Trabajador/a independiente", "puntos": 1, "categoria": "economica"},
+        {"valor": "desempleado", "texto": "Desempleado/a", "puntos": 3, "categoria": "economica"},
+        {"valor": "estudiante", "texto": "Estudiante", "puntos": 1, "categoria": "educativa"},
+        {"valor": "ama_casa", "texto": "Ama de casa", "puntos": 1, "categoria": "economica"},
+        {"valor": "jubilado", "texto": "Jubilado/a", "puntos": 0, "categoria": "economica"}
+      ]
+    },
+    {
+      "id": "q5",
+      "pregunta": "¿Los ingresos del hogar alcanzan para cubrir las necesidades básicas?",
+      "tipo": "radio",
+      "opciones": [
+        {"valor": "si_completamente", "texto": "Sí, completamente", "puntos": 0, "categoria": "economica"},
+        {"valor": "parcialmente", "texto": "Parcialmente", "puntos": 2, "categoria": "economica"},
+        {"valor": "no", "texto": "No", "puntos": 3, "categoria": "economica"}
+      ]
+    },
+    {
+      "id": "q6",
+      "pregunta": "¿Algún miembro de tu hogar presenta una condición especial?",
+      "tipo": "radio",
+      "opciones": [
+        {"valor": "si", "texto": "Sí", "puntos": 2, "categoria": "salud"},
+        {"valor": "no", "texto": "No", "puntos": 0, "categoria": "salud"},
+        {"valor": "prefiero_no_responder", "texto": "Prefiero no responder", "puntos": 1, "categoria": "salud"}
+      ]
+    },
+    {
+      "id": "q7",
+      "pregunta": "¿Cómo describirías el acceso a los servicios de salud?",
+      "tipo": "radio",
+      "opciones": [
+        {"valor": "bueno", "texto": "Bueno", "puntos": 0, "categoria": "salud"},
+        {"valor": "regular", "texto": "Regular", "puntos": 1, "categoria": "salud"},
+        {"valor": "deficiente", "texto": "Deficiente", "puntos": 2, "categoria": "salud"},
+        {"valor": "inexistente", "texto": "Inexistente", "puntos": 3, "categoria": "salud"}
+      ]
+    },
+    {
+      "id": "q8",
+      "pregunta": "¿Cuál es tu nivel educativo más alto alcanzado?",
+      "tipo": "radio",
+      "opciones": [
+        {"valor": "ninguno", "texto": "Ninguno", "puntos": 3, "categoria": "educativa"},
+        {"valor": "primaria", "texto": "Primaria", "puntos": 2, "categoria": "educativa"},
+        {"valor": "secundaria", "texto": "Secundaria", "puntos": 1, "categoria": "educativa"},
+        {"valor": "tecnica", "texto": "Técnica", "puntos": 0, "categoria": "educativa"},
+        {"valor": "universitaria", "texto": "Universitaria", "puntos": 0, "categoria": "educativa"},
+        {"valor": "posgrado", "texto": "Posgrado", "puntos": 0, "categoria": "educativa"}
+      ]
+    },
+    {
+      "id": "q9",
+      "pregunta": "¿Qué tipo de ayuda consideras más necesaria?",
+      "tipo": "radio",
+      "opciones": [
+        {"valor": "apoyo_economico", "texto": "Apoyo económico", "puntos": 3, "categoria": "economica"},
+        {"valor": "capacitacion", "texto": "Capacitación", "puntos": 2, "categoria": "educativa"},
+        {"valor": "atencion_psicologica", "texto": "Atención psicológica", "puntos": 2, "categoria": "social"},
+        {"valor": "programas_empleo", "texto": "Programas de empleo", "puntos": 3, "categoria": "economica"},
+        {"valor": "proyectos_comunitarios", "texto": "Proyectos comunitarios", "puntos": 1, "categoria": "social"},
+        {"valor": "otro", "texto": "Otro", "puntos": 2, "categoria": "social"}
+      ]
+    },
+    {
+      "id": "q10",
+      "pregunta": "¿Estarías dispuesto/a a participar en procesos de diagnóstico?",
+      "tipo": "radio",
+      "opciones": [
+        {"valor": "si", "texto": "Sí", "puntos": 0, "categoria": "social"},
+        {"valor": "no", "texto": "No", "puntos": 1, "categoria": "social"},
+        {"valor": "tal_vez", "texto": "Tal vez", "puntos": 0.5, "categoria": "social"}
+      ]
+    }
+  ],
+  "categorias": {
+    "economica": {
+      "nombre": "Vulnerabilidad Económica",
+      "descripcion": "Situaciones relacionadas con ingresos, empleo y estabilidad financiera",
+      "color": "#ef4444",
+      "icono": "💰"
+    },
+    "social": {
+      "nombre": "Vulnerabilidad Social",
+      "descripcion": "Problemas de convivencia, violencia y exclusión social",
+      "color": "#f97316",
+      "icono": "👥"
+    },
+    "salud": {
+      "nombre": "Vulnerabilidad en Salud",
+      "descripcion": "Acceso limitado a servicios de salud y condiciones especiales",
+      "color": "#dc2626",
+      "icono": "🏥"
+    },
+    "educativa": {
+      "nombre": "Vulnerabilidad Educativa",
+      "descripcion": "Bajo nivel educativo y falta de oportunidades de formación",
+      "color": "#2563eb",
+      "icono": "📚"
+    },
+    "ambiental": {
+      "nombre": "Vulnerabilidad Ambiental",
+      "descripcion": "Problemas ambientales que afectan la calidad de vida",
+      "color": "#16a34a",
+      "icono": "🌱"
+    }
+  },
+  "niveles_vulnerabilidad": {
+    "baja": {
+      "puntos_min": 0,
+      "puntos_max": 5,
+      "nombre": "Vulnerabilidad Baja",
+      "descripcion": "Tu situación presenta riesgos mínimos. Mantén las buenas prácticas y continúa desarrollándote.",
+      "color": "#22c55e",
+      "recomendaciones": [
+        "Mantén tu situación actual",
+        "Busca oportunidades de crecimiento",
+        "Ayuda a otros en tu comunidad"
+      ]
+    },
+    "media": {
+      "puntos_min": 6,
+      "puntos_max": 12,
+      "nombre": "Vulnerabilidad Media",
+      "descripcion": "Presentas algunos riesgos que requieren atención. Es importante tomar medidas preventivas.",
+      "color": "#f59e0b",
+      "recomendaciones": [
+        "Busca apoyo en programas sociales",
+        "Mejora tus habilidades",
+        "Mantén redes de apoyo"
+      ]
+    },
+    "alta": {
+      "puntos_min": 13,
+      "puntos_max": 20,
+      "nombre": "Vulnerabilidad Alta",
+      "descripcion": "Tu situación requiere atención inmediata. Es importante buscar apoyo especializado.",
+      "color": "#ef4444",
+      "recomendaciones": [
+        "Busca ayuda profesional",
+        "Accede a programas de apoyo",
+        "Construye redes de apoyo sólidas"
+      ]
+    },
+    "critica": {
+      "puntos_min": 21,
+      "puntos_max": 30,
+      "nombre": "Vulnerabilidad Crítica",
+      "descripcion": "Tu situación requiere intervención urgente. Busca ayuda inmediata en servicios sociales.",
+      "color": "#dc2626",
+      "recomendaciones": [
+        "Busca ayuda inmediata",
+        "Contacta servicios sociales",
+        "No dudes en pedir apoyo"
+      ]
+    }
+  },
+  "diagnosticos_especificos": [
+    {
+      "condicion": {
+        "comunidad": "rural",
+        "problemas": ["falta_empleo"],
+        "laboral": "desempleado",
+        "impacto": "mucho"
+      },
+      "mensaje": "Tu diagnóstico refleja una vulnerabilidad económica alta en zona rural, asociada al desempleo. Se recomienda orientación laboral, apoyo en emprendimientos rurales y vinculación a programas de empleo local."
+    },
+    {
+      "condicion": {
+        "comunidad": "urbana",
+        "problemas": ["falta_empleo"],
+        "laboral": "trabajador_independiente",
+        "impacto": "mucho"
+      },
+      "mensaje": "Se observa inestabilidad económica en entorno urbano. Es recomendable fortalecer la formalización laboral, acceso a microcréditos y programas de sostenibilidad financiera."
+    },
+    {
+      "condicion": {
+        "comunidad": "rural",
+        "problemas": ["acceso_salud"],
+        "impacto": "mucho"
+      },
+      "mensaje": "Tu diagnóstico evidencia dificultades serias de acceso a salud en zona rural. Se sugiere gestionar brigadas médicas, afiliación a EPS y fortalecimiento del sistema de atención primaria."
+    },
+    {
+      "condicion": {
+        "problemas": ["acceso_salud"],
+        "impacto": "poco"
+      },
+      "mensaje": "Se identifican leves dificultades en acceso o atención médica. Es importante mantener el autocuidado y participar en campañas de prevención en salud."
+    },
+    {
+      "condicion": {
+        "problemas": ["acceso_educacion"],
+        "laboral": "estudiante",
+        "impacto": "mucho"
+      },
+      "mensaje": "Tu diagnóstico muestra barreras en el acceso educativo. Se recomienda solicitar apoyo en becas, tutorías o programas de conectividad digital."
+    },
+    {
+      "condicion": {
+        "problemas": ["acceso_educacion"],
+        "laboral": "desempleado"
+      },
+      "mensaje": "Se detecta bajo nivel educativo que afecta la empleabilidad. Es recomendable acceder a programas de educación técnica o formación para el trabajo."
+    },
+    {
+      "condicion": {
+        "problemas": ["problemas_ambientales"],
+        "comunidad": "urbana"
+      },
+      "mensaje": "Tu diagnóstico refleja afectaciones ambientales en tu entorno urbano. Participar en programas de reciclaje, limpieza y manejo de residuos puede mejorar la calidad de vida."
+    },
+    {
+      "condicion": {
+        "problemas": ["problemas_ambientales"],
+        "comunidad": "rural"
+      },
+      "mensaje": "Se evidencian problemas ambientales en la comunidad rural. Se recomienda promover prácticas sostenibles y cuidado del entorno natural."
+    },
+    {
+      "condicion": {
+        "problemas": ["falta_empleo", "acceso_educacion"],
+        "impacto": "mucho"
+      },
+      "mensaje": "Tu diagnóstico refleja una vulnerabilidad combinada por falta de empleo y baja educación. Se recomienda participación en programas integrales de formación y empleabilidad."
+    },
+    {
+      "condicion": {
+        "problemas": ["falta_empleo", "acceso_salud"],
+        "impacto": "mucho"
+      },
+      "mensaje": "El diagnóstico indica doble afectación: desempleo y limitaciones de salud. Es necesario acompañamiento social y apoyo integral en bienestar y empleo."
+    },
+    {
+      "condicion": {
+        "problemas": ["acceso_educacion", "problemas_ambientales"]
+      },
+      "mensaje": "Tu diagnóstico evidencia debilidad educativa y problemas ambientales. Es importante promover la educación ambiental en la comunidad."
+    },
+    {
+      "condicion": {
+        "problemas": ["inseguridad"],
+        "impacto": "mucho"
+      },
+      "mensaje": "Tu diagnóstico refleja alta percepción de inseguridad. Se recomienda fortalecer la participación ciudadana, redes vecinales y cooperación con autoridades locales."
+    },
+    {
+      "condicion": {
+        "problemas": ["conflictos_familiares"],
+        "impacto": "mucho"
+      },
+      "mensaje": "El diagnóstico sugiere presencia de conflictos familiares o comunitarios. Se recomienda apoyo psicológico y mediación social para mejorar la convivencia."
+    },
+    {
+      "condicion": {
+        "problemas": ["oportunidades_jovenes"],
+        "impacto": "mucho"
+      },
+      "mensaje": "Se identifican limitadas oportunidades para jóvenes y mujeres. Participar en programas de liderazgo y emprendimiento inclusivo puede mejorar tu desarrollo personal y social."
+    },
+    {
+      "condicion": {
+        "problemas": ["falta_empleo", "acceso_salud", "acceso_educacion"],
+        "impacto": "mucho",
+        "comunidad": "rural"
+      },
+      "mensaje": "Tu diagnóstico muestra una vulnerabilidad múltiple en zona rural. Es esencial la intervención integral en empleo, educación y salud comunitaria."
+    },
+    {
+      "condicion": {
+        "problemas": ["acceso_salud", "problemas_ambientales"],
+        "impacto": "mucho"
+      },
+      "mensaje": "Tu diagnóstico revela cómo los problemas ambientales están afectando la salud. Se recomienda gestión de proyectos ambientales y educación sanitaria comunitaria."
+    },
+    {
+      "condicion": {
+        "problemas": ["acceso_educacion"],
+        "impacto": "poco"
+      },
+      "mensaje": "Se observan leves dificultades en educación. Se sugiere continuar con formación continua y refuerzo académico."
+    },
+    {
+      "condicion": {
+        "problemas": ["falta_empleo"],
+        "impacto": "nada"
+      },
+      "mensaje": "No se evidencian impactos económicos graves, pero es recomendable mantener estabilidad financiera y hábitos de ahorro."
+    },
+    {
+      "condicion": {
+        "problemas": ["acceso_salud"],
+        "servicios_salud": "deficiente"
+      },
+      "mensaje": "El diagnóstico señala acceso deficiente a los servicios de salud. Se recomienda acudir a la Secretaría de Salud para programas de apoyo y atención oportuna."
+    },
+    {
+      "condicion": {
+        "problemas": ["acceso_educacion"],
+        "educacion": "primaria"
+      },
+      "mensaje": "Tu diagnóstico indica nivel educativo bajo. Acceder a programas de educación para adultos o cursos técnicos puede mejorar tus oportunidades."
+    },
+    {
+      "condicion": {
+        "problemas": ["falta_empleo"],
+        "educacion": "universitaria",
+        "impacto": "poco"
+      },
+      "mensaje": "Aunque tienes formación universitaria, se percibe cierta inestabilidad laboral. Se recomienda actualización profesional o emprendimiento digital."
+    },
+    {
+      "condicion": {
+        "problemas": ["problemas_ambientales"],
+        "impacto": "mucho",
+        "comunidad": "semiurbana"
+      },
+      "mensaje": "Tu diagnóstico refleja afectaciones ambientales considerables en zona semiurbana. Se sugiere participación en proyectos de gestión ambiental comunitaria."
+    },
+    {
+      "condicion": {
+        "problemas": ["inseguridad", "conflictos_familiares"],
+        "impacto": "mucho"
+      },
+      "mensaje": "Tu diagnóstico muestra tensión social por inseguridad y conflictos comunitarios. Se recomienda acompañamiento psicosocial y espacios de diálogo ciudadano."
+    },
+    {
+      "condicion": {
+        "problemas": ["falta_empleo", "acceso_educacion", "acceso_salud"],
+        "impacto": "mucho",
+        "comunidad": "urbana"
+      },
+      "mensaje": "Tu diagnóstico refleja vulnerabilidad integral en entorno urbano, con carencias en empleo, educación y salud. Es necesario apoyo social coordinado."
+    },
+    {
+      "condicion": {
+        "problemas": ["acceso_salud"],
+        "condicion_hogar": "si"
+      },
+      "mensaje": "Tu diagnóstico indica presencia de una condición especial en el hogar. Es fundamental vincularse a redes de apoyo social y programas de atención diferencial."
+    },
+    {
+      "condicion": {
+        "problemas": ["conflictos_familiares"],
+        "impacto": "poco"
+      },
+      "mensaje": "Tu diagnóstico muestra conflictos leves en el entorno. Es recomendable promover la comunicación asertiva y la mediación comunitaria."
+    },
+    {
+      "condicion": {
+        "problemas": ["oportunidades_jovenes"],
+        "impacto": "poco"
+      },
+      "mensaje": "Tu diagnóstico refleja limitaciones moderadas en oportunidades. Participar en capacitaciones y ferias laborales puede ampliar tus opciones."
+    },
+    {
+      "condicion": {
+        "problemas": ["problemas_ambientales"],
+        "impacto": "nada"
+      },
+      "mensaje": "No se perciben impactos ambientales directos, pero mantener prácticas sostenibles es clave para la comunidad."
+    },
+    {
+      "condicion": {
+        "problemas": ["acceso_educacion"],
+        "educacion": "secundaria",
+        "impacto": "mucho"
+      },
+      "mensaje": "Tu diagnóstico evidencia falta de oportunidades tras nivel secundario. Se recomienda acceder a formación técnica o tecnológica."
+    },
+    {
+      "condicion": {
+        "problemas": ["falta_empleo"],
+        "laboral": "ama_casa"
+      },
+      "mensaje": "Tu diagnóstico sugiere necesidad de inclusión laboral para mujeres cuidadoras. Participar en programas de emprendimiento o trabajo en casa puede ser una alternativa."
+    }
+  ]
+}

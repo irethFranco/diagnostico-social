@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Recomendaciones Mejoradas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .recommendations {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #007bff;
+        }
+        .recommendation-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 3px solid #28a745;
+        }
+        .recommendation-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .scenario {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🎯 Prueba de Recomendaciones Mejoradas</h1>
+        <p>Esta página permite probar las nuevas recomendaciones más realistas y específicas del sistema de diagnóstico.</p>
+        
+        <div class="scenario">
+            <h3>Escenario 1: Vulnerabilidad Económica Crítica</h3>
+            <p>Simula una situación de desempleo, ingresos insuficientes y falta de empleo</p>
+            <button class="test-button" onclick="testEconomicCrisis()">Probar Recomendaciones Económicas</button>
+        </div>
+        
+        <div class="scenario">
+            <h3>Escenario 2: Vulnerabilidad en Salud</h3>
+            <p>Simula problemas de acceso a salud y condiciones especiales</p>
+            <button class="test-button" onclick="testHealthVulnerability()">Probar Recomendaciones de Salud</button>
+        </div>
+        
+        <div class="scenario">
+            <h3>Escenario 3: Vulnerabilidad Educativa</h3>
+            <p>Simula bajo nivel educativo y falta de acceso a educación</p>
+            <button class="test-button" onclick="testEducationalVulnerability()">Probar Recomendaciones Educativas</button>
+        </div>
+        
+        <div class="scenario">
+            <h3>Escenario 4: Vulnerabilidad Múltiple</h3>
+            <p>Simula múltiples problemáticas que requieren atención integral</p>
+            <button class="test-button" onclick="testMultipleVulnerability()">Probar Recomendaciones Múltiples</button>
+        </div>
+        
+        <div class="scenario">
+            <h3>Escenario 5: Baja Vulnerabilidad</h3>
+            <p>Simula una situación estable con pocas vulnerabilidades</p>
+            <button class="test-button" onclick="testLowVulnerability()">Probar Recomendaciones Preventivas</button>
+        </div>
+        
+        <div id="recommendations" class="recommendations" style="display: none;"></div>
+    </div>
+
+    <script src="JS/diagnostic.js"></script>
+    <script>
+        // Función para mostrar recomendaciones
+        function showRecommendations(title, recommendations) {
+            const recommendationsDiv = document.getElementById('recommendations');
+            recommendationsDiv.style.display = 'block';
+            
+            let html = `<h3>${title}</h3>`;
+            html += `<p><strong>Total de recomendaciones:</strong> ${recommendations.length}</p>`;
+            
+            recommendations.forEach((rec, index) => {
+                html += `
+                    <div class="recommendation-item">
+                        <div class="recommendation-title">${index + 1}. ${rec}</div>
+                    </div>
+                `;
+            });
+            
+            recommendationsDiv.innerHTML = html;
+        }
+
+        // Función para simular respuestas y generar recomendaciones
+        function simulateRecommendations(answers, scenarioName) {
+            console.log(`🧪 Simulando ${scenarioName} con respuestas:`, answers);
+            
+            // Crear instancia del sistema de diagnóstico
+            const diagnostic = new DiagnosticForm();
+            diagnostic.answers = answers;
+            
+            // Generar análisis detallado
+            const analysis = diagnostic.generateDetailedAnalysis();
+            console.log('📊 Análisis generado:', analysis);
+            
+            // Calcular puntuación y nivel de vulnerabilidad
+            const generalScore = diagnostic.calculateGeneralScore();
+            const vulnerabilityLevel = diagnostic.getVulnerabilityLevel(generalScore);
+            console.log('📈 Puntuación:', generalScore, 'Nivel:', vulnerabilityLevel.nombre);
+            
+            // Generar recomendaciones específicas
+            const recommendations = diagnostic.generateSpecificRecommendations(analysis, vulnerabilityLevel.nombre);
+            console.log('💡 Recomendaciones generadas:', recommendations);
+            
+            return recommendations;
+        }
+
+        // Escenario 1: Vulnerabilidad Económica Crítica
+        function testEconomicCrisis() {
+            const answers = {
+                q1: 'rural',
+                q2: ['falta_empleo'],
+                q3: 'mucho',
+                q4: 'desempleado',
+                q5: 'no',
+                q6: 'no',
+                q7: 'bueno',
+                q8: 'secundaria',
+                q9: 'apoyo_economico',
+                q10: 'si'
+            };
+            
+            const recommendations = simulateRecommendations(answers, 'Vulnerabilidad Económica Crítica');
+            showRecommendations('Recomendaciones para Vulnerabilidad Económica Crítica', recommendations);
+        }
+
+        // Escenario 2: Vulnerabilidad en Salud
+        function testHealthVulnerability() {
+            const answers = {
+                q1: 'rural',
+                q2: ['acceso_salud'],
+                q3: 'mucho',
+                q4: 'empleado_formal',
+                q5: 'si_completamente',
+                q6: 'si',
+                q7: 'inexistente',
+                q8: 'universitaria',
+                q9: 'atencion_psicologica',
+                q10: 'si'
+            };
+            
+            const recommendations = simulateRecommendations(answers, 'Vulnerabilidad en Salud');
+            showRecommendations('Recomendaciones para Vulnerabilidad en Salud', recommendations);
+        }
+
+        // Escenario 3: Vulnerabilidad Educativa
+        function testEducationalVulnerability() {
+            const answers = {
+                q1: 'urbana',
+                q2: ['acceso_educacion'],
+                q3: 'mucho',
+                q4: 'trabajador_independiente',
+                q5: 'parcialmente',
+                q6: 'no',
+                q7: 'bueno',
+                q8: 'ninguno',
+                q9: 'capacitacion',
+                q10: 'si'
+            };
+            
+            const recommendations = simulateRecommendations(answers, 'Vulnerabilidad Educativa');
+            showRecommendations('Recomendaciones para Vulnerabilidad Educativa', recommendations);
+        }
+
+        // Escenario 4: Vulnerabilidad Múltiple
+        function testMultipleVulnerability() {
+            const answers = {
+                q1: 'rural',
+                q2: ['falta_empleo', 'acceso_salud', 'acceso_educacion', 'problemas_ambientales'],
+                q3: 'mucho',
+                q4: 'desempleado',
+                q5: 'no',
+                q6: 'si',
+                q7: 'inexistente',
+                q8: 'primaria',
+                q9: 'apoyo_economico',
+                q10: 'no'
+            };
+            
+            const recommendations = simulateRecommendations(answers, 'Vulnerabilidad Múltiple');
+            showRecommendations('Recomendaciones para Vulnerabilidad Múltiple', recommendations);
+        }
+
+        // Escenario 5: Baja Vulnerabilidad
+        function testLowVulnerability() {
+            const answers = {
+                q1: 'urbana',
+                q2: [],
+                q3: 'nada',
+                q4: 'empleado_formal',
+                q5: 'si_completamente',
+                q6: 'no',
+                q7: 'bueno',
+                q8: 'universitaria',
+                q9: 'proyectos_comunitarios',
+                q10: 'si'
+            };
+            
+            const recommendations = simulateRecommendations(answers, 'Baja Vulnerabilidad');
+            showRecommendations('Recomendaciones para Baja Vulnerabilidad', recommendations);
+        }
+
+        // Cargar datos de diagnóstico al iniciar
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🧪 Página de prueba de recomendaciones mejoradas cargada');
+        });
+    </script>
+</body>
+</html>
